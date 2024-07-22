@@ -52,5 +52,11 @@ Resloves(해결됨) : #3
 Ref(참고이슈) : #1
 ```
 
+## 📌 커밋 순서
+1. 본인 브런치에서 작성 후 커밋 & 푸시
+2. `main` 브런치로 pr 후 코드리뷰
+3. 코드리뷰 완료 후, 부리더가 `main` 브런치로 merge
+4. 반복
+
 # 🎨 와이어 프레임 참고
 [피그마](https://www.figma.com/design/M0wKraRjm4ktcKjfeBjkqQ/2%EC%A1%B0-%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=0-1&t=zhwpSm9TstOSDX8T-1)
