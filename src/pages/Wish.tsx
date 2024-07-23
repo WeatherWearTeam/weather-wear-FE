@@ -1,5 +1,5 @@
 const Wish = () => {
-  return <div>Wish</div>;
+  return <div>wish</div>;
 };
 
 export default Wish;
