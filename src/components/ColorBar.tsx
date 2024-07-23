@@ -1,3 +1,4 @@
+import ColorChip from "@components/ColorChip";
 import styled from "styled-components";
 
 function ColorBar() {
@@ -33,11 +34,4 @@ const ColorContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
-`;
-
-const ColorChip = styled.div<{ color: string }>`
-  width: 1rem;
-  height: 1rem;
-  background-color: ${({ color, theme }) => theme.colors[color]};
-  border: ${({ theme }) => theme.borders.buttonBorder};
 `;
