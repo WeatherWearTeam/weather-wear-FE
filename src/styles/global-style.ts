@@ -34,6 +34,7 @@ export const GlobalStyle = createGlobalStyle`
       line-height: 1.5;
       margin: 0;
       height: 100%;
+      color:${({ theme }) => theme.colors.main};
     }
 
     #root {
