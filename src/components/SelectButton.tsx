@@ -1,0 +1,55 @@
+import Icon from "@components/Icon";
+import { arrowDownIcon } from "@shared/icons";
+import styled from "styled-components";
+
+interface SelectButtonProps {
+  //   openModal: () => void;
+  selectedOption: string;
+  buttonRef?: React.RefObject<HTMLButtonElement>;
+}
+
+export default function SelectButton({
+  //   openModal,
+  // buttonRef,
+  selectedOption,
+}: SelectButtonProps) {
+  return (
+    <StSelectButton
+    //onClick={openModal}
+    // ref={buttonRef}
+    >
+      {selectedOption}
+      {arrowDownIcon}
+    </StSelectButton>
+  );
+}
+
+const StSelectButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 5rem;
+  outline: none;
+  font-size: small;
+  padding: 1.5rem 1.5rem;
+  border: ${({ theme }) => theme.borders.containerBorder};
+  transition: border linear 0.25s;
+
+  &:hover,
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.colors.black};
+  }
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+    transition: transform linear 0.25s;
+
+    &:hover,
+    &:focus {
+      transform: rotate(180deg);
+    }
+  }
+`;
