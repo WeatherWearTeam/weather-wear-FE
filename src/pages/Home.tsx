@@ -1,6 +1,7 @@
 
 
 import ClothesTag from "@components/ClothesTag";
+import ClothesType from "@components/ClothesTypes";
 import ColorBar from "@components/ColorBar";
 import ColorChip from "@components/ColorChip";
 import Icon from "@components/Icon";
@@ -16,6 +17,7 @@ const Home = () => {
       <Icon icon={menuIcon} />
       <Icon icon={heartIcon} />
       <Icon icon={heartFillIcon} />
+      <ClothesType />
     </div>
   );
 };

@@ -27,6 +27,7 @@ const Container = styled.div`
   width: 9rem;
   padding: 0.3rem 0.5rem;
   border: ${({ theme }) => theme.borders.buttonBorder};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const ClothesType = styled.p`
