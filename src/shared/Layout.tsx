@@ -17,6 +17,7 @@ function Layout({ children }: LayoutProps) {
             {/* ✅ 근우님~! 리액트 라우터 돔에서 제공하는 Link 를 사용하여 네비게이팅을 해보세요! */}
           </NavLeft>
           <NavRight>
+            <NavItem href="#setting">설정</NavItem>
             <NavItem href="#logout">Logout</NavItem>
           </NavRight>
         </Nav>

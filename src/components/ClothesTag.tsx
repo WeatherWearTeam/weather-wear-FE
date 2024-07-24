@@ -1,5 +1,6 @@
 import ColorChip from "@components/ColorChip";
 import styled from "styled-components";
+
 interface ClothesTagProps {
   color: string;
   type: string;
