@@ -7,10 +7,10 @@ export default function PageMoveButton() {
     return (
         <FooterButtons>
             <PreviousButton>
-                <arrowLeftIcon />
+                {/* <arrowLeftIcon />  */}
             </PreviousButton>
             <NextButton>
-                <arrowRightIcon />
+                {/* <arrowRightIcon /> */}
             </NextButton>
         </FooterButtons>
     )
