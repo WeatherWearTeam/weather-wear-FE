@@ -7,6 +7,8 @@ import Closet from "@pages/Closet";
 import Posts from "@pages/Posts";
 import Wish from "@pages/Wish";
 import PostDetail from "@pages/PostDetail";
+import PostAdd from "@pages/PostAdd";
+import ClosetAdd from "@pages/ClosetAdd";
 
 const Router = () => {
   return (
@@ -19,7 +21,9 @@ const Router = () => {
             <Route path="closet" element={<Closet />} />
             <Route path="wish" element={<Wish />} />
           </Route>
+          <Route path="/mypage/closet/add" element={<ClosetAdd />} />
           <Route path="/ootd" element={<Trend />} />
+          <Route path="/ootd/add" element={<PostAdd />} />
           <Route path="/ootd/:id" element={<PostDetail />} />
         </Routes>
       </Layout>
