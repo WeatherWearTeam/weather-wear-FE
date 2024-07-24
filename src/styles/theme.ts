@@ -1,3 +1,5 @@
+import { css } from "styled-components";
+
 const colors = {
   white: "#FFFFFF",
   gray: "#AEAEB2",
@@ -25,12 +27,41 @@ const borders = {
   containerBorder: `1px solid ${colors.borderLightGray}`,
 };
 
-// const button = {};
+const buttons = {
+  primary: {
+    backgroundColor: `${colors.black}`,
+    border: `1px solid ${colors.black}`,
+    color: `${colors.white}`,
+
+    hover: css`
+      background-color: ${colors.white};
+      border: 1px solid ${colors.black};
+      color: ${colors.black};
+    `,
+    focus: css`
+      background-color: ${colors.white};
+      border: 1px solid ${colors.black};
+      color: ${colors.black};
+    `,
+  },
+  secondary: {
+    backgroundColor: `${colors.white}`,
+    border: `${borders.containerBorder}`,
+    hover: css`
+      border: 1px solid ${colors.black};
+      color: ${colors.black};
+    `,
+    focus: css`
+      border: 1px solid ${colors.black};
+      color: ${colors.black};
+    `,
+  },
+};
 
 const theme = {
   colors,
   borders,
-  // button,
+  buttons,
 };
 
 export default theme;
