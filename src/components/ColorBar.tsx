@@ -1,7 +1,11 @@
 import ColorChip from "@components/ColorChip";
 import styled from "styled-components";
 
-function ColorBar() {
+interface ColorBarProps {
+  size?: "s" | "m";
+}
+
+function ColorBar({ size = "s" }: ColorBarProps) {
   const colorBarList = [
     "white",
     "gray",
@@ -22,7 +26,7 @@ function ColorBar() {
   return (
     <ColorContainer>
       {colorBarList.map((color, index) => (
-        <ColorChip key={index} color={color}></ColorChip>
+        <ColorChip key={index} color={color} size={size}></ColorChip>
       ))}
     </ColorContainer>
   );
@@ -33,5 +37,5 @@ export default ColorBar;
 const ColorContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0.3rem;
+  gap: 0.5rem;
 `;
