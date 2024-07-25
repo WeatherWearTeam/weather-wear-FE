@@ -4,16 +4,16 @@ import { arrowLeftIcon, arrowRightIcon } from "@shared/icons";
 
 
 export default function PageMoveButton() {
-    return (
-        <FooterButtons>
-            <PreviousButton>
-                {/* <arrowLeftIcon />  */}
-            </PreviousButton>
-            <NextButton>
-                {/* <arrowRightIcon /> */}
-            </NextButton>
-        </FooterButtons>
-    )
+  return (
+    <FooterButtons>
+      <PreviousButton>
+        <Icon icon={arrowLeftIcon} />
+      </PreviousButton>
+      <NextButton>
+        <Icon icon={arrowRightIcon} />
+      </NextButton>
+    </FooterButtons>
+  )
 }
 
 const FooterButtons = styled.div`
@@ -36,13 +36,16 @@ const FooterButton = styled.button`
 
 const PreviousButton = styled(FooterButton)`
   margin-left: 35px;
-  &::before {
-    content: '<';
-  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  };
 `;
 
 const NextButton = styled(FooterButton)`
-  &::before {
-    content: '>';
-  }
+  svg {
+    width: 20px;
+    height: 20px;
+  };
 `;
