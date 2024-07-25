@@ -9,6 +9,8 @@ import Wish from "@pages/Wish";
 import PostDetail from "@pages/PostDetail";
 import PostAdd from "@pages/PostAdd";
 import ClosetAdd from "@pages/ClosetAdd";
+import Login from "@pages/Login";
+import Signup from "@pages/Signup";
 
 const Router = () => {
   return (
@@ -16,14 +18,23 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+
           <Route path="/mypage" element={<MyPage />}>
+            <Route index element={<Posts />} />
             <Route path="myootd" element={<Posts />} />
             <Route path="closet" element={<Closet />} />
             <Route path="wish" element={<Wish />} />
           </Route>
+
           <Route path="/mypage/closet/add" element={<ClosetAdd />} />
+
           <Route path="/ootd" element={<Trend />} />
+
           <Route path="/ootd/add" element={<PostAdd />} />
+
           <Route path="/ootd/:id" element={<PostDetail />} />
         </Routes>
       </Layout>
