@@ -4,6 +4,7 @@ import ClothesGrid from "@components/ClothesGrid";
 import PageMoveButton from "@components/PageMoveButton";
 import AddButton from "@components/AddButton";
 
+
 function Posts() {
   return (
     <MypageContentsContainer>

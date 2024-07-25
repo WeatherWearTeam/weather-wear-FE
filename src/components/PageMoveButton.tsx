@@ -1,14 +1,20 @@
 import styled from "styled-components";
+import Icon from "@components/Icon";
+import { arrowLeftIcon, arrowRightIcon } from "@shared/icons";
+
 
 export default function PageMoveButton() {
     return (
         <FooterButtons>
-            <PreviousButton />
-            <NextButton />
+            <PreviousButton>
+                {/* <arrowLeftIcon />  */}
+            </PreviousButton>
+            <NextButton>
+                {/* <arrowRightIcon /> */}
+            </NextButton>
         </FooterButtons>
     )
 }
-
 
 const FooterButtons = styled.div`
   display: flex;
@@ -40,4 +46,3 @@ const NextButton = styled(FooterButton)`
     content: '>';
   }
 `;
-

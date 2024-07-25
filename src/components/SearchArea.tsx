@@ -10,8 +10,6 @@ const ContentsHeader = styled.div`
   height: 60px;
   max-width: 1090px;
   flex-shrink: 0; /* 고정된 높이 유지 */
-  position: fixed;
-  top: 175px;
   display: flex;
   justify-content: center; /* 가로 중앙 정렬 */
   flex-direction: column; /* 수직 방향 정렬 */

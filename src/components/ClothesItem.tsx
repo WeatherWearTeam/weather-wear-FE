@@ -1,21 +1,40 @@
 import styled from "styled-components";
-import ColorChip from "@components/ColorChip";
+import ClothesTag from "./ClothesTag";
 
 interface ClothesTagProps {
-    color: string;
+  color: string;
+  type: string;
+  showTag?: boolean; // ClothesTag 표시 여부
+  showData?: boolean; // ContentsItemData 표시 여부
+  showTitle?: boolean; // ContentsItemTitle 표시 여부
 }
 
-function ClothesItem({ color }: ClothesTagProps) {
-    return (
-        <ContentsItem>
-            <ContentsItemImage>마이페이지 이미지</ContentsItemImage>
-            <ContentsItemData>
-                <span>data</span>
-                <Color color={color} />
-            </ContentsItemData>
-            <ContentsItemTitle>이미지 제목</ContentsItemTitle>
-        </ContentsItem>
-    );
+function ClothesItem({ 
+  color,
+  type,
+  showTag = true,
+  showData = true,
+  showTitle = true
+  }: ClothesTagProps) {
+  return (
+    <ContentsItem>
+      <ContentsItemImage>
+        마이페이지 이미지
+        {showTag && (
+          <TagWrapper>
+            <ClothesTag color={color} type={type} />
+          </TagWrapper>
+        )}
+      </ContentsItemImage>
+      {showData && (
+        <ContentsItemData>
+          <span>data</span>
+          <Color color={color} />
+        </ContentsItemData>
+      )}
+      {showTitle && <ContentsItemTitle>이미지 제목</ContentsItemTitle>}
+    </ContentsItem>
+  );
 }
 
 export default ClothesItem;
@@ -31,6 +50,13 @@ const ContentsItemImage = styled.div`
   width: 250px;
   height: 270px;
   box-sizing: border-box;
+  position: relative; /* 상대 위치를 설정 */
+`;
+
+const TagWrapper = styled.div`
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 `;
 
 const ContentsItemData = styled.div`
