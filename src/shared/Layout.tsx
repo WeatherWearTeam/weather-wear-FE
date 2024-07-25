@@ -6,6 +6,7 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
+  const isLoggedIn = false; //✅ 임의
   return (
     <>
       <HeaderContainer>
@@ -28,9 +29,19 @@ function Layout({ children }: LayoutProps) {
             <Link to={`/`}>
               <NavItem>설정</NavItem>
             </Link>
-            <StLink to={`/logout`}>
-              <NavItem>로그아웃</NavItem>
-            </StLink>
+            {isLoggedIn ? (
+              <Logout
+                onClick={() => {
+                  console.log("핸들 로그아웃");
+                }}
+              >
+                <NavItem>로그아웃</NavItem>
+              </Logout>
+            ) : (
+              <StLink to={`/login`}>
+                <NavItem>로그인</NavItem>
+              </StLink>
+            )}
           </NavRight>
         </Nav>
       </HeaderContainer>
@@ -95,7 +106,18 @@ const StLink = styled(NavLink)`
 
   &:hover,
   &:focus {
-    color: ${({ theme }) => theme.colors.red};
+    color: ${({ theme }) => theme.colors.black};
+    font-weight: 600;
+  }
+`;
+
+const Logout = styled.button`
+  transition: color 0.1s linear;
+
+  &:hover,
+  &:focus {
+    color: ${({ theme }) => theme.colors.black};
+    font-weight: 600;
   }
 `;
 
