@@ -4,8 +4,10 @@ import AddButton from "@components/AddButton";
 import ColorBar from "@components/ColorBar";
 import ClothesType from "@components/ClothesTypes";
 import ClothesItem from "@components/ClothesItem"; // ClothesItem 컴포넌트 임포트
+import { useNavigate } from "react-router-dom";
 
 function Closet() {
+  const navigate = useNavigate();
   return (
     <>
       <MypageContentsContainer>
@@ -14,15 +16,45 @@ function Closet() {
           <ColorBar />
         </ContentsHeader>
         <ContentsMain>
-          <ClothesItem color="blue" type="바지" showTag={true} showData={false} showTitle={false} />
-          <ClothesItem color="red" type="바지" showTag={true} showData={false} showTitle={false} />
-          <ClothesItem color="blue" type="바지" showTag={true} showData={false} showTitle={false} />
-          <ClothesItem color="blue" type="바지" showTag={true} showData={false} showTitle={false} />
-          <ClothesItem color="green" type="바지" showTag={true} showData={false} showTitle={false} />
+          <ClothesItem
+            color="blue"
+            type="바지"
+            showTag={true}
+            showData={false}
+            showTitle={false}
+          />
+          <ClothesItem
+            color="red"
+            type="바지"
+            showTag={true}
+            showData={false}
+            showTitle={false}
+          />
+          <ClothesItem
+            color="blue"
+            type="바지"
+            showTag={true}
+            showData={false}
+            showTitle={false}
+          />
+          <ClothesItem
+            color="blue"
+            type="바지"
+            showTag={true}
+            showData={false}
+            showTitle={false}
+          />
+          <ClothesItem
+            color="green"
+            type="바지"
+            showTag={true}
+            showData={false}
+            showTitle={false}
+          />
         </ContentsMain>
         <ContentsFooter>
           <PageMoveButton />
-          <AddButton />
+          <AddButton onClick={() => navigate(`/mypage/closet/add`)} />
         </ContentsFooter>
       </MypageContentsContainer>
     </>
