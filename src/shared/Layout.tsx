@@ -1,3 +1,4 @@
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 interface LayoutProps {
@@ -10,15 +11,26 @@ function Layout({ children }: LayoutProps) {
       <HeaderContainer>
         <Nav>
           <NavLeft>
-            <NavItem href="#logo">로고?</NavItem>
-            <NavItem href="/">홈</NavItem>
-            <NavItem href="/mypage">마이페이지</NavItem>
-            <NavItem href="/ootd">OOTD 트렌드</NavItem>
-            {/* ✅ 근우님~! 리액트 라우터 돔에서 제공하는 Link 를 사용하여 네비게이팅을 해보세요! */}
+            <Link to={`/`}>
+              <NavItem>웨더웨어</NavItem>
+            </Link>
+            <StNavLink to={`/`}>
+              <NavItem>홈</NavItem>
+            </StNavLink>
+            <StNavLink to={`/mypage`}>
+              <NavItem>마이페이지</NavItem>
+            </StNavLink>
+            <StNavLink to={`/ootd`}>
+              <NavItem>OOTD 트렌드</NavItem>
+            </StNavLink>
           </NavLeft>
           <NavRight>
-            <NavItem href="#setting">설정</NavItem>
-            <NavItem href="#logout">Logout</NavItem>
+            <Link to={`/`}>
+              <NavItem>설정</NavItem>
+            </Link>
+            <StLink to={`/logout`}>
+              <NavItem>로그아웃</NavItem>
+            </StLink>
           </NavRight>
         </Nav>
       </HeaderContainer>
@@ -29,47 +41,66 @@ function Layout({ children }: LayoutProps) {
 
 export default Layout;
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
   width: 100%;
-  height: 50px;
+  height: 5rem;
   position: fixed;
-  top: 10px;
+  top: 0;
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
+  /* box-shadow: 2px 2px 10px ${({ theme }) => theme.colors.borderLightGray}; */
+  box-shadow: 2px 2px 10px rgb(239, 239, 239);
 `;
 
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
-  align-items: center; /* 수직 중앙 정렬 */
   width: 100%;
-  padding: 0 15px; /* 패딩을 수정하여 네비게이션 바 내의 간격 조정 */
+  padding: 0 4rem;
 `;
 
 const NavLeft = styled.div`
   display: flex;
-  align-items: center; /* 수직 중앙 정렬 */
-  gap: 60px; /* 간격 조정 */
-  padding: 50px;
+  align-items: center;
+  gap: 3rem;
 `;
 
 const NavRight = styled.div`
   display: flex;
-  align-items: center; /* 수직 중앙 정렬 */
-  margin-left: auto; /* NavRight를 오른쪽 끝으로 보냄 */
+  align-items: center;
+  gap: 3rem;
 `;
 
-const NavItem = styled.a`
-  color: black;
-  text-decoration: none;
-  font-size: 16px;
+const StNavLink = styled(NavLink)`
+  transition: color 0.1s linear;
 
-  &:hover {
-    text-decoration: underline;
+  &:hover,
+  &:focus {
+    color: ${({ theme }) => theme.colors.black};
+    font-weight: 600;
   }
+
+  &.active {
+    color: ${({ theme }) => theme.colors.black};
+    font-weight: 600;
+  }
+`;
+
+const StLink = styled(NavLink)`
+  transition: color 0.1s linear;
+
+  &:hover,
+  &:focus {
+    color: ${({ theme }) => theme.colors.red};
+  }
+`;
+
+const NavItem = styled.span`
+  font-size: small;
 `;
 
 //네비게이션 바 밑의 메인 영역입니다.

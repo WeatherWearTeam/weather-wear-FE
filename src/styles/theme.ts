@@ -20,6 +20,7 @@ const colors = {
   main: "#5E5E5E", //메인 텍스트 컬러
   borderGray: "#A3A3A3", //버튼 보더 컬러
   borderLightGray: "#D9D9D9", //컨테이너 보더 컬러
+  back: "#2C2C2C",
 };
 
 const borders = {
