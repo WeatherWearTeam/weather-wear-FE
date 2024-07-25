@@ -1,7 +1,14 @@
 import styled from "styled-components";
+import Icon from "./Icon";
+import { plusIcon } from "@shared/icons";
 
 export default function AddButton() {
-  return <PostAddButton />;
+  return (
+    <PostAddButton>
+      <Icon icon={plusIcon} />
+    </PostAddButton>
+  )
+
 }
 
 const PostAddButton = styled.button`
@@ -17,8 +24,4 @@ const PostAddButton = styled.button`
   align-items: center;
   cursor: pointer;
   margin: 0;
-
-  &::before {
-    content: '+';
-  }
 `;
