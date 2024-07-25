@@ -1,3 +1,4 @@
+import Avatar from "@components/Avatar";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -26,22 +27,26 @@ function Layout({ children }: LayoutProps) {
             </StNavLink>
           </NavLeft>
           <NavRight>
-            <Link to={`/`}>
-              <NavItem>설정</NavItem>
-            </Link>
             {isLoggedIn ? (
-              <Logout
+              <Avatar
+                size="s"
                 onClick={() => {
-                  console.log("핸들 로그아웃");
+                  console.log("로그아웃, 내 계정 스티키 모달 창 오픈");
                 }}
-              >
-                <NavItem>로그아웃</NavItem>
-              </Logout>
+              />
             ) : (
               <StLink to={`/login`}>
                 <NavItem>로그인</NavItem>
               </StLink>
             )}
+            {/* 모달
+                <Logout
+                onClick={() => {
+                  console.log("핸들 로그아웃");
+                }}
+              >
+                <NavItem>로그아웃</NavItem>
+              </Logout> */}
           </NavRight>
         </Nav>
       </HeaderContainer>
@@ -53,6 +58,7 @@ function Layout({ children }: LayoutProps) {
 export default Layout;
 
 const HeaderContainer = styled.header`
+  z-index: 5;
   width: 100%;
   height: 5rem;
   position: fixed;

@@ -59,10 +59,31 @@ const buttons = {
   },
 };
 
+//아바타 사이즈
+const size = {
+  s: {
+    width: "3rem",
+    height: "3rem",
+  },
+  m: {
+    width: "4rem",
+    height: "4rem",
+  },
+  lg: {
+    width: "5rem",
+    height: "5rem",
+  },
+  xl: {
+    width: "12rem",
+    height: "12rem",
+  },
+};
+
 const theme = {
   colors,
   borders,
   buttons,
+  size,
 };
 
 export default theme;
