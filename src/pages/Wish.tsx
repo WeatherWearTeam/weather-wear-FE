@@ -4,22 +4,157 @@ import AddButton from "@components/AddButton";
 import ColorBar from "@components/ColorBar";
 import ClothesType from "@components/ClothesTypes";
 import WishsGrid from "@components/WishsGrid";
+import useModal from "@hooks/useModal";
+import ModalPortal from "@components/Modal/ModalPortal";
+import ModalLayout from "@components/Modal/ModalLayout";
+import WishDetail from "@pages/WishDetail";
 
 function Wish() {
+  const { isVisible, openModal, closeModal } = useModal();
+
+  const mockWishItems = [
+    {
+      productId: 1, //Integer
+      title: "반팔 티셔츠 루룰루루",
+      link: "#링크",
+      image: "이미지",
+      lprice: 10000, //Integer
+      hprice: 0, //Integer
+      mallName: "네이버",
+      maker: "제조사",
+      brand: "브랜드",
+      category1: "대분류",
+      category2: "중분류",
+      category3: "소분류",
+      category4: "세분류",
+    },
+    {
+      productId: 2, //Integer
+      title: "반팔 티셔츠 루룰루루",
+      link: "#링크",
+      image: "이미지",
+      lprice: 10000, //Integer
+      hprice: 0, //Integer
+      mallName: "네이버",
+      maker: "제조사",
+      brand: "브랜드",
+      category1: "대분류",
+      category2: "중분류",
+      category3: "소분류",
+      category4: "세분류",
+    },
+    {
+      productId: 3, //Integer
+      title: "반팔 티셔츠 루룰루루",
+      link: "#링크",
+      image: "이미지",
+      lprice: 10000, //Integer
+      hprice: 0, //Integer
+      mallName: "네이버",
+      maker: "제조사",
+      brand: "브랜드",
+      category1: "대분류",
+      category2: "중분류",
+      category3: "소분류",
+      category4: "세분류",
+    },
+    {
+      productId: 4, //Integer
+      title: "반팔 티셔츠 루룰루루",
+      link: "#링크",
+      image: "이미지",
+      lprice: 10000, //Integer
+      hprice: 0, //Integer
+      mallName: "네이버",
+      maker: "제조사",
+      brand: "브랜드",
+      category1: "대분류",
+      category2: "중분류",
+      category3: "소분류",
+      category4: "세분류",
+    },
+    {
+      productId: 5, //Integer
+      title: "반팔 티셔츠 루룰루루",
+      link: "#링크",
+      image: "이미지",
+      lprice: 10000, //Integer
+      hprice: 0, //Integer
+      mallName: "네이버",
+      maker: "제조사",
+      brand: "브랜드",
+      category1: "대분류",
+      category2: "중분류",
+      category3: "소분류",
+      category4: "세분류",
+    },
+    {
+      productId: 6, //Integer
+      title: "반팔 티셔츠 루룰루루",
+      link: "#링크",
+      image: "이미지",
+      lprice: 10000, //Integer
+      hprice: 0, //Integer
+      mallName: "네이버",
+      maker: "제조사",
+      brand: "브랜드",
+      category1: "대분류",
+      category2: "중분류",
+      category3: "소분류",
+      category4: "세분류",
+    },
+    {
+      productId: 7, //Integer
+      title: "반팔 티셔츠 루룰루루",
+      link: "#링크",
+      image: "이미지",
+      lprice: 10000, //Integer
+      hprice: 0, //Integer
+      mallName: "네이버",
+      maker: "제조사",
+      brand: "브랜드",
+      category1: "대분류",
+      category2: "중분류",
+      category3: "소분류",
+      category4: "세분류",
+    },
+    {
+      productId: 8, //Integer
+      title: "반팔 티셔츠 루룰루루",
+      link: "#링크",
+      image: "이미지",
+      lprice: 10000, //Integer
+      hprice: 0, //Integer
+      mallName: "네이버",
+      maker: "제조사",
+      brand: "브랜드",
+      category1: "대분류",
+      category2: "중분류",
+      category3: "소분류",
+      category4: "세분류",
+    },
+  ];
+
   return (
-      <MypageContentsContainer>
-        <ContentsHeader>
-          <ClothesType />
-          <ColorBar />
-        </ContentsHeader>
-        <ContentsMain>
-          <WishsGrid />
-        </ContentsMain>
-        <ContentsFooter>
-          <PageMoveButton />
-          <AddButton />
-        </ContentsFooter>
-      </MypageContentsContainer>
+    <MypageContentsContainer>
+      <ContentsHeader>
+        <ClothesType />
+        <ColorBar />
+      </ContentsHeader>
+      <ContentsMain>
+        <WishsGrid onClick={openModal} data={mockWishItems}/>
+      </ContentsMain>
+      <ContentsFooter>
+        <PageMoveButton />
+        {isVisible && (
+          <ModalPortal>
+            <ModalLayout onClose={closeModal}>
+              <WishDetail />
+            </ModalLayout>
+          </ModalPortal>
+        )}
+      </ContentsFooter>
+    </MypageContentsContainer>
   );
 }
 

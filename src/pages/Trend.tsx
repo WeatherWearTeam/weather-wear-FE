@@ -3,13 +3,18 @@ import AddButton from "@components/AddButton";
 import Icon from "@components/Icon";
 import { fundsBoxIcon } from "@shared/icons";
 import TrendGrid from "@components/TrendGrid";
+import { useNavigate } from "react-router-dom";
 
 function Trend() {
+  const navigate = useNavigate();
   return (
     <>
       <TrendHeader>
         <MainTitleContainer>
-          <MainTitleTop>OOTD<Icon icon={fundsBoxIcon} /></MainTitleTop>
+          <MainTitleTop>
+            OOTD
+            <Icon icon={fundsBoxIcon} />
+          </MainTitleTop>
           <TrendSearch>검색기능</TrendSearch>
         </MainTitleContainer>
       </TrendHeader>
@@ -19,7 +24,7 @@ function Trend() {
           <MoreButtonWrapper>
             <MoreButton>더보기</MoreButton>
           </MoreButtonWrapper>
-          <AddButton />
+          <AddButton onClick={() => navigate(`/ootd/add`)} />
         </ContentsFooter>
       </MypageContentsContainer>
     </>
@@ -105,7 +110,7 @@ const MoreButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #A3A3A3;
+  background-color: #a3a3a3;
   border: none;
   color: black;
 
@@ -116,4 +121,3 @@ const MoreButton = styled.button`
     ${({ theme, $buttonType = "primary" }) => theme.buttons[$buttonType].focus};
   }
 `;
-

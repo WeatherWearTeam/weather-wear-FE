@@ -3,16 +3,17 @@ import SearchArea from "@components/SearchArea";
 import ClothesGrid from "@components/ClothesGrid";
 import PageMoveButton from "@components/PageMoveButton";
 import AddButton from "@components/AddButton";
-
+import { useNavigate } from "react-router-dom";
 
 function Posts() {
+  const navigate = useNavigate();
   return (
     <MypageContentsContainer>
       <SearchArea />
       <ClothesGrid />
       <ContentsFooter>
         <PageMoveButton />
-        <AddButton />
+        <AddButton onClick={() => navigate(`/ootd/add`)} />
       </ContentsFooter>
     </MypageContentsContainer>
   );

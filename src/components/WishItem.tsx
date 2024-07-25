@@ -1,15 +1,23 @@
+import { WishItemType } from "@components/WishsGrid";
 import styled from "styled-components";
 
-function WishItem() {
+interface WishItemProps {
+  onClick: () => void;
+  item: WishItemType;
+}
+
+function WishItem({ onClick, item }: WishItemProps) {
   return (
-    <ContentsItem>
-      <ContentsItemImage>마이페이지 이미지</ContentsItemImage>
+    <ContentsItem onClick={onClick}>
+      <ContentsItemImage>{item.image}</ContentsItemImage>
       <ContentsItemData>
-        <span>티셔츠 Product Type_</span>
+        <span>{item.category4}</span>
       </ContentsItemData>
       <ProducPricetWrapper>
-        <ContentsItemTitle>제품명</ContentsItemTitle>
-        <ContentsItemPrice>10,000~15,000</ContentsItemPrice>
+        <ContentsItemTitle>{item.title}</ContentsItemTitle>
+        <ContentsItemPrice>
+          {item.lprice} ~ {item.hprice}
+        </ContentsItemPrice>
       </ProducPricetWrapper>
     </ContentsItem>
   );
@@ -21,6 +29,7 @@ const ContentsItem = styled.div`
   width: 250px;
   height: 320px;
   box-sizing: border-box;
+  cursor: pointer;
 `;
 
 const ContentsItemImage = styled.div`

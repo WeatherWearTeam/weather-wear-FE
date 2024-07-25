@@ -1,12 +1,12 @@
 import Button from "@components/Button";
 import Icon from "@components/Icon";
 import Input from "@components/Input";
-import SelectButton from "@components/SelectButton";
 import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Login() {
+  const navigate = useNavigate();
   return (
     <Container>
       <GridContainer>
@@ -56,16 +56,29 @@ export default function Login() {
             <LinkWrapper>
               비밀번호가 기억나지 않아요.
               <LinkToLogin to={`/login`}>비밀번호 찾기</LinkToLogin>
+              {/* 아직 회원이 아닌가요?
+              <LinkToLogin to={`/login`}>가입하기</LinkToLogin> */}
             </LinkWrapper>
             <SocialLoginContainer>
               <SeparateBorder>
-                <span>또는</span>
+                <span>또는 SNS 계정으로 로그인</span>
               </SeparateBorder>
-              SNS 계정으로 로그인
+              {/* SNS 계정으로 로그인 */}
               <SocialLoginIconWrapper>
                 <Icon icon={kakaoIcon} />
               </SocialLoginIconWrapper>
             </SocialLoginContainer>
+            <SeparateBorder>
+              <span>아직 회원이 아닌가요?</span>
+            </SeparateBorder>
+            <Button
+              buttonType="secondary"
+              onClick={() => {
+                navigate(`/signup`);
+              }}
+            >
+              가입하기
+            </Button>
           </FormContainer>
         </RightColumn>
       </GridContainer>
@@ -161,11 +174,11 @@ const RightColumn = styled.div`
   grid-area: right-column;
   display: flex;
   flex-direction: column;
-  padding: 8rem 20rem;
+  padding: 3.8rem 20rem;
   gap: 4rem;
 
   @media (max-width: 1200px) {
-    padding: 8rem 10rem;
+    padding: 3.8rem 10rem;
   }
 
   @media (max-width: 900px) {
