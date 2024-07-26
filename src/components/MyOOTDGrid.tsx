@@ -13,6 +13,7 @@ export default function MyOOTDGrid() {
 }
 
 const ContentsMain = styled.div`
+  justify-content: center; 
   width: 85%;
   max-width: 1090px;
   display: grid;

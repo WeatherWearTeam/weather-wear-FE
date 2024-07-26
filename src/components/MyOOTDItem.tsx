@@ -11,7 +11,6 @@ function MyOOTDItem() {
 export default MyOOTDItem;
 
 const ContentsItem = styled.div`
-  width: 250px;
   height: 320px;
   box-sizing: border-box;
 `;
