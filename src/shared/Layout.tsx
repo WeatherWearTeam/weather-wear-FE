@@ -1,4 +1,9 @@
 import Avatar from "@components/Avatar";
+import DropdownLayout from "@components/Modal/DropdownLayout";
+import ModalPortal from "@components/Modal/ModalPortal";
+import SettingDialog from "@components/Modal/SettingDialog";
+import useDropdownPosition from "@hooks/useDropdownPosition";
+import useModal from "@hooks/useModal";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -7,7 +12,11 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
-  const isLoggedIn = false; //✅ 임의
+  // const isLoggedIn = false; //✅ 임의
+
+  const { openModal, closeModal, isVisible } = useModal();
+  const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
+
   return (
     <>
       <HeaderContainer>
@@ -27,26 +36,26 @@ function Layout({ children }: LayoutProps) {
             </StNavLink>
           </NavLeft>
           <NavRight>
-            {isLoggedIn ? (
-              <Avatar
-                size="s"
-                onClick={() => {
-                  console.log("로그아웃, 내 계정 스티키 모달 창 오픈");
-                }}
-              />
-            ) : (
-              <StLink to={`/login`}>
-                <NavItem>로그인</NavItem>
-              </StLink>
+            {/* {isLoggedIn ? ( */}
+            <AvatarWrapper ref={divRef}>
+              <Avatar size="s" onClick={openModal} />
+            </AvatarWrapper>
+            {/* ) : ( */}
+            <StLink to={`/login`}>
+              <NavItem>로그인</NavItem>
+            </StLink>
+            {/* )} */}
+
+            {isVisible && (
+              <ModalPortal>
+                <DropdownLayout
+                  onClose={closeModal}
+                  dropdownPosition={{ ...dropdownPosition }}
+                >
+                  <SettingDialog onClose={closeModal} />
+                </DropdownLayout>
+              </ModalPortal>
             )}
-            {/* 모달
-                <Logout
-                onClick={() => {
-                  console.log("핸들 로그아웃");
-                }}
-              >
-                <NavItem>로그아웃</NavItem>
-              </Logout> */}
           </NavRight>
         </Nav>
       </HeaderContainer>
@@ -92,6 +101,13 @@ const NavRight = styled.div`
   gap: 3rem;
 `;
 
+const AvatarWrapper = styled.div`
+  position: relative;
+  display: flex;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
 const StNavLink = styled(NavLink)`
   transition: color 0.1s linear;
 
@@ -117,15 +133,15 @@ const StLink = styled(NavLink)`
   }
 `;
 
-const Logout = styled.button`
-  transition: color 0.1s linear;
+// const Logout = styled.button`
+//   transition: color 0.1s linear;
 
-  &:hover,
-  &:focus {
-    color: ${({ theme }) => theme.colors.black};
-    font-weight: 600;
-  }
-`;
+//   &:hover,
+//   &:focus {
+//     color: ${({ theme }) => theme.colors.black};
+//     font-weight: 600;
+//   }
+// `;
 
 const NavItem = styled.span`
   font-size: small;
