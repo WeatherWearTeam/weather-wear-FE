@@ -4,7 +4,7 @@ import Input from "@components/Input";
 import SelectButton from "@components/SelectButton";
 import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
 import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export default function Signup() {
   return (

@@ -1,4 +1,4 @@
-import { userIcon } from "@shared/icons";
+import { userCircleIcon } from "@shared/icons";
 import styled from "styled-components";
 
 interface AvatarProps {
@@ -16,7 +16,7 @@ export default function Avatar({ size = "m", onClick }: AvatarProps) {
       {hasUserImage ? (
         <AvatarImg $size={size} src={`#`} alt="user image" />
       ) : (
-        <DefaultUserIconWrapper $size={size}>{userIcon}</DefaultUserIconWrapper>
+        <DefaultUserIconWrapper $size={size}>{userCircleIcon}</DefaultUserIconWrapper>
       )}
     </AvatarWrapper>
   );
