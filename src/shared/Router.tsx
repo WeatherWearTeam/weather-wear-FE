@@ -11,6 +11,8 @@ import PostAdd from "@pages/PostAdd";
 import ClosetAdd from "@pages/ClosetAdd";
 import Login from "@pages/Login";
 import Signup from "@pages/Signup";
+import MyAccount from "@pages/MyAccount";
+import MyAccountEdit from "@pages/MyAccountEdit";
 
 const Router = () => {
   return (
@@ -21,6 +23,8 @@ const Router = () => {
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/my" element={<MyAccount />} />
+          <Route path="/my/setting" element={<MyAccountEdit />} />
 
           <Route path="/mypage" element={<MyPage />}>
             <Route index element={<Posts />} />

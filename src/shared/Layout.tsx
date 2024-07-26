@@ -1,3 +1,9 @@
+import Avatar from "@components/Avatar";
+import DropdownLayout from "@components/Modal/DropdownLayout";
+import ModalPortal from "@components/Modal/ModalPortal";
+import SettingDialog from "@components/Modal/SettingDialog";
+import useDropdownPosition from "@hooks/useDropdownPosition";
+import useModal from "@hooks/useModal";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,7 +12,11 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
-  const isLoggedIn = false; //✅ 임의
+  // const isLoggedIn = false; //✅ 임의
+
+  const { openModal, closeModal, isVisible } = useModal();
+  const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
+
   return (
     <>
       <HeaderContainer>
@@ -26,21 +36,25 @@ function Layout({ children }: LayoutProps) {
             </StNavLink>
           </NavLeft>
           <NavRight>
-            <Link to={`/`}>
-              <NavItem>설정</NavItem>
-            </Link>
-            {isLoggedIn ? (
-              <Logout
-                onClick={() => {
-                  console.log("핸들 로그아웃");
-                }}
-              >
-                <NavItem>로그아웃</NavItem>
-              </Logout>
-            ) : (
-              <StLink to={`/login`}>
-                <NavItem>로그인</NavItem>
-              </StLink>
+            {/* {isLoggedIn ? ( */}
+            <AvatarWrapper ref={divRef}>
+              <Avatar size="s" onClick={openModal} />
+            </AvatarWrapper>
+            {/* ) : ( */}
+            <StLink to={`/login`}>
+              <NavItem>로그인</NavItem>
+            </StLink>
+            {/* )} */}
+
+            {isVisible && (
+              <ModalPortal>
+                <DropdownLayout
+                  onClose={closeModal}
+                  dropdownPosition={{ ...dropdownPosition }}
+                >
+                  <SettingDialog onClose={closeModal} />
+                </DropdownLayout>
+              </ModalPortal>
             )}
           </NavRight>
         </Nav>
@@ -53,6 +67,7 @@ function Layout({ children }: LayoutProps) {
 export default Layout;
 
 const HeaderContainer = styled.header`
+  z-index: 5;
   width: 100%;
   height: 5rem;
   position: fixed;
@@ -86,6 +101,13 @@ const NavRight = styled.div`
   gap: 3rem;
 `;
 
+const AvatarWrapper = styled.div`
+  position: relative;
+  display: flex;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
 const StNavLink = styled(NavLink)`
   transition: color 0.1s linear;
 
@@ -111,15 +133,15 @@ const StLink = styled(NavLink)`
   }
 `;
 
-const Logout = styled.button`
-  transition: color 0.1s linear;
+// const Logout = styled.button`
+//   transition: color 0.1s linear;
 
-  &:hover,
-  &:focus {
-    color: ${({ theme }) => theme.colors.black};
-    font-weight: 600;
-  }
-`;
+//   &:hover,
+//   &:focus {
+//     color: ${({ theme }) => theme.colors.black};
+//     font-weight: 600;
+//   }
+// `;
 
 const NavItem = styled.span`
   font-size: small;
