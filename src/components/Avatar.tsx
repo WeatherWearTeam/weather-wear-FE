@@ -16,7 +16,9 @@ export default function Avatar({ size = "m", onClick }: AvatarProps) {
       {hasUserImage ? (
         <AvatarImg $size={size} src={`#`} alt="user image" />
       ) : (
-        <DefaultUserIconWrapper $size={size}>{userCircleIcon}</DefaultUserIconWrapper>
+        <DefaultUserIconWrapper $size={size}>
+          {userCircleIcon}
+        </DefaultUserIconWrapper>
       )}
     </AvatarWrapper>
   );
@@ -27,7 +29,6 @@ interface AvatarProps {
 }
 
 const AvatarWrapper = styled.div<AvatarProps>`
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
