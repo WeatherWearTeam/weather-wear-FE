@@ -13,7 +13,6 @@ export default function MyOOTDGrid() {
 }
 
 const ContentsMain = styled.div`
-  justify-content: center; 
   width: 85%;
   max-width: 1090px;
   display: grid;
@@ -21,7 +20,13 @@ const ContentsMain = styled.div`
   grid-auto-rows: auto;
   gap: 30px;
   padding: 20px 0 15px 0;
-  @media (max-width: 1200px) {grid-template-columns: repeat(2, 2fr);} 
+  
+  @media (max-width: 1200px) {
+  grid-template-columns: repeat(2, 2fr);
+  } 
   // @media (max-width: 900px) {grid-template-columns: repeat(2, 2fr);} 
-  @media (max-width: 600px) {grid-template-columns: 1fr;} 
+  
+  media (max-width: 600px) {
+  grid-template-columns: 1fr;
+  } 
 `;
