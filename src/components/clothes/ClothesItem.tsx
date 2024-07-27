@@ -12,9 +12,9 @@ interface ClothesTagProps {
 function ClothesItem({ 
   color,
   type,
-  showTag = true,
-  showData = true,
-  showTitle = true
+  showTag = false,
+  showData = false,
+  showTitle = false
   }: ClothesTagProps) {
   return (
     <ContentsItem>

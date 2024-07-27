@@ -1,4 +1,4 @@
-import { WishItemType } from "@components/WishsGrid";
+import { WishItemType } from "@components/wish/WishsGrid";
 import styled from "styled-components";
 
 interface WishItemProps {

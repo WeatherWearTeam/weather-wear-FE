@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import TrendItem from "@components/TrendItem";
+import TrendItem from "@components/trend/TrendItem";
 
 export default function TrendGrid() {
   return (

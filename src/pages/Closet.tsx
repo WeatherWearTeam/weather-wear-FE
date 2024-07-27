@@ -2,8 +2,8 @@ import styled from "styled-components";
 import PageMoveButton from "@components/PageMoveButton";
 import AddButton from "@components/AddButton";
 import ColorBar from "@components/ColorBar";
-import ClothesType from "@components/ClothesTypes";
-import ClothesItem from "@components/ClothesItem"; // ClothesItem 컴포넌트 임포트
+import ClothesType from "@components/clothes/ClothesTypes";
+import ClothesItem from "@components/clothes/ClothesItem"; // ClothesItem 컴포넌트 임포트
 import { useNavigate } from "react-router-dom";
 
 function Closet() {
