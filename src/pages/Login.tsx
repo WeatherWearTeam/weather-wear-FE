@@ -59,18 +59,9 @@ export default function Login() {
               {/* 아직 회원이 아닌가요?
               <LinkToLogin to={`/login`}>가입하기</LinkToLogin> */}
             </LinkWrapper>
-            <SocialLoginContainer>
-              <SeparateBorder>
-                <span>또는 SNS 계정으로 로그인</span>
-              </SeparateBorder>
-              {/* SNS 계정으로 로그인 */}
-              <SocialLoginIconWrapper>
-                <Icon icon={kakaoIcon} />
-              </SocialLoginIconWrapper>
-            </SocialLoginContainer>
-            <SeparateBorder>
+            {/* <SeparateBorder>
               <span>아직 회원이 아닌가요?</span>
-            </SeparateBorder>
+            </SeparateBorder> */}
             <Button
               buttonType="secondary"
               onClick={() => {
@@ -79,6 +70,15 @@ export default function Login() {
             >
               가입하기
             </Button>
+            <SocialLoginContainer>
+              <SeparateBorder>
+                <span>또는 SNS 계정으로 시작하기</span>
+              </SeparateBorder>
+              {/* SNS 계정으로 로그인 */}
+              <SocialLoginIconWrapper>
+                <Icon icon={kakaoIcon} />
+              </SocialLoginIconWrapper>
+            </SocialLoginContainer>
           </FormContainer>
         </RightColumn>
       </GridContainer>
