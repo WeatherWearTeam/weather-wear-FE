@@ -1,20 +1,37 @@
+import React from "react";
 import styled from "styled-components";
 import ClothesItem from "@components/ClothesItem";
 
-export default function ClothesGrid() {
-  return (
-      <ContentsMain>
-        <ClothesItem color="red" type="티셔츠" showTag={false} showData={true} showTitle={true} />
-        <ClothesItem color="blue" type="원피스" showTag={false} showData={true} showTitle={true} />
-        <ClothesItem color="green" type="바지" showTag={false} showData={true} showTitle={true} />
-        <ClothesItem color="yellow" type="티셔츠" showTag={false} showData={true} showTitle={true} />
-        <ClothesItem color="yellow" type="티셔츠" showTag={true} showData={true} showTitle={true} />
-        <ClothesItem color="yellow" type="원피스" showTag={true} showData={true} showTitle={true} />
-        <ClothesItem color="yellow" type="원피스" showTag={true} showData={true} showTitle={true} />
-        <ClothesItem color="blue" type="바지" showTag={true} showData={true} showTitle={true} />
-      </ContentsMain>
-  );
+interface OOTDItem {
+  id: string;
+  color: string;
+  type: string;
 }
+
+interface ClothesGridProps {
+  items: OOTDItem[];
+  onItemClick: (id: string) => void;
+}
+
+const ClothesGrid: React.FC<ClothesGridProps> = ({ items, onItemClick }) => {
+  return (
+    <ContentsMain>
+      {items.map((item) => (
+        <ClothesItemWrapper key={item.id} onClick={() => onItemClick(item.id)}>
+          <ClothesItem
+            color={item.color}
+            type={item.type}
+            showTag={false}
+            showData={true}
+            showTitle={true}
+          />
+        </ClothesItemWrapper>
+      ))}
+    </ContentsMain>
+  );
+};
+
+export default ClothesGrid;
 
 const ContentsMain = styled.div`
   width: 85%;
@@ -24,7 +41,16 @@ const ContentsMain = styled.div`
   grid-auto-rows: auto;
   gap: 30px;
   padding: 20px 0 15px 0;
-  @media (max-width: 1200px) {grid-template-columns: repeat(2, 2fr);} 
-  // @media (max-width: 900px) {grid-template-columns: repeat(2, 2fr);} 
-  @media (max-width: 600px) {grid-template-columns: 1fr;} 
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 2fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ClothesItemWrapper = styled.div`
+  cursor: pointer;
 `;
