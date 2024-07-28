@@ -1,4 +1,4 @@
-import ClothesTag from "@components/ClothesTag";
+import ClothesTag from "@components/clothes/ClothesTag";
 import Comments from "@components/Comment/Comments";
 import EditIcon from "@components/EditIcon";
 import Icon from "@components/Icon";

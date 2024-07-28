@@ -48,11 +48,8 @@ const Container = styled.div`
   padding: 1rem;
   border-radius: 10rem;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  text-align: center;
 `;
 
 const ButtonWrapper = styled.button<{ $hovercolor: string }>`

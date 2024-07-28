@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import MyOOTDRecommendation from '@components/MyOOTDRecommendation';
-import OOTDTrend from '@components/OOTDTrend';
-import NaverShopRecommendation from '@components/NaverShopRecommendation';
-import ColorBar from '@components/ColorBar';
-import ClothesTag from '@components/ClothesTag';
-import ClothesType from '@components/ClothesTypes';
-import ColorChip from '@components/ColorChip';
-import Icon from '@components/Icon';
-import { menuIcon, heartIcon, heartFillIcon } from '@shared/icons';
+import MyOOTDRecommendation from '@components/ootd/MyOOTDRecommendation';
+import OOTDTrend from '@components/trend/OOTDTrend';
+import NaverShopRecommendation from '@components/shop/NaverShopRecommendation';
+
 
 const Home: React.FC = () => {
   const [liked, setLiked] = useState<boolean[]>([false, false, false]);
@@ -24,20 +19,12 @@ const Home: React.FC = () => {
   return (
     <HomeContainer>
       Home
-      <ColorBar />
-      <ClothesTag color="red" type="티셔츠" />
-      <ColorChip color={'red'} />
-      <Icon icon={menuIcon} />
-      <Icon icon={heartIcon} />
-      <Icon icon={heartFillIcon} />
-      <ClothesType />
-
       <Divider />
       <MyOOTDRecommendation />
-
+      
       <Divider />
       <OOTDTrend />
-
+      
       <Divider />
       <NaverShopRecommendation liked={liked} toggleLike={toggleLike} />
 
@@ -54,10 +41,15 @@ const HomeContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box; /* 패딩을 포함한 박스 크기 조정 */
 `;
 
 const Divider = styled.hr`
-  width: 80%;
+  width: 100%;
   border: 1px solid ${({ theme }) => theme.colors.gray};
   margin: 20px 0;
 `;

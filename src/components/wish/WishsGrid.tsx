@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import WishItem from "@components/WishItem";
+import WishItem from "@components/wish/WishItem";
 
 export interface WishItemType {
   productId: number;

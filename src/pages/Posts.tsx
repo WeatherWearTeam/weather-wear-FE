@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import SearchArea from "@components/SearchArea";
-import ClothesGrid from "@components/ClothesGrid";
+import Search from "@components/Search";
+import ClothesGrid from "@components/clothes/ClothesGrid";
 import PageMoveButton from "@components/PageMoveButton";
 import AddButton from "@components/AddButton";
 import { useNavigate } from "react-router-dom";
+import WeatherBar from "@components/WeatherBar";
 
 interface OOTDItem {
   id: string;
@@ -25,7 +26,7 @@ const initialOOTDData: OOTDItem[] = [
 
 function Posts() {
   const navigate = useNavigate();
-  const [ootdData, setOotdData] = useState<OOTDItem[]>(initialOOTDData);
+  const [ootdData] = useState<OOTDItem[]>(initialOOTDData);
 
   const handleItemClick = (id: string) => {
     navigate(`/ootd/${id}`);
@@ -33,7 +34,14 @@ function Posts() {
 
   return (
     <MypageContentsContainer>
-      <SearchArea />
+      <HeaderContainer>
+        <WeatherBarWrapper>
+          <WeatherBar />
+        </WeatherBarWrapper>
+        <SearchWrapper>
+          <Search />
+        </SearchWrapper>
+      </HeaderContainer>
       <ClothesGrid items={ootdData} onItemClick={handleItemClick} />
       <ContentsFooter>
         <PageMoveButton />
@@ -57,6 +65,30 @@ const MypageContentsContainer = styled.div`
   align-items: center;
   padding: 0 15px;
   overflow-y: auto;
+`;
+
+const HeaderContainer = styled.div`
+  width: 100%;
+  max-width: 1220px;
+  display: flex;
+  justify-content: space-between; /* 양옆 끝으로 배치 */
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 20px;
+`;
+
+const WeatherBarWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  width: 300px;
+  height: 40px;
+`;
+
+const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 300px;
+  padding-left: 20px
 `;
 
 const ContentsFooter = styled.div`

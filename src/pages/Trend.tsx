@@ -2,8 +2,9 @@ import styled from "styled-components";
 import AddButton from "@components/AddButton";
 import Icon from "@components/Icon";
 import { fundsBoxIcon } from "@shared/icons";
-import TrendGrid from "@components/TrendGrid";
+import TrendGrid from "@components/trend/TrendGrid";
 import { useNavigate } from "react-router-dom";
+import Search from "@components/Search";
 
 function Trend() {
   const navigate = useNavigate();
@@ -15,7 +16,11 @@ function Trend() {
             OOTD
             <Icon icon={fundsBoxIcon} />
           </MainTitleTop>
-          <TrendSearch>검색기능</TrendSearch>
+          <TrendSearch>
+            <SearchWrapper>
+              <Search />
+            </SearchWrapper>
+          </TrendSearch>
         </MainTitleContainer>
       </TrendHeader>
       <MypageContentsContainer>
@@ -120,4 +125,11 @@ const MoreButton = styled.button`
   &:focus {
     ${({ theme, $buttonType = "primary" }) => theme.buttons[$buttonType].focus};
   }
+`;
+
+const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 300px;
+  padding-left: 20px
 `;

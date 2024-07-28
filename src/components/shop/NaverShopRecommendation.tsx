@@ -11,9 +11,9 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked
     return (
         <HomeContents5>
             <NaverShopGrid>
-                <NaverShopImage1></NaverShopImage1>
-                <NaverShopImage2></NaverShopImage2>
-                <NaverShopImage3></NaverShopImage3>
+                <NaverShopImage1 />
+                <NaverShopImage2 />
+                <NaverShopImage3 />
                 {[0, 1, 2].map((index) => (
                     <NaverShopData key={index}>
                         <NaverShopDataText>
@@ -38,42 +38,72 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked
 export default NaverShopRecommendation;
 
 const HomeContents5 = styled.div`
-  width: 80%;
-  height: 450px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
   flex-direction: column;
-  position: static;
-  margin: 40px 0;
+  align-items: center;
 `;
 
 const NaverShopGrid = styled.div`
   justify-content: center; 
   display: grid;
   padding: 10px;
-  grid-template-columns: repeat(3, 260px);
+  grid-template-columns: repeat(3, 330px);
   grid-gap: 5px 50px;
-  grid-template-rows: 210px 50px 200px;
+  grid-template-rows: 240px 50px 200px;
   grid-template-areas: 
-      'a b c '
-      'd e f '
-      'g g g '
+      'a b c'
+      'd e f'
+      'g g g';
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 260px);
+    grid-template-areas: 
+      'a b c'
+      'd e f'
+      'g g g';
+  }
+
+  @media (max-width: 980px) {
+    grid-template-columns: repeat(3, 200px);
+    grid-template-areas: 
+      'a b c'
+      'd e f'
+      'g g g';
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 50px 200px 50px 200px 50px 200px;
+    grid-template-areas: 
+      'a'
+      'd'
+      'b'
+      'e'
+      'c'
+      'f'
+      'g';
+  }
 `;
 
-const NaverShopImage1 = styled.div`
+const NaverShopImage = styled.div`
+  background-color: gray;
+  box-sizing: border-box;
+`;
+
+const NaverShopImage1 = styled(NaverShopImage)`
   grid-area: a;
-  background-color: gray;
-  box-sizing: border-box;
 `;
 
-const NaverShopImage2 = styled.div`
+const NaverShopImage2 = styled(NaverShopImage)`
   grid-area: b;
-  background-color: gray;
-  box-sizing: border-box;
 `;
 
-const NaverShopImage3 = styled.div`
+const NaverShopImage3 = styled(NaverShopImage)`
   grid-area: c;
-  background-color: gray;
-  box-sizing: border-box;
 `;
 
 const NaverShopData = styled.div`

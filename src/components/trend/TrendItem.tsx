@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Icon from "./Icon";
+import Icon from "@components/Icon";
 import { atIcon, celsiusIcon, chatIcon, eyeIcon, hashtagIcon, heartIcon } from "@shared/icons";
 
 
