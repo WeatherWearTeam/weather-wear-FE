@@ -92,15 +92,6 @@ export default function Signup() {
               이미 가입하셨나요?
               <LinkToLogin to={`/login`}>로그인하기</LinkToLogin>
             </LinkWrapper>
-            <SocialLoginContainer>
-              <SeparateBorder>
-                <span>또는</span>
-              </SeparateBorder>
-              SNS 계정으로 로그인
-              <SocialLoginIconWrapper>
-                <Icon icon={kakaoIcon} />
-              </SocialLoginIconWrapper>
-            </SocialLoginContainer>
           </FormContainer>
         </RightColumn>
       </GridContainer>
@@ -288,48 +279,4 @@ const LinkWrapper = styled.div`
 const LinkToLogin = styled(Link)`
   color: ${({ theme }) => theme.colors.blue};
   font-size: small;
-`;
-
-//✅ 소셜로그인
-
-const SocialLoginContainer = styled.div`
-  font-size: small;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-`;
-
-const SeparateBorder = styled.div`
-  width: 100%;
-  position: relative;
-  border-bottom: ${({ theme }) => theme.borders.containerBorder};
-  margin: 2rem 0;
-  span {
-    font-size: small;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 0 1rem;
-  }
-`;
-
-const SocialLoginIconWrapper = styled.button`
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.yellow};
-  width: 4rem;
-  height: 4rem;
-  transition: background-color 0.1s linear;
-
-  &:hover,
-  &:focus {
-    background-color: #ffae00;
-  }
 `;

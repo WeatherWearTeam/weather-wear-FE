@@ -10,19 +10,19 @@ interface InputProps {
 }
 
 export default function Input({
-  //   onChange,
+  onChange,
   value,
   label,
   name,
   type = "text",
-  maxLength = 20,
+  maxLength = 30,
 }: InputProps) {
   return (
     <StInput
       value={value}
       id={name}
       name={name}
-      //   onChange={(e) => onChange(e)}
+      onChange={(e) => onChange(e)}
       type={type}
       placeholder={label}
       autoComplete="off"
