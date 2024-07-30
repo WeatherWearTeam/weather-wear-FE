@@ -29,15 +29,18 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@shared/*": ["src/shared/*"],
-      "@axios/*": ["src/axios/*"],
+      "@api/*": ["src/api/*"],
+      "@queries/*": ["src/queries/*"],
       "@styles/*": ["src/styles/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@assets/*": ["src/assets/*"],
+
       "@/*": ["src/*"]
     },
 
     /*카카오 맵 타입 패키지 추가*/
     //https://github.com/JaeSeoKim/kakao.maps.d.ts
-    "types": ["kakao.maps.d.ts"]
+    "types": ["kakao.maps.d.ts", "vite-plugin-svgr/client"]
   },
-  "include": ["src"]
+  "include": ["src", "svg.d.ts"]
 }

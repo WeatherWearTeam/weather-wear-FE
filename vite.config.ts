@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
 import { createHtmlPlugin } from "vite-plugin-html";
 
 interface configProps {
@@ -15,6 +16,7 @@ export default ({ mode }: configProps) => {
   return defineConfig({
     plugins: [
       react(),
+      svgr(),
       //html 환경변수 사용 설정
       createHtmlPlugin({
         minify: true,
@@ -46,9 +48,11 @@ export default ({ mode }: configProps) => {
         { find: "@components", replacement: "/src/components" },
         { find: "@pages", replacement: "/src/pages" },
         { find: "@shared", replacement: "/src/shared" },
-        { find: "@axios", replacement: "/src/axios" },
+        { find: "@api", replacement: "/src/api" },
+        { find: "@queries", replacement: "/src/queries" },
         { find: "@styles", replacement: "/src/styles" },
         { find: "@hooks", replacement: "/src/hooks" },
+        { find: "@assets", replacement: "/src/assets" },
         { find: "@", replacement: "/src" },
       ],
     },
