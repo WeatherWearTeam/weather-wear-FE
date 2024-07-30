@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import MyOOTDRecommendation from '@components/ootd/MyOOTDRecommendation';
-import OOTDTrend from '@components/trend/OOTDTrend';
-import NaverShopRecommendation from '@components/shop/NaverShopRecommendation';
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import MyOOTDRecommendation from "@components/ootd/MyOOTDRecommendation";
+import OOTDTrend from "@components/trend/OOTDTrend";
+import NaverShopRecommendation from "@components/shop/NaverShopRecommendation";
+import WeatherSection from "@components/WeatherSection";
+import SignupRecommendation from "@components/SignupRecommendation";
 
 const Home: React.FC = () => {
   const [liked, setLiked] = useState<boolean[]>([false, false, false]);
@@ -16,19 +17,31 @@ const Home: React.FC = () => {
     });
   };
 
+  //✅ 임의
+  const isLoggedIn = false;
+
   return (
     <HomeContainer>
-      Home
-      <Divider />
-      <MyOOTDRecommendation />
-      
-      <Divider />
-      <OOTDTrend />
-      
-      <Divider />
-      <NaverShopRecommendation liked={liked} toggleLike={toggleLike} />
+      <WeatherSection />
 
-      <Divider />
+      {!isLoggedIn ? (
+        <>
+          <SignupRecommendation />
+        </>
+      ) : (
+        <>
+          <Divider />
+          <MyOOTDRecommendation />
+
+          <Divider />
+          <OOTDTrend />
+
+          <Divider />
+          <NaverShopRecommendation liked={liked} toggleLike={toggleLike} />
+
+          <Divider />
+        </>
+      )}
     </HomeContainer>
   );
 };
@@ -50,6 +63,6 @@ const HomeContainer = styled.div`
 
 const Divider = styled.hr`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.gray};
+  background-color: ${({ theme }) => theme.colors.borderLightGray};
   margin: 20px 0;
 `;
