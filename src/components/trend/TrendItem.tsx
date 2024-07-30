@@ -48,7 +48,7 @@ const ContentsItemImage = styled.div`
 const ContentsItemData = styled.div`
   width: 250px;
   height: 25px;
-  font-size: 12px;
+  font-size: small;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -125,7 +125,7 @@ const ContentsItemTitle = styled.div`
   color: black;
   width: 250px;
   height: 25px;
-  font-size: 14px;
+  font-size: medium;
   font-weight: bold;
   box-sizing: border-box;
   margin: 1rem 0em 0rem;

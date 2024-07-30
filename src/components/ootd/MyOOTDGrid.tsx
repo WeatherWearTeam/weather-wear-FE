@@ -13,7 +13,7 @@ export default function MyOOTDGrid() {
 }
 
 const ContentsMain = styled.div`
-  width: 85%;
+  width: 95%;
   max-width: 1090px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -23,13 +23,13 @@ const ContentsMain = styled.div`
   justify-content: center;
   align-items: center;
   
-  @media (max-width: 1200px) {
-  grid-template-columns: repeat(2, 2fr);
+  @media (max-width: 980px) {
+  grid-template-columns: repeat(2, 1fr);
   justify-content: center;
   } 
   // @media (max-width: 900px) {grid-template-columns: repeat(2, 2fr);} 
   
-  media (max-width: 600px) {
+  @media (max-width: 600px) {
   grid-template-columns: 1fr;
   justify-content: center;
   } 
