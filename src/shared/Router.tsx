@@ -13,7 +13,6 @@ import Login from "@pages/Login";
 import Signup from "@pages/Signup";
 import MyAccount from "@pages/MyAccount";
 import MyAccountEdit from "@pages/MyAccountEdit";
-import Weather from "@pages/Weather";
 
 const Router = () => {
   return (
@@ -21,7 +20,6 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/weather" element={<Weather />} />
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
