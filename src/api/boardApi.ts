@@ -1,7 +1,18 @@
 import api from "@api/api";
 
-//OOTD 게시글 올리기
-export const addBoard = async (newBoard: Omit<BOARD, "id">) => {
-  const response = await api.post(`/board`, newBoard);
+// 전체 Boards 리소스 조회
+export const getBoards = async () => {
+  const response = await api.get(`/board`);
+  return response.data;
+};
+
+// Board 리소스 생성
+// FormData를 사용하는 경우 타입도 폼 데이터
+export const createBoard = async (newBoardFormData: FormData) => {
+  const response = await api.post(`/board`, newBoardFormData, {
+    headers: {
+      "Content-Type": "multipart/form-data", // FormData를 사용하는 경우
+    },
+  });
   return response.data;
 };
