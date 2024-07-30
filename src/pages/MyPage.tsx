@@ -55,7 +55,7 @@ const MainTitleTop = styled.div`
   text-align: left; /* 텍스트를 왼쪽 정렬 */
   margin: 0; /* 기본 여백 제거 */
   padding: 0 20px; /* 텍스트와 컨테이너 사이에 여백 추가 */
-  font-size: 24px;
+  font-size: x-large;
   box-sizing: border-box; /* 패딩과 보더를 포함한 박스 크기 조정 */
 `;
 
@@ -76,8 +76,7 @@ const MainTitleBottom = styled.div`
 const MainTitleSelectedItem = styled.div`
   background-color: white;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: medium;
 
   &:hover {
     text-decoration: underline;
@@ -87,7 +86,7 @@ const MainTitleSelectedItem = styled.div`
 const MainTitleItem = styled.div`
   background-color: white;
   text-decoration: none;
-  font-size: 14px;
+  font-size: medium;
 
   &:hover {
     text-decoration: underline;

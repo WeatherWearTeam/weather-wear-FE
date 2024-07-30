@@ -58,7 +58,7 @@ const SearchInput = styled.input`
   padding: 0 40px 0 10px; /* 오른쪽 패딩을 아이콘 크기만큼 늘리기 */
   border: 1px solid ${({ theme }) => theme.colors.gray};
   border-radius: 5px;
-  font-size: 16px;
+  font-size: small;
   box-sizing: border-box; /* 패딩을 포함한 박스 크기 조정 */
 `;
 

@@ -34,13 +34,13 @@ const OOTDTrend: React.FC = () => {
 export default OOTDTrend;
 
 const HomeTitle = styled.div`
-  font-size: 3rem;
+  font-size: x-large;
   color: black;
   font-weight: bold;
 `;
 
 const HomeContent = styled.div`
-  font-size: 1.3rem;
+  font-size: medium;
 `;
 
 const HomeContents4 = styled.div`
@@ -54,7 +54,8 @@ const HomeContents4 = styled.div`
 `;
 
 const TrendGrid = styled.div`
-  justify-content: center;
+  width: 100%;
+  justify-content: center; 
   display: grid;
   padding: 10px;
   grid-template-columns: repeat(5, 200px);
@@ -81,7 +82,7 @@ const TrendGrid = styled.div`
 
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 300px;
     grid-template-rows: 200px 250px 250px 250px;
     grid-template-areas: 
       'b'
