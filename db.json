@@ -1,0 +1,98 @@
+{
+  "boards": [
+    {
+      "id": 12345,
+      "userId": 12345,
+      "title": "제목입니다 1",
+      "contents": "내용입니다 1",
+      "isPrivate": false,
+      "stn": 12345,
+      "createTime": "2024-07-20T12:00:00",
+      "modifiedTime": "2024-07-20T12:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 12345,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-20T12:00:00"
+      }
+    },
+
+    {
+      "id": 23456,
+      "userId": 23456,
+      "title": "제목입니다 2",
+      "contents": "내용입니다 2",
+      "isPrivate": false,
+      "stn": 23456,
+      "createTime": "2024-07-20T12:00:00",
+      "modifiedTime": "2024-07-20T12:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 23456,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-20T12:00:00"
+      }
+    },
+    {
+      "id": 34567,
+      "userId": 34567,
+      "title": "제목입니다 3",
+      "contents": "내용입니다 3",
+      "isPrivate": false,
+      "stn": 34567,
+      "createTime": "2024-07-20T12:00:00",
+      "modifiedTime": "2024-07-20T12:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 34567,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-20T12:00:00"
+      }
+    }
+  ],
+  "clothes": [],
+  "comments": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "board_id": 1,
+      "regist_date": "2024-07-20T13:00:00",
+      "update_date": "2024-07-20T13:00:00",
+      "contents": "Great post!",
+      "comment_like": true
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "board_id": 1,
+      "regist_date": "2024-07-20T13:00:00",
+      "update_date": "2024-07-20T13:00:00",
+      "contents": "Great post!",
+      "comment_like": true
+    }
+  ],
+  "users": [
+    {
+      "email": "user123@example.com",
+      "nickname": "user123@example.com",
+      "password": "password123",
+      "passwordCheck": "password123",
+      "stn": 12345,
+      "gender": "Male",
+      "birthday": "1990-01-01"
+    },
+    {
+      "email": "user000@example.com",
+      "nickname": "user000@example.com",
+      "password": "password123",
+      "passwordCheck": "password123",
+      "stn": 12345,
+      "gender": "Female",
+      "birthday": "1990-01-01"
+    }
+  ],
+  "wishlist": []
+}
