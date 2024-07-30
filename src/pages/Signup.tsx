@@ -48,15 +48,21 @@ export default function Signup() {
           </FormTextContainer>
           <FormContainer>
             <Form>
-              <Input label="이메일" type="email" />
               <FlexRow>
-                <Input label="비밀번호" type="password" />
-                <Input label="비밀번호" type="password" />
+                <FlexColum>
+                  <Label>이메일</Label>
+                  <Input label="이메일" type="email" />
+                </FlexColum>
+                <FlexColum>
+                  <Label>닉네임</Label>
+                  <Input label="닉네임" type="text" />
+                </FlexColum>
+                {/* <SelectButton selectedOption="위치" /> */}
               </FlexRow>
 
               <FlexRow>
-                <Input label="닉네임" type="text" />
-                <SelectButton selectedOption="위치" />
+                <Input label="비밀번호" type="password" />
+                <Input label="비밀번호" type="password" />
               </FlexRow>
 
               <FlexRow>
@@ -132,6 +138,12 @@ const LeftColumn = styled.div`
   padding: 10rem;
   position: relative;
   overflow: hidden;
+
+  height: calc(100vh - 13rem);
+
+  @media (max-width: 900px) {
+    height: inherit;
+  }
 `;
 
 const BackgroundSunWrapper = styled.div`
@@ -231,6 +243,18 @@ const FlexRow = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+`;
+
+const FlexColum = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+`;
+
+const Label = styled.label`
+  width: 100%;
+  font-weight: 600;
 `;
 
 const Fieldset = styled.fieldset`

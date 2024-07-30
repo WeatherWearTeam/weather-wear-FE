@@ -119,6 +119,12 @@ const LeftColumn = styled.div`
   padding: 10rem;
   position: relative;
   overflow: hidden;
+
+  height: calc(100vh - 13rem);
+
+  @media (max-width: 900px) {
+    height: inherit;
+  }
 `;
 
 const BackgroundSunWrapper = styled.div`

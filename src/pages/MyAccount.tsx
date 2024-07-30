@@ -62,11 +62,11 @@ export default function MyAccount() {
                   <InfoTitle>생년월일</InfoTitle>
                   <InfoText>{`2024.07.26`}</InfoText>
                 </InfoTextWrapper>
-                <InfoTextWrapper>
+                {/* <InfoTextWrapper>
                   <Icon icon={mapPinIcon} />
                   <InfoTitle>위치</InfoTitle>
                   <InfoText>{`대구광역시 ㅇㅇ구 ㅇㅇ길 ㅇㅇㅇ`}</InfoText>
-                </InfoTextWrapper>
+                </InfoTextWrapper> */}
                 <InfoTextWrapper>
                   <Icon icon={emailIcon} />
                   <InfoTitle>이메일</InfoTitle>
