@@ -89,7 +89,7 @@ export default function MyAccountEdit() {
               </ImageEditContainer>
               <InputContainer>
                 <Input label="닉네임" type="text" />
-                <SelectButton selectedOption="위치" />
+                {/* <SelectButton selectedOption="위치" /> */}
                 <Input label="비밀번호" type="password" />
                 <Input label="비밀번호" type="password" />
                 {/* <FlexRow>
