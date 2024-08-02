@@ -22,6 +22,7 @@ export default function ClosetAdd() {
     setIsSingleTag,
     addTag,
     removeTag,
+    resetTag,
   } = useClothesTagStore();
 
   // 선택한 타입과 색상이 모두 있을 때 태그 추가
@@ -76,6 +77,9 @@ export default function ClosetAdd() {
     }
 
     // 🌟 mutateCreateClothes로 요청 보내기
+
+    //상태 리셋하기
+    resetTag();
   };
 
   //////////////////////////////////////////////////////////////
