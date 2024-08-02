@@ -22,7 +22,7 @@ export default function Input({
       value={value}
       id={name}
       name={name}
-      onChange={(e) => onChange(e)}
+      onChange={onChange}
       type={type}
       placeholder={label}
       autoComplete="off"

@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
-export default function Textarea() {
+interface TextareaProps {
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void; //일단 옵셔널
+  value: string;
+}
+
+export default function Textarea({ onChange, value }: TextareaProps) {
   return (
     <StTextArea
-      //   onChange={}
-      //   value={}
+      onChange={onChange}
+      value={value}
       placeholder={"내용"}
-      name="content"
+      name="contents"
       maxLength={500}
       minLength={1}
     />
