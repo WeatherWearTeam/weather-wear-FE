@@ -51,6 +51,8 @@ export default ({ mode }: configProps) => {
         { find: "@styles", replacement: "/src/styles" },
         { find: "@hooks", replacement: "/src/hooks" },
         { find: "@assets", replacement: "/src/assets" },
+        { find: "@utils", replacement: "/src/utils" },
+        { find: "@store", replacement: "/src/store" },
         { find: "@", replacement: "/src" },
       ],
     },
