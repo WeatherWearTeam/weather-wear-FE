@@ -1,43 +1,86 @@
 import Button from "@components/Button";
-import ColorBar from "@components/ColorBar";
 import ColorPickBar from "@components/ColorPickBar";
 import Select from "@components/Select";
-import SelectButton from "@components/SelectButton";
 import SelectedTag from "@components/SelectedTag";
 import { imageAddIcon } from "@shared/icons";
-import { useRef, useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
 
 export default function ClosetAdd() {
+  //////////////////////////////////////////////////////////////
+  //옷 type 선택
+  const [selectedType, setSelectedType] = useState("옷 종류");
+
+  const handleSelectedType = (type: string) => {
+    setSelectedType(type);
+  };
+
+  //////////////////////////////////////////////////////////////
+  //옷 color 선택
+  const [selectedColor, setSelectedColor] = useState("");
+
+  const handleSelectedColor = (color: string) => {
+    setSelectedColor(color);
+  };
+
+  //////////////////////////////////////////////////////////////
+
+  //🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
+  //옷색깔 & 옷 컬러 선택 되면 그 값에 따라 SelectedTag 보이게 설정해보세요.
+  //그리고 x 클릭하면 그 값이 삭제 되게 해보세요.
+  //useState 사용하시면 됩니다!
+  //변수들을 항상 콘솔에 찍어보세요! 답이 보일거에요.
+
+  console.log("✅ 옷 종류 선택한 값:", selectedType);
+  console.log("✅ 컬러 선택한 값:", selectedColor);
+
+  //////////////////////////////////////////////////////////////
+  //파일 선택 및 프리뷰 보기
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const imageRef = useRef<HTMLInputElement>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null); //임시 url 만들기(string 타입으로 src에 넣기 위함)
 
-  const uploadImageFile = () => {
-    if (imageRef.current && imageRef.current.files) {
-      const file = imageRef.current.files[0];
+  const uploadImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
 
-      if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          setImageFile(reader.result as string);
-        };
-      }
+    if (file) {
+      setImageFile(file);
+      const previewUrl = URL.createObjectURL(file);
+      setImageSrc(previewUrl);
     }
   };
 
+  //////////////////////////////////////////////////////////////
+  //등록하기 버튼 클릭했을 때 실행하는 handleSubmit 함수
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // 새로고침 방지
 
-    console.log("등록하기");
+    //🌟🌟🌟🌟🌟 예외처리 하는 로직 작성 🌟🌟🌟🌟🌟
+    //예외처리: 이미지파일이 안들어 왔다면 return
+    //예외처리:옷 종류-컬러 1세트 없으면 return
 
+    // 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
+    //폼 데이터 제출하는 로직 짜기
+    //이미지
     if (imageFile) {
       const formData = new FormData();
       formData.append("image", imageFile);
+    }
+    //옷 종류, 컬러 폼 데이터 생성
 
-      //
-    } //예외처리: 이미지파일 올려주세요
+    // 🌟🌟🌟🌟🌟 만들어진 새로운 폼 데이터를 mutateCreateClothes로 요청 보내기 🌟🌟🌟🌟🌟
   };
+
+  //////////////////////////////////////////////////////////////
+  // imageSrc 상태 변하면 프리뷰 세팅
+  useEffect(() => {
+    //클린업 펑션
+    return () => {
+      if (imageSrc) {
+        URL.revokeObjectURL(imageSrc);
+      }
+    };
+  }, [imageSrc]);
+  //////////////////////////////////////////////////////////////
 
   return (
     <Container>
@@ -52,8 +95,8 @@ export default function ClosetAdd() {
             <LeftWrapper>
               <Label htmlFor="clothesImage">
                 <PreviewWrapper>
-                  {imageFile && <Preview src={imageFile} alt="preview" />}
-                  {!imageFile && <IconWrapper>{imageAddIcon}</IconWrapper>}
+                  {imageSrc && <Preview src={imageSrc} alt="preview" />}
+                  <IconWrapper>{imageAddIcon}</IconWrapper>
                 </PreviewWrapper>
               </Label>
               <HiddenInput
@@ -61,7 +104,6 @@ export default function ClosetAdd() {
                 accept="image/*"
                 id="clothesImage"
                 onChange={uploadImageFile}
-                ref={imageRef}
               />
             </LeftWrapper>
             {/* / */}
@@ -70,8 +112,12 @@ export default function ClosetAdd() {
             {/* / */}
             <RightWrapper>
               <RowWrapper>
-                <Select />
-                <ColorPickBar />
+                <Select
+                  onClick={handleSelectedType}
+                  value={selectedType}
+                  // label="클로즈 타입"
+                />
+                <ColorPickBar onClick={handleSelectedColor} />
                 <SelectedTagContainer>
                   <SelectedTag color="sand" selectedTypeOption="티셔츠" />
                 </SelectedTagContainer>
@@ -114,9 +160,12 @@ export const PreviewWrapper = styled.div`
 `;
 
 export const IconWrapper = styled.div`
+  position: absolute;
   cursor: pointer;
-  width: 30%;
-  color: ${({ theme }) => theme.colors.borderLightGray};
+  width: 10rem;
+  color: ${({ theme }) => css`
+    ${theme.colors.main}66; //투명도 40%
+  `};
   transition: color 0.25s linear;
 
   &:hover {

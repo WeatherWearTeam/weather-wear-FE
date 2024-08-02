@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 interface ColorBarProps {
   size?: "s" | "m";
+  onClick?: (color: string) => void;
 }
 
-function ColorBar({ size = "s" }: ColorBarProps) {
+function ColorBar({ size = "s", onClick }: ColorBarProps) {
   const colorBarList = [
     "white",
     "gray",
@@ -23,10 +24,19 @@ function ColorBar({ size = "s" }: ColorBarProps) {
     "purple",
     "pink",
   ];
+
+  const onSelectedClick = (color: string) => {
+    onClick && onClick(color);
+  };
   return (
     <ColorContainer>
       {colorBarList.map((color, index) => (
-        <ColorChip key={index} color={color} size={size}></ColorChip>
+        <ColorChip
+          key={index}
+          color={color}
+          size={size}
+          onClick={() => onSelectedClick(color)}
+        ></ColorChip>
       ))}
     </ColorContainer>
   );

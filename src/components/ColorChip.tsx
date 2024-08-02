@@ -3,10 +3,11 @@ import styled from "styled-components";
 interface ColorChipProps {
   color: string;
   size?: "s" | "m";
+  onClick?: () => void;
 }
 
-function ColorChip({ color, size = "s" }: ColorChipProps) {
-  return <Color color={color} $size={size} />;
+function ColorChip({ color, size = "s", onClick }: ColorChipProps) {
+  return <Color color={color} $size={size} onClick={onClick} />;
 }
 
 export default ColorChip;
