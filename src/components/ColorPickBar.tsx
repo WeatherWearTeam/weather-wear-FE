@@ -1,11 +1,15 @@
 import ColorBar from "@components/ColorBar";
 import styled from "styled-components";
 
-export default function ColorPickBar() {
+interface ColorPickBarProps {
+  onClick?: (color: string) => void;
+}
+
+export default function ColorPickBar({ onClick }: ColorPickBarProps) {
   return (
     <Container>
       색상
-      <ColorBar size="m" />
+      <ColorBar size="m" onClick={onClick} />
     </Container>
   );
 }
