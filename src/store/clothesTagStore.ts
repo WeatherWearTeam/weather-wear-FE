@@ -67,7 +67,7 @@ interface StoreActions {
 
   addTag: (tag: ClothesTag) => void;
   removeTag: (id: number) => void;
-  resetSelections: () => void;
+  resetTag: () => void;
 }
 
 // 초기 상태 정의
@@ -110,7 +110,8 @@ const useClothesTagStore = create<StoreState & StoreActions>((set) => ({
       newTagList: state.newTagList.filter((tag) => tag.id !== id),
     })),
 
-  resetSelections: () => set({ selectedType: "옷 종류", selectedColor: "" }),
+  resetTag: () =>
+    set({ selectedType: "옷 종류", selectedColor: "", newTagList: [] }),
 }));
 
 export default useClothesTagStore;
