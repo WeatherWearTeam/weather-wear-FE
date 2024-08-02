@@ -49,7 +49,7 @@ export const StickyDialog = styled.div<StickyDialogProps>`
   z-index: 20;
   border-radius: 12px;
   top: ${({ $top }) => $top}px;
-  right: calc(${({ $right }) => $right}px + 2.3rem);
+  right: calc(${({ $right }) => $right}px); //+ 17rem
   width: ${({ $width }) => $width}px;
 `;
 

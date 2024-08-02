@@ -3,28 +3,25 @@ import { arrowDownIcon } from "@shared/icons";
 import styled from "styled-components";
 
 interface SelectButtonProps {
-  //   openModal: () => void;
+  openModal: () => void;
   selectedOption: string;
-  buttonRef?: React.RefObject<HTMLButtonElement>;
+  divRef?: React.RefObject<HTMLDivElement>;
 }
 
 export default function SelectButton({
-  //   openModal,
-  // buttonRef,
+  openModal,
+  divRef,
   selectedOption,
 }: SelectButtonProps) {
   return (
-    <StSelectButton
-    //onClick={openModal}
-    // ref={buttonRef}
-    >
+    <StSelectButton onClick={openModal} ref={divRef}>
       {selectedOption}
       {arrowDownIcon}
     </StSelectButton>
   );
 }
 
-const StSelectButton = styled.button`
+const StSelectButton = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
