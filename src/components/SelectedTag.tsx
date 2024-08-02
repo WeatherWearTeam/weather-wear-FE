@@ -6,10 +6,14 @@ import styled from "styled-components";
 interface SelectedTagProps {
   color: string;
   selectedTypeOption: string;
+  id: number;
+  onRemoveTag: (id: number) => void;
 }
 export default function SelectedTag({
   color,
   selectedTypeOption,
+  id,
+  onRemoveTag,
 }: SelectedTagProps) {
   return (
     <Container>
@@ -17,7 +21,7 @@ export default function SelectedTag({
         <ColorChip color={color} />
         {selectedTypeOption}
       </TagContainer>
-      <button>
+      <button onClick={() => onRemoveTag(id)}>
         <Icon icon={closeIcon} />
       </button>
     </Container>

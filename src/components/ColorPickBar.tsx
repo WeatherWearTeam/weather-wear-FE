@@ -1,8 +1,9 @@
+import { ClothesColorType } from "@store/clothesTagStore";
 import ColorBar from "@components/ColorBar";
 import styled from "styled-components";
 
 interface ColorPickBarProps {
-  onClick?: (color: string) => void;
+  onClick?: (color: ClothesColorType) => void;
 }
 
 export default function ColorPickBar({ onClick }: ColorPickBarProps) {

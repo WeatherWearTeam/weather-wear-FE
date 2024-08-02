@@ -1,13 +1,14 @@
+import { ClothesColorType } from "@store/clothesTagStore";
 import ColorChip from "@components/ColorChip";
 import styled from "styled-components";
 
 interface ColorBarProps {
   size?: "s" | "m";
-  onClick?: (color: string) => void;
+  onClick?: (color: ClothesColorType) => void;
 }
 
 function ColorBar({ size = "s", onClick }: ColorBarProps) {
-  const colorBarList = [
+  const colorBarList: ClothesColorType[] = [
     "white",
     "gray",
     "black",
@@ -25,7 +26,7 @@ function ColorBar({ size = "s", onClick }: ColorBarProps) {
     "pink",
   ];
 
-  const onSelectedClick = (color: string) => {
+  const onSelectedClick = (color: ClothesColorType) => {
     onClick && onClick(color);
   };
   return (

@@ -28,19 +28,17 @@ export default ({ mode }: configProps) => {
       }),
       //
     ],
-    //proxy 설정
-    // server: {
-    //   proxy: {
-    //     "/api": {
-    //       target: "나중에 백엔드 서버랑 연결시", //요청 전달 대상 서버 주소 설정
-    //       changeOrigin: true, // 요청 헤더 host 필드 값을 대상 서버의 호스트 이름으로  변경
-    //       rewrite: (path: string) => path.replace(/^\/api/, ""), // 요청 경로에서 '/api' 제거
-    //       secure: false, // SSL 인증서 검증 무시
-    //       ws: true, // WebSocket 프로토콜 사용
-    //     },
-    //   },
-    // },
-    //
+    //개발 모드에서만 작동함
+    //서버 proxy 설정
+    server: {
+      proxy: {
+        "/api": {
+          target: env.VITE_SERVER_URL_PRODUCTION, //요청 전달 대상 서버 주소 설정
+          changeOrigin: true, // 요청 헤더 host 필드 값을 대상 서버의 호스트 이름으로 변경
+          secure: false, // SSL 인증서 검증 무시
+        },
+      },
+    },
 
     //절대경로 설정
     resolve: {
@@ -53,6 +51,8 @@ export default ({ mode }: configProps) => {
         { find: "@styles", replacement: "/src/styles" },
         { find: "@hooks", replacement: "/src/hooks" },
         { find: "@assets", replacement: "/src/assets" },
+        { find: "@utils", replacement: "/src/utils" },
+        { find: "@store", replacement: "/src/store" },
         { find: "@", replacement: "/src" },
       ],
     },

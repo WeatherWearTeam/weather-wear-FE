@@ -3,36 +3,46 @@ import ColorPickBar from "@components/ColorPickBar";
 import Select from "@components/Select";
 import SelectedTag from "@components/SelectedTag";
 import { imageAddIcon } from "@shared/icons";
+import useClothesTagStore, {
+  ClothesColorType,
+  ClothesType,
+} from "@store/clothesTagStore";
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
 export default function ClosetAdd() {
   //////////////////////////////////////////////////////////////
-  //옷 type 선택
-  const [selectedType, setSelectedType] = useState("옷 종류");
+  // zustand 사용해 옷 타입, 컬러 태그 선택 관리 > 전역으로 관리
+  const {
+    selectedType,
+    selectedColor,
+    newTagList,
+    setSelectedType,
+    setSelectedColor,
+    setIsSingleTag,
+    addTag,
+    removeTag,
+  } = useClothesTagStore();
 
-  const handleSelectedType = (type: string) => {
+  // 선택한 타입과 색상이 모두 있을 때 태그 추가
+  useEffect(() => {
+    setIsSingleTag(true);
+    if (selectedType !== "옷 종류" && selectedColor) {
+      addTag({
+        id: Number(new Date().getTime()),
+        type: selectedType,
+        color: selectedColor,
+      });
+    }
+  }, [selectedType, selectedColor, addTag, setIsSingleTag]);
+
+  const handleSelectedType = (type: ClothesType) => {
     setSelectedType(type);
   };
 
-  //////////////////////////////////////////////////////////////
-  //옷 color 선택
-  const [selectedColor, setSelectedColor] = useState("");
-
-  const handleSelectedColor = (color: string) => {
+  const handleSelectedColor = (color: ClothesColorType) => {
     setSelectedColor(color);
   };
-
-  //////////////////////////////////////////////////////////////
-
-  //🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
-  //옷색깔 & 옷 컬러 선택 되면 그 값에 따라 SelectedTag 보이게 설정해보세요.
-  //그리고 x 클릭하면 그 값이 삭제 되게 해보세요.
-  //useState 사용하시면 됩니다!
-  //변수들을 항상 콘솔에 찍어보세요! 답이 보일거에요.
-
-  console.log("✅ 옷 종류 선택한 값:", selectedType);
-  console.log("✅ 컬러 선택한 값:", selectedColor);
 
   //////////////////////////////////////////////////////////////
   //파일 선택 및 프리뷰 보기
@@ -54,20 +64,18 @@ export default function ClosetAdd() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // 새로고침 방지
 
-    //🌟🌟🌟🌟🌟 예외처리 하는 로직 작성 🌟🌟🌟🌟🌟
+    //🌟 예외처리 하는 로직 작성
     //예외처리: 이미지파일이 안들어 왔다면 return
     //예외처리:옷 종류-컬러 1세트 없으면 return
 
-    // 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
-    //폼 데이터 제출하는 로직 짜기
+    //🌟 폼 데이터 제출하는 로직 짜기
     //이미지
     if (imageFile) {
       const formData = new FormData();
       formData.append("image", imageFile);
     }
-    //옷 종류, 컬러 폼 데이터 생성
 
-    // 🌟🌟🌟🌟🌟 만들어진 새로운 폼 데이터를 mutateCreateClothes로 요청 보내기 🌟🌟🌟🌟🌟
+    // 🌟 mutateCreateClothes로 요청 보내기
   };
 
   //////////////////////////////////////////////////////////////
@@ -112,14 +120,18 @@ export default function ClosetAdd() {
             {/* / */}
             <RightWrapper>
               <RowWrapper>
-                <Select
-                  onClick={handleSelectedType}
-                  value={selectedType}
-                  // label="클로즈 타입"
-                />
+                <Select onClick={handleSelectedType} value={selectedType} />
                 <ColorPickBar onClick={handleSelectedColor} />
                 <SelectedTagContainer>
-                  <SelectedTag color="sand" selectedTypeOption="티셔츠" />
+                  {newTagList.map((tag) => (
+                    <SelectedTag
+                      key={tag.id}
+                      id={tag.id}
+                      color={tag.color}
+                      selectedTypeOption={tag.type}
+                      onRemoveTag={removeTag}
+                    />
+                  ))}
                 </SelectedTagContainer>
               </RowWrapper>
               <ButtonWrapper>
