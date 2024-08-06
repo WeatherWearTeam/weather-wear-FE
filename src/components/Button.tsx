@@ -1,5 +1,5 @@
 import Icon from "@components/Icon";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 type buttonType = "primary" | "secondary";
 
@@ -73,6 +73,18 @@ const StButton = styled.button<buttonsProps>`
     cursor: not-allowed;
     opacity: 0.5;
   }
+
+  ${({ theme, $buttonType = "primary", $selected }) => css`
+    background-color: ${theme.buttons[$buttonType].backgroundColor};
+    border: ${theme.buttons[$buttonType].border};
+    color: ${theme.buttons[$buttonType].color};
+
+    &:hover {
+      ${theme.buttons[$buttonType].hover};
+    }
+
+    ${$selected && theme.buttons[$buttonType].focus};
+  `}
 `;
 
 const Container = styled.div`

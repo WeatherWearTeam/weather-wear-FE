@@ -1,12 +1,22 @@
+import { testUser } from "@api/userApi";
 import Button from "@components/Button";
 import Icon from "@components/Icon";
 import Input from "@components/Input";
 import SelectButton from "@components/SelectButton";
+import SignupForm from "@components/Signup/SignupForm";
 import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Signup() {
+  // const { data } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: testUser,
+  // });
+  // console.log(data);
+  
   return (
     <Container>
       <GridContainer>
@@ -47,53 +57,8 @@ export default function Signup() {
             <FormText>지금 웨더웨어를 시작하세요!</FormText>
           </FormTextContainer>
           <FormContainer>
-            <Form>
-              <FlexRow>
-                <FlexColum>
-                  <Label>이메일</Label>
-                  <Input label="이메일" type="email" />
-                </FlexColum>
-                <FlexColum>
-                  <Label>닉네임</Label>
-                  <Input label="닉네임" type="text" />
-                </FlexColum>
-                {/* <SelectButton selectedOption="위치" /> */}
-              </FlexRow>
-
-              <FlexRow>
-                <Input label="비밀번호" type="password" />
-                <Input label="비밀번호" type="password" />
-              </FlexRow>
-
-              <FlexRow>
-                <Input label="생년월일" type="date" />
-
-                <Fieldset>
-                  <Legend>성별</Legend>
-                  <InputContainer>
-                    <RadioInputWrapper>
-                      <input
-                        type="radio"
-                        id="male"
-                        name="gender"
-                        value="남자"
-                      />
-                      <label htmlFor="male">남자</label>
-                    </RadioInputWrapper>
-                    <RadioInputWrapper>
-                      <input
-                        type="radio"
-                        id="female"
-                        name="gender"
-                        value="여자"
-                      />
-                      <label htmlFor="female">여자</label>
-                    </RadioInputWrapper>
-                  </InputContainer>
-                </Fieldset>
-              </FlexRow>
-              <Button>가입하기</Button>
-            </Form>
+            {/*  */}
+            <SignupForm />
             <LinkWrapper>
               이미 가입하셨나요?
               <LinkToLogin to={`/login`}>로그인하기</LinkToLogin>
@@ -230,69 +195,7 @@ const FormContainer = styled.div`
   gap: 2rem;
 `;
 
-//📝 폼
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
-
-const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-`;
-
-const FlexColum = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 1rem;
-`;
-
-const Label = styled.label`
-  width: 100%;
-  font-weight: 600;
-`;
-
-const Fieldset = styled.fieldset`
-  border: ${({ theme }) => theme.borders.containerBorder};
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  text-align: center;
-  gap: 2rem;
-  position: relative;
-`;
-
-const Legend = styled.legend`
-  position: absolute;
-  left: 1rem;
-  top: 50%; //수직 중앙
-  transform: translateY(-50%); //중앙정렬
-  font-size: small;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-left: 3.5rem;
-`;
-
-const RadioInputWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  label {
-    font-size: small;
-  }
-`;
-
-//
+////////
 
 const LinkWrapper = styled.div`
   font-size: small;

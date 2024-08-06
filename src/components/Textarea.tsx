@@ -21,6 +21,7 @@ export default function Textarea({ onChange, value }: TextareaProps) {
 const StTextArea = styled.textarea`
   width: 100%;
   height: 100%;
+  min-height: 10rem;
   outline: none;
   resize: none;
   font-size: small;

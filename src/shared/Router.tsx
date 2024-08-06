@@ -15,7 +15,12 @@ import MyAccount from "@pages/MyAccount";
 import MyAccountEdit from "@pages/MyAccountEdit";
 import PostEdit from "@pages/PostEdit";
 import useAuth from "@queries/useAuth";
+
+import MyAccountPassEdit from "@pages/MyAccountPassEdit";
+import PasswordFind from "@pages/PasswordFind";
+
 import ClosetEdit from "@pages/ClosetEdit";
+
 
 // PrivateRoute : 로그인이 필요한 페이지에 접근할 수 있도록 하는 컴포넌트
 // 로그인이 되어있지 않은 사용자는 login 페이지로 리다이렉트
@@ -45,27 +50,46 @@ const Router = () => {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/my" element={<MyAccount />} />
-          <Route path="/my/setting" element={<MyAccountEdit />} />
+          <Route path="/signup" element={<PublicRoute element={Signup} />} />
+          <Route path="/login" element={<PublicRoute element={Login} />} />
+          <Route
+            path="/login/find"
+            element={<PublicRoute element={PasswordFind} />}
+          />
 
-          <Route path="/mypage" element={<MyPage />}>
+          <Route path="/my" element={<PrivateRoute element={MyAccount} />} />
+          <Route
+            path="/my/setting"
+            element={<PrivateRoute element={MyAccountEdit} />}
+          />
+          <Route
+            path="/my/setting/password"
+            element={<PrivateRoute element={MyAccountPassEdit} />}
+          />
+          <Route path="/mypage" element={<PrivateRoute element={MyPage} />}>
             <Route index element={<Posts />} />
             <Route path="myootd" element={<Posts />} />
             <Route path="closet" element={<Closet />} />
             <Route path="wish" element={<Wish />} />
           </Route>
 
-          <Route path="/mypage/closet/add" element={<ClosetAdd />} />
-          <Route path="/mypage/closet/edit/:id" element={<ClosetEdit />} />
+
+         <Route path="/mypage/closet/:id/edit" element={<PrivateRoute element={ClosetEdit} />} />
+          <Route
+            path="/mypage/closet/add"
+            element={<PrivateRoute element={ClosetAdd} />}
+          />
 
           <Route path="/ootd" element={<Trend />} />
-
-          <Route path="/ootd/add" element={<PostAdd />} />
-          <Route path="/ootd/:id/edit" element={<PostEdit />} />
-
+          <Route
+            path="/ootd/:id/edit"
+            element={<PrivateRoute element={PostEdit} />}
+          />
           <Route path="/ootd/:id" element={<PostDetail />} />
+          <Route
+            path="/ootd/add"
+            element={<PrivateRoute element={PostAdd} />}
+          />
         </Routes>
       </Layout>
     </BrowserRouter>

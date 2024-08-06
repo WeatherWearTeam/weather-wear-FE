@@ -1,49 +1,148 @@
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
 import Input from "@components/Input";
-import SelectButton from "@components/SelectButton";
+import useAuth from "@queries/useAuth";
+import { useDeleteUser, useMe, useUpdateUser } from "@queries/userQueries";
 import { imageAddIcon, weatherSunCloudyIcon } from "@shared/icons";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export default function MyAccountEdit() {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
+  const { me } = useMe(isLoggedIn);
 
+  /////////////////////////////////////////////////////
+  //회원 탈퇴
+  const { mutateDeleteUser } = useDeleteUser();
+
+  const handleDeleteUser = () => {
+    const isConfirmed = confirm(
+      "정말 탈퇴하시겠습니까? 모든 회원 정보는 복구할 수 없습니다."
+    );
+    isConfirmed && mutateDeleteUser();
+  };
+
+  /////////////////////////////////////////////////////
+  //회원 업데이트
+  const { mutateUpdateUser } = useUpdateUser();
+
+  const [userNickname, setUserNickname] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserNickname(e.target.value);
+  };
+
+  //파일 선택 및 프리뷰 보기
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const imageRef = useRef<HTMLInputElement>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null); //임시 url 만들기(string 타입으로 src에 넣기 위함)
 
-  const uploadImageFile = () => {
-    if (imageRef.current && imageRef.current.files) {
-      const file = imageRef.current.files[0];
+  const uploadImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
 
-      if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          setImageFile(reader.result as string);
-        };
-      }
+    if (file) {
+      setImageFile(file);
+      const previewUrl = URL.createObjectURL(file);
+      setImageSrc(previewUrl);
     }
   };
 
-  const handleSubmit = (e) => {
+  // 🌟 FormData의 내용을 콘솔에 출력하는 함수
+  function logFormData(formData: FormData) {
+    for (const pair of formData.entries()) {
+      // 'const' 사용
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    return console.log("회원 정보 수정 시작!");
+    if (me) {
+      if (!userNickname.trim()) {
+        alert("닉네임을 입력해 주세요!");
+        return;
+      }
 
-    //폼 검증
+      if (userNickname === me.nickname && !imageFile) {
+        alert(
+          "변경된 사항이 없습니다. 변경하실 사항이 없으면 취소를 버튼을 눌러 주세요."
+        );
+        return;
+      }
 
-    //폼 값 받기"
+      // const jsonPayloadNickname = JSON.stringify({
+      //   nickname: userNickname,
+      // });
+      // const jsonPayloadImageUrl = JSON.stringify({
+      //   url: me.image === null ? null : me.image,
+      // });
 
-    //비동기 통신
+      // return console.log(imageSrc, imageFile, me.image);
 
-    //폼 인풋 비우기
+      // formData.append("nickname", jsonPayloadNickname);
+      // formData.append("url", jsonPayloadImageUrl);
 
-    //navigate /my
+      // if (imageFile) {
+      //   formData.append("file", imageFile);
+      // }
+      //폼 데이터 제출하는 로직 짜기
+      const formData = new FormData();
+
+      // 닉네임은 변경하든 말든 그냥 다 보냄
+      formData.append("nickname", userNickname);
+
+      if (me.image === null) {
+        formData.append("url", "");
+        if (imageFile) {
+          formData.append("file", imageFile);
+        } else {
+          formData.append(
+            "file",
+            new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
+          );
+        }
+      } else {
+        formData.append("url", me.image as string);
+        if (imageFile) {
+          formData.append("file", imageFile);
+        } else {
+          formData.append(
+            "file",
+            new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
+          );
+        }
+      }
+
+      logFormData(formData);
+
+      //폼 인풋 비우기
+      mutateUpdateUser(formData);
+    }
   };
 
-  //useEffect로 내 정보 먼저 가져와서 폼 채우기
+  // useEffect로 내 정보 먼저 가져와서 폼 채우기
+  useEffect(() => {
+    if (me) {
+      setUserNickname(me.nickname);
+      if (me.image) {
+        setImageSrc(me.image);
+      }
+    }
+  }, [me]);
+
+  //////////////////////////////////////////////////////////////
+  useEffect(() => {
+    //클린업 펑션
+    return () => {
+      if (imageSrc) {
+        URL.revokeObjectURL(imageSrc);
+      }
+    };
+  }, [imageSrc]);
+
+  //////////////////////////////////////////////////////////////
 
   return (
     <Container>
@@ -54,7 +153,6 @@ export default function MyAccountEdit() {
           </BackgroundSunWrapper>
           <TextContainer>
             <Title>내 계정</Title>
-            {/* <Text>회원 정보 수정</Text> */}
           </TextContainer>
           <BackgroundCloudWrapper>
             {weatherSunCloudyIcon}
@@ -63,7 +161,6 @@ export default function MyAccountEdit() {
         <RightColumn>
           <FormTextContainer>
             <FormTitle>회원 정보 수정</FormTitle>
-            {/* <FormText>지금 웨더웨어를 시작하세요!</FormText> */}
           </FormTextContainer>
           <FormContainer>
             <Form
@@ -72,56 +169,32 @@ export default function MyAccountEdit() {
               onSubmit={handleSubmit}
             >
               <ImageEditContainer>
-                <Label htmlFor="clothesImage">
+                <Label htmlFor="userImage">
                   <PreviewWrapper>
-                    {imageFile && <Preview src={imageFile} alt="preview" />}
-                    {!imageFile && <Avatar size="xl" />}
+                    <Avatar size="xl" image={imageSrc} />
+                    <IconWrapper>{imageAddIcon}</IconWrapper>
                   </PreviewWrapper>
                 </Label>
                 <HiddenInput
                   name="image"
                   type="file"
                   accept="image/*"
-                  id="clothesImage"
+                  id="userImage"
                   onChange={uploadImageFile}
-                  ref={imageRef}
                 />
               </ImageEditContainer>
               <InputContainer>
-                <Input label="닉네임" type="text" />
-                {/* <SelectButton selectedOption="위치" /> */}
-                <Input label="비밀번호" type="password" />
-                <Input label="비밀번호" type="password" />
-                {/* <FlexRow>
-                <Input label="생년월일" type="date" />
-
-                <Fieldset>
-                  <Legend>성별</Legend>
-                  <InputContainer>
-                    <RadioInputWrapper>
-                      <input
-                        type="radio"
-                        id="male"
-                        name="gender"
-                        value="남자"
-                      />
-                      <label htmlFor="male">남자</label>
-                    </RadioInputWrapper>
-                    <RadioInputWrapper>
-                      <input
-                        type="radio"
-                        id="female"
-                        name="gender"
-                        value="여자"
-                      />
-                      <label htmlFor="female">여자</label>
-                    </RadioInputWrapper>
-                  </InputContainer>
-                </Fieldset>
-              </FlexRow> */}
+                <Input
+                  label="닉네임"
+                  type="text"
+                  name={"nickname"}
+                  value={userNickname}
+                  onChange={handleChange}
+                />
                 <ButtonWrapper>
-                  <Button type={"button"}>수정</Button>
+                  <Button type={"submit"}>수정</Button>
                   <Button
+                    type={"button"}
                     buttonType={"secondary"}
                     onClick={() => {
                       navigate(-1);
@@ -132,10 +205,19 @@ export default function MyAccountEdit() {
                 </ButtonWrapper>
               </InputContainer>
             </Form>
-            <LinkWrapper>
-              더 이상 웨더웨어를 사용하고 싶지 않아요
-              <LinkToLogin to={`/login`}>회원 탈퇴하기</LinkToLogin>
-            </LinkWrapper>
+            <LinkContainer>
+              <LinkWrapper>
+                <LinkToPassEdit to={`/my/setting/password`}>
+                  비밀번호 변경하기
+                </LinkToPassEdit>
+              </LinkWrapper>
+              <LinkWrapper>
+                더 이상 웨더웨어를 사용하고 싶지 않아요
+                <LinkToDeleteUser onClick={handleDeleteUser}>
+                  회원 탈퇴하기
+                </LinkToDeleteUser>
+              </LinkWrapper>
+            </LinkContainer>
           </FormContainer>
         </RightColumn>
       </GridContainer>
@@ -242,6 +324,7 @@ const RightColumn = styled.div`
 const FormTextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
 `;
 
@@ -259,7 +342,9 @@ const FormTitle = styled.h1`
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
+  height: 100%;
 `;
 
 //📝 폼
@@ -267,6 +352,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   gap: 2rem;
 `;
 
@@ -315,6 +401,14 @@ const Form = styled.form`
 
 //
 
+const LinkContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  width: 70%;
+`;
 const LinkWrapper = styled.div`
   font-size: small;
   display: flex;
@@ -322,11 +416,16 @@ const LinkWrapper = styled.div`
   justify-content: center;
   gap: 0.5rem;
 `;
-const LinkToLogin = styled(Link)`
+const LinkToPassEdit = styled(Link)`
   color: ${({ theme }) => theme.colors.blue};
   font-size: small;
 `;
 
+const LinkToDeleteUser = styled.div`
+  color: ${({ theme }) => theme.colors.blue};
+  font-size: small;
+  cursor: pointer;
+`;
 //✅ 인풋
 
 const ImageEditContainer = styled.div`
@@ -354,16 +453,20 @@ export const PreviewWrapper = styled.div`
   align-items: center;
 `;
 
-// export const IconWrapper = styled.div`
-//   cursor: pointer;
-//   width: 30%;
-//   color: ${({ theme }) => theme.colors.borderLightGray};
-//   transition: color 0.25s linear;
+export const IconWrapper = styled.div`
+  position: absolute;
+  cursor: pointer;
+  width: 7rem;
+  height: 7rem;
+  color: ${({ theme }) => css`
+    ${theme.colors.main}66; //투명도 40%
+  `};
+  transition: color 0.25s linear;
 
-//   &:hover {
-//     color: ${({ theme }) => theme.colors.main};
-//   }
-// `;
+  &:hover {
+    color: ${({ theme }) => theme.colors.main};
+  }
+`;
 
 export const Preview = styled.img`
   width: 13rem;

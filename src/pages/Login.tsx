@@ -4,9 +4,38 @@ import Input from "@components/Input";
 import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useState } from "react";
+import useAuth from "@queries/useAuth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { mutateLogin, isPendingLogin } = useAuth();
+
+  const [loginUser, setLoginUser] = useState({ username: "", password: "" });
+
+  const handleChangeLoginUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setLoginUser({ ...loginUser, [name]: value });
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (!loginUser.username) {
+      return alert("이메일을 입력해 주세요!");
+    }
+
+    if (!loginUser.password) {
+      return alert("비밀번호를 입력해 주세요!");
+    }
+
+    console.log(loginUser);
+
+    mutateLogin(loginUser);
+
+    setLoginUser({ username: "", password: "" });
+  };
+
   return (
     <Container>
       <GridContainer>
@@ -47,15 +76,29 @@ export default function Login() {
             <FormText>지금 웨더웨어를 시작하세요!</FormText>
           </FormTextContainer>
           <FormContainer>
-            <Form>
-              <Input label="이메일" type="email" />
-              <Input label="비밀번호" type="password" />
+            <Form onSubmit={handleLogin}>
+              <Input
+                label="이메일"
+                name="username"
+                type="email"
+                value={loginUser.username}
+                onChange={handleChangeLoginUser}
+              />
+              <Input
+                label="비밀번호"
+                name="password"
+                type="password"
+                value={loginUser.password}
+                onChange={handleChangeLoginUser}
+              />
 
-              <Button>로그인</Button>
+              <Button type="submit" disabled={isPendingLogin}>
+                로그인
+              </Button>
             </Form>
             <LinkWrapper>
               비밀번호가 기억나지 않아요.
-              <LinkToLogin to={`/login`}>비밀번호 찾기</LinkToLogin>
+              <LinkToLogin to={`/login/find`}>비밀번호 찾기</LinkToLogin>
               {/* 아직 회원이 아닌가요?
               <LinkToLogin to={`/login`}>가입하기</LinkToLogin> */}
             </LinkWrapper>
@@ -63,10 +106,12 @@ export default function Login() {
               <span>아직 회원이 아닌가요?</span>
             </SeparateBorder> */}
             <Button
+              type="button"
               buttonType="secondary"
               onClick={() => {
                 navigate(`/signup`);
               }}
+              disabled={isPendingLogin}
             >
               가입하기
             </Button>

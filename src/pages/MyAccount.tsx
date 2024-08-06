@@ -1,24 +1,41 @@
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
 import Icon from "@components/Icon";
+import useAuth from "@queries/useAuth";
+import { useMe } from "@queries/userQueries";
 import {
   cakeIcon,
   emailIcon,
-  mapPinIcon,
   userIcon,
   weatherSunCloudyIcon,
 } from "@shared/icons";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function MyAccount() {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
+  const { me, isError, isPending, isSuccess } = useMe(isLoggedIn); //처음 Layout nav 바에서 가져올 때, 캐싱한 것 ㅇㅇㅇ...을쓰면 되지 않을런지?
 
-  //✅ 임의
-  const hasUserImage = false;
+  const getGender = (gender: string) => {
+    switch (gender) {
+      case "MALE":
+        return "남자";
+      case "FEMALE":
+        return "여자";
+      default:
+        "남자";
+        break;
+    }
+  };
 
-  //useEffect로 내 정보 먼저 가져와서 폼 채우기
+  //useEffect로 내 정보 먼저 가져와서 채우기
+  useEffect(() => {
+    if (me) {
+      console.log(me);
+    }
+  }, [me]);
 
   return (
     <Container>
@@ -42,25 +59,24 @@ export default function MyAccount() {
           <RightContainer>
             <ImageContainer>
               <ImageWrapper>
-                {hasUserImage && <Preview src={userImage} alt="preview" />}
-                {!hasUserImage && <Avatar size="xl" />}
+                {<Avatar size="xl" image={me?.image as string} />}
               </ImageWrapper>
             </ImageContainer>
 
             <UserInfoContainer>
               <NickNameWrapper>
-                <Nickname>{`닉네임`}님!</Nickname>
+                <Nickname>{me?.nickname}님!</Nickname>
               </NickNameWrapper>
               <InfoContainer>
                 <InfoTextWrapper>
                   <Icon icon={userIcon} />
                   <InfoTitle>성별</InfoTitle>
-                  <InfoText>{`남자/여자`}</InfoText>
+                  <InfoText>{getGender(me?.gender as string)}</InfoText>
                 </InfoTextWrapper>
                 <InfoTextWrapper>
                   <Icon icon={cakeIcon} />
                   <InfoTitle>생년월일</InfoTitle>
-                  <InfoText>{`2024.07.26`}</InfoText>
+                  <InfoText>{me?.birthday}</InfoText>
                 </InfoTextWrapper>
                 {/* <InfoTextWrapper>
                   <Icon icon={mapPinIcon} />
@@ -70,7 +86,7 @@ export default function MyAccount() {
                 <InfoTextWrapper>
                   <Icon icon={emailIcon} />
                   <InfoTitle>이메일</InfoTitle>
-                  <InfoText>{`email@email.com`}</InfoText>
+                  <InfoText>{me?.email}</InfoText>
                 </InfoTextWrapper>
               </InfoContainer>
             </UserInfoContainer>
@@ -80,10 +96,6 @@ export default function MyAccount() {
                 회원 정보 수정하기
               </Button>
             </ButtonWrapper>
-            {/* <LinkWrapper>
-              더 이상 웨더웨어를 사용하고 싶지 않아요
-              <LinkToLogin to={`/login`}>회원 탈퇴하기</LinkToLogin>
-            </LinkWrapper> */}
           </RightContainer>
         </RightColumn>
       </GridContainer>
@@ -190,6 +202,7 @@ const RightColumn = styled.div`
 const FormTextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
 `;
 

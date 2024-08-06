@@ -6,14 +6,29 @@ import styled from "styled-components";
 
 interface SettingDialogProps {
   onClose: () => void;
+  onLogout: () => void;
+  isPendingLogout: boolean;
+  myImage: string | null;
+  myNickname: string;
+  myEmail: string;
 }
 
-export default function SettingDialog({ onClose }: SettingDialogProps) {
+export default function SettingDialog({
+  onClose,
+  onLogout,
+  isPendingLogout,
+  myImage,
+  myNickname,
+  myEmail,
+}: SettingDialogProps) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     console.log("로그아웃, 유저 정보 날리기");
-    onClose();
+    onLogout(); //로그아웃
+    if (!isPendingLogout) {
+      onClose();
+    }
   };
 
   return (
@@ -21,10 +36,10 @@ export default function SettingDialog({ onClose }: SettingDialogProps) {
       <ContentWrapper>
         <DialogList>
           <UserInfo>
-            <Avatar size="m" />
+            <Avatar size="m" image={myImage} />
             <TextContainer>
-              <Text>{`user.nickName`}</Text>
-              <Text>{`user.email@email.com`}</Text>
+              <Text>{myNickname}</Text>
+              <Text>{myEmail}</Text>
             </TextContainer>
           </UserInfo>
           <DialogItem
@@ -70,7 +85,6 @@ export const DialogItem = styled.div`
   width: 100%;
   padding: 1rem 2rem;
   font-size: small;
-
   &:hover {
     background-color: ${({ theme }) => theme.colors.borderLightGray};
   }
@@ -93,6 +107,7 @@ const UserInfo = styled.div`
   gap: 1rem;
   border-bottom: ${({ theme }) => theme.borders.containerBorder};
 `;
+
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
