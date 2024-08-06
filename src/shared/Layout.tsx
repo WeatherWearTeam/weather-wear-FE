@@ -4,6 +4,9 @@ import ModalPortal from "@components/Modal/ModalPortal";
 import SettingDialog from "@components/Modal/SettingDialog";
 import useDropdownPosition from "@hooks/useDropdownPosition";
 import useModal from "@hooks/useModal";
+import useAuth from "@queries/useAuth";
+import { useMe } from "@queries/userQueries";
+import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -12,11 +15,17 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
-  // const isLoggedIn = false; //✅ 임의
+  const { isLoggedIn, mutateLogout, isPendingLogout } = useAuth();
 
+  const { me, isError, isPending, isSuccess } = useMe(isLoggedIn); //isLoggedIn이 true일 때만 useMe 호출되도록
   const { openModal, closeModal, isVisible } = useModal();
   const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
 
+  useEffect(() => {
+    if (isLoggedIn && me) {
+      console.log("👋🏻", me);
+    }
+  }, [isLoggedIn, me]);
   return (
     <>
       <HeaderContainer>
@@ -36,15 +45,19 @@ function Layout({ children }: LayoutProps) {
             </StNavLink>
           </NavLeft>
           <NavRight>
-            {/* {isLoggedIn ? ( */}
-            <AvatarWrapper ref={divRef}>
-              <Avatar size="s" onClick={openModal} />
-            </AvatarWrapper>
-            {/* ) : ( */}
-            <StLink to={`/login`}>
-              <NavItem>로그인</NavItem>
-            </StLink>
-            {/* )} */}
+            {isLoggedIn ? (
+              <AvatarWrapper ref={divRef}>
+                <Avatar
+                  size="s"
+                  onClick={openModal}
+                  image={me?.image as string}
+                />
+              </AvatarWrapper>
+            ) : (
+              <StLink to={`/login`}>
+                <NavItem>로그인</NavItem>
+              </StLink>
+            )}
 
             {isVisible && (
               <ModalPortal>
@@ -52,7 +65,14 @@ function Layout({ children }: LayoutProps) {
                   onClose={closeModal}
                   dropdownPosition={{ ...dropdownPosition }}
                 >
-                  <SettingDialog onClose={closeModal} />
+                  <SettingDialog
+                    onClose={closeModal}
+                    onLogout={mutateLogout}
+                    isPendingLogout={isPendingLogout}
+                    myImage={me?.image as string}
+                    myNickname={me?.nickname as string}
+                    myEmail={me?.email as string}
+                  />
                 </DropdownLayout>
               </ModalPortal>
             )}
@@ -78,7 +98,6 @@ const HeaderContainer = styled.header`
   justify-content: center;
   align-items: center;
   background-color: white;
-  /* box-shadow: 2px 2px 10px ${({ theme }) => theme.colors.borderLightGray}; */
   box-shadow: 2px 2px 10px rgb(239, 239, 239);
 `;
 
@@ -149,7 +168,7 @@ const NavItem = styled.span`
 
 //네비게이션 바 밑의 메인 영역입니다.
 const Main = styled.main`
-  margin-top: 7rem;
-  height: calc(100vh - 7rem);
+  margin-top: 5rem;
+  height: calc(100vh - 5rem);
   width: 100%;
 `;
