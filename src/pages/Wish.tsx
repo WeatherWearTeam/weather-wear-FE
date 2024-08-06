@@ -1,155 +1,69 @@
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PageMoveButton from "@components/PageMoveButton";
-import AddButton from "@components/AddButton";
-import ColorBar from "@components/ColorBar";
 import ClothesType from "@components/clothes/ClothesTypes";
 import WishsGrid from "@components/wish/WishsGrid";
 import useModal from "@hooks/useModal";
 import ModalPortal from "@components/Modal/ModalPortal";
 import ModalLayout from "@components/Modal/ModalLayout";
 import WishDetail from "@pages/WishDetail";
+import { useWishlistItems, useDeleteWishlistItem, useWishlistItem } from "@/queries/wishlistQueries";
 
 function Wish() {
   const { isVisible, openModal, closeModal } = useModal();
+  const { wishlistItems, isPending, isError } = useWishlistItems();
+  const { mutate: deleteWishlistItem } = useDeleteWishlistItem();
+  
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const { data: itemData, isLoading, error } = useWishlistItem(selectedItemId ? parseInt(selectedItemId) : undefined);
 
-  const mockWishItems = [
-    {
-      productId: 1, //Integer
-      title: "반팔 티셔츠 루룰루루",
-      link: "#링크",
-      image: "이미지",
-      lprice: 10000, //Integer
-      hprice: 0, //Integer
-      mallName: "네이버",
-      maker: "제조사",
-      brand: "브랜드",
-      category1: "대분류",
-      category2: "중분류",
-      category3: "소분류",
-      category4: "세분류",
-    },
-    {
-      productId: 2, //Integer
-      title: "반팔 티셔츠 루룰루루",
-      link: "#링크",
-      image: "이미지",
-      lprice: 10000, //Integer
-      hprice: 0, //Integer
-      mallName: "네이버",
-      maker: "제조사",
-      brand: "브랜드",
-      category1: "대분류",
-      category2: "중분류",
-      category3: "소분류",
-      category4: "세분류",
-    },
-    {
-      productId: 3, //Integer
-      title: "반팔 티셔츠 루룰루루",
-      link: "#링크",
-      image: "이미지",
-      lprice: 10000, //Integer
-      hprice: 0, //Integer
-      mallName: "네이버",
-      maker: "제조사",
-      brand: "브랜드",
-      category1: "대분류",
-      category2: "중분류",
-      category3: "소분류",
-      category4: "세분류",
-    },
-    {
-      productId: 4, //Integer
-      title: "반팔 티셔츠 루룰루루",
-      link: "#링크",
-      image: "이미지",
-      lprice: 10000, //Integer
-      hprice: 0, //Integer
-      mallName: "네이버",
-      maker: "제조사",
-      brand: "브랜드",
-      category1: "대분류",
-      category2: "중분류",
-      category3: "소분류",
-      category4: "세분류",
-    },
-    {
-      productId: 5, //Integer
-      title: "반팔 티셔츠 루룰루루",
-      link: "#링크",
-      image: "이미지",
-      lprice: 10000, //Integer
-      hprice: 0, //Integer
-      mallName: "네이버",
-      maker: "제조사",
-      brand: "브랜드",
-      category1: "대분류",
-      category2: "중분류",
-      category3: "소분류",
-      category4: "세분류",
-    },
-    {
-      productId: 6, //Integer
-      title: "반팔 티셔츠 루룰루루",
-      link: "#링크",
-      image: "이미지",
-      lprice: 10000, //Integer
-      hprice: 0, //Integer
-      mallName: "네이버",
-      maker: "제조사",
-      brand: "브랜드",
-      category1: "대분류",
-      category2: "중분류",
-      category3: "소분류",
-      category4: "세분류",
-    },
-    {
-      productId: 7, //Integer
-      title: "반팔 티셔츠 루룰루루",
-      link: "#링크",
-      image: "이미지",
-      lprice: 10000, //Integer
-      hprice: 0, //Integer
-      mallName: "네이버",
-      maker: "제조사",
-      brand: "브랜드",
-      category1: "대분류",
-      category2: "중분류",
-      category3: "소분류",
-      category4: "세분류",
-    },
-    {
-      productId: 8, //Integer
-      title: "반팔 티셔츠 루룰루루",
-      link: "#링크",
-      image: "이미지",
-      lprice: 10000, //Integer
-      hprice: 0, //Integer
-      mallName: "네이버",
-      maker: "제조사",
-      brand: "브랜드",
-      category1: "대분류",
-      category2: "중분류",
-      category3: "소분류",
-      category4: "세분류",
-    },
-  ];
+  //find 하나만 찾기 ***********중요
+  const selectedItem = wishlistItems?.find((item) => item.id === selectedItemId);
+  // console.log(wishlistItems);
+
+  useEffect(() => {
+    if (itemData) {
+      // 선택된 아이템의 데이터가 변경되면 해당 데이터로 상태를 업데이트
+      setSelectedItemId(itemData.id.toString());
+    }
+  }, [itemData]);
+
+  useEffect(() => {
+    if (error) {
+      console.error("Error loading wishlist item:", error);
+    }
+  }, [error]);
+
+  if (isPending || isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading wishlist items</div>;
+
+  const handleDelete = (productId: number) => {
+    deleteWishlistItem(productId);
+  };
+
+  const handleItemClick = (id: string) => {
+    setSelectedItemId(id);
+    openModal();
+  };
 
   return (
     <MypageContentsContainer>
       <ContentsHeader>
         <ClothesType />
-        <ColorBar />
       </ContentsHeader>
       <ContentsMain>
-        <WishsGrid onClick={openModal} data={mockWishItems}/>
+        <WishsGrid 
+          onClick={handleItemClick} 
+          data={wishlistItems}
+          onDelete={handleDelete}
+        />
       </ContentsMain>
       <ContentsFooter>
         <PageMoveButton />
-        {isVisible && (
+        {isVisible && selectedItemId && (
           <ModalPortal>
             <ModalLayout onClose={closeModal}>
-              <WishDetail />
+              <WishDetail item={selectedItem} /> {/* itemData가 올바르게 전달됨 */}
             </ModalLayout>
           </ModalPortal>
         )}
@@ -187,17 +101,6 @@ const ContentsHeader = styled.div`
   box-sizing: border-box;
 `;
 
-const ContentsFooter = styled.div`
-  width: 85%;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  max-width: 1220px;
-  flex-shrink: 0;
-`;
-
 const ContentsMain = styled.div`
   width: 85%;
   max-width: 1090px;
@@ -212,4 +115,9 @@ const ContentsMain = styled.div`
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
+`;
+
+const ContentsFooter = styled.div`
+  margin-top: auto;
+  margin-bottom: 5rem;
 `;

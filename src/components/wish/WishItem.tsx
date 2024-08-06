@@ -1,29 +1,41 @@
-import { WishItemType } from "@components/wish/WishsGrid";
+import React from "react";
 import styled from "styled-components";
+import { WishItemType } from "@components/wish/WishsGrid";
 
 interface WishItemProps {
-  onClick: () => void;
   item: WishItemType;
+  onClick: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-function WishItem({ onClick, item }: WishItemProps) {
+function WishItem({ item, onClick, onDelete }: WishItemProps) {
   return (
-    <ContentsItem onClick={onClick}>
-      <ContentsItemImage>{item.image}</ContentsItemImage>
+    <ContentsItem>
+      <ContentsItemImage src={item.image} alt="" onClick={() => onClick(item.id)} />
       <ContentsItemData>
-        <span>{item.category4}</span>
+        <span>{item.category3}</span>
       </ContentsItemData>
       <ProducPricetWrapper>
         <ContentsItemTitle>{item.title}</ContentsItemTitle>
         <ContentsItemPrice>
-          {item.lprice} ~ {item.hprice}
+          {item.lprice}원
         </ContentsItemPrice>
       </ProducPricetWrapper>
+      <DeleteButton onClick={() => onDelete(item.id)}>삭제</DeleteButton>
     </ContentsItem>
   );
 }
 
 export default WishItem;
+
+const DeleteButton = styled.button`
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+`;
 
 const ContentsItem = styled.div`
   width: 250px;
@@ -32,7 +44,7 @@ const ContentsItem = styled.div`
   cursor: pointer;
 `;
 
-const ContentsItemImage = styled.div`
+const ContentsItemImage = styled.img`
   background-color: gray;
   width: 250px;
   height: 270px;
@@ -63,16 +75,16 @@ const ContentsItemTitle = styled.div`
   color: black;
   width: 250px;
   height: 25px;
-  font-size: medium;
+  font-size: small;
   font-weight: bold;
   box-sizing: border-box;
 `;
 
 const ContentsItemPrice = styled.div`
   color: black;
-  width: 250px;
+  width: 85px;
   height: 25px;
-  margin-left: 60px;
+  margin-left: 20px;
   font-size: small;
   font-weight: bold;
 `;

@@ -1,68 +1,62 @@
+import React from "react";
 import Button from "@components/Button";
 import styled from "styled-components";
+import { WishlistItem } from "@api/wishlistApi";
 
-export default function WishDetail() {
+interface WishItemProps {
+  item?: WishlistItem | undefined; // WishlistItem | undefined로 수정
+}
+
+const WishDetail: React.FC<WishItemProps> = ({ item }) => {
+  if (!item) {
+    return null;
+  }
+
+
   return (
     <Container>
       <TitleContainer>
         <SubTitle>위시 리스트</SubTitle>
-        {/* <Title>{`상품 이름 여기에`}</Title> */}
+        <Title>{item.title}</Title>
       </TitleContainer>
       <GridContainer>
         <Column>
           <ImageWrapper>
-            <img
-              src="https://image.msscdn.net/images/goods_img/20240606/4180968/4180968_17181958693144_500.jpg"
-              alt="네이버 쇼핑 추천 아이템"
-            />
-            {/* 이미지 로드 실패 시 예외 처리 필요 */}
+            <img src={item.image} alt="네이버 쇼핑 추천 아이템" />
           </ImageWrapper>
         </Column>
         <Column>
           <RightWrapper>
-            {/*  */}
             <UpContainer>
-              {/*  */}
               <CategoryWrapper>
-                {`category1`} / {`category2`} / {`category3`} / {`category4`}
+                {item.category1} / {item.category2} / {item.category3} / {item.category4}
               </CategoryWrapper>
-              {/*  */}
-              {/*  */}
               <ProductNameWrapper>
-                <ProductName>{`title: 상품 이름`}</ProductName>
+                <ProductName>{item.title}</ProductName>
               </ProductNameWrapper>
-              {/*  */}
-              {/*  */}
               <DataWrapper>
                 <InfoLabel>제조사</InfoLabel>
-                <InfoData>{`maker`}</InfoData>
+                <InfoData>{item.maker}</InfoData>
               </DataWrapper>
-
               <DataWrapper>
                 <InfoLabel>브랜드</InfoLabel>
-                <InfoData>{`brand`}</InfoData>
+                <InfoData>{item.brand}</InfoData>
               </DataWrapper>
-
               <DataWrapper>
                 <InfoLabel>판매처</InfoLabel>
-                <InfoData>{`mallName`}</InfoData>
+                <InfoData>{item.mallName}</InfoData>
               </DataWrapper>
-              {/*  */}
             </UpContainer>
             <DownContainer>
-              {/* <PriceContainer> */}
               <FlexRow>
-                <LowHighlight>최저 </LowHighlight>
-                <LowPrice>{`lprice`}원</LowPrice>
-                <HightPrice> ~ </HightPrice>
+                <LowHighlight>최저</LowHighlight>
+                <LowPrice>{item.lprice}원</LowPrice>
                 <HighHighlight>최고</HighHighlight>
-                <HightPrice>{`hprice`}원</HightPrice>
+                <HightPrice>{item.hprice}원</HightPrice>
               </FlexRow>
-              {/* </PriceContainer> */}
               <Button
                 onClick={() => {
-                  // window.location.href = `${}`;
-                  // 네이버 외부 링크 넣기
+                  window.location.href = `${item.link}`;
                 }}
               >
                 사러가기
@@ -73,7 +67,9 @@ export default function WishDetail() {
       </GridContainer>
     </Container>
   );
-}
+};
+
+export default WishDetail;
 
 //✅ 상단 글 부분
 const ImageWrapper = styled.div`
