@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import LikeButton from '@components/LikeButton';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import { useCreateWishlistItem, useDeleteWishlistItem } from "@/queries/wishlistQueries";
+import { WishlistItem } from '@/api/wishlistApi';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -14,11 +16,54 @@ interface NaverShopRecommendationProps {
 }
 
 const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked, toggleLike }) => {
-  const slideData = Array(9).fill(null).map((_, index) => ({
-    image: `NaverShopImage${index + 1}`,
-    type: '티셔츠Product Type_',
-    title: `제품명 (title ${index + 1})`
-  }));
+  const [slideData, setSlideData] = useState<WishlistItem[]>([]);
+  const { mutate: createWishlistItem } = useCreateWishlistItem();
+  const { mutate: deleteWishlistItem } = useDeleteWishlistItem();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/wishlist');
+        const wishlistItems: WishlistItem[] = response.data;
+        setSlideData(wishlistItems);
+      } catch (error) {
+        console.error('Error fetching data', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleLikeClick = (index: number) => {
+    const updatedLiked = [...liked];
+    updatedLiked[index] = !updatedLiked[index];
+    toggleLike(index);
+
+    const item = slideData[index];
+
+    if (updatedLiked[index]) {
+      const wishlistItem: WishlistItem = {
+        productId: item.productId,
+        title: item.title,
+        link: item.link,
+        image: item.image,
+        lprice: item.lprice,
+        hprice: item.hprice,
+        mallName: item.mallName,
+        brand: item.brand,
+        maker: item.maker,
+        category1: item.category1,
+        category2: item.category2,
+        category3: item.category3,
+        category4: item.category4,
+        type: item.type,
+        id: item.id,
+      };
+      createWishlistItem(wishlistItem);
+    } else {
+      deleteWishlistItem(item.productId);
+    }
+  };
 
   return (
     <HomeContents5>
@@ -29,31 +74,22 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked
             navigation={true}
             modules={[Navigation]}
             breakpoints={{
-              1200: {
-                slidesPerView: 3,
-                spaceBetween: 20
-              },
-              980: {
-                slidesPerView: 3,
-                spaceBetween: 20
-              },
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 20
-              }
+              1200: { slidesPerView: 3, spaceBetween: 20 },
+              980: { slidesPerView: 3, spaceBetween: 20 },
+              768: { slidesPerView: 2, spaceBetween: 20 }
             }}
             className="mySwiper"
           >
             {slideData.map((slide, index) => (
               <SwiperSlide key={index}>
-                  <NaverShopImage />
-                  <NaverShopData>
-                    <NaverShopDataText>
-                      <NaverShopDataType>{slide.type}</NaverShopDataType>
-                      <NaverShopDataTitle>{slide.title}</NaverShopDataTitle>
-                    </NaverShopDataText>
-                    <LikeButton active={liked[index]} onClick={() => toggleLike(index)} />
-                  </NaverShopData>
+                <NaverShopImage style={{ backgroundImage: `url(${slide.image})` }} />
+                <NaverShopData>
+                  <NaverShopDataText>
+                    <NaverShopDataType>{slide.category3}</NaverShopDataType>
+                    <NaverShopDataTitle>{slide.title}</NaverShopDataTitle>
+                  </NaverShopDataText>
+                  <LikeButton active={liked[index]} onClick={() => handleLikeClick(index)} />
+                </NaverShopData>
               </SwiperSlide>
             ))}
           </StyledSwiper>
@@ -125,17 +161,17 @@ const StyledSwiper = styled(Swiper)`
   .swiper-button-prev {
     color: black;
     top: 50%;
-    transform: translateY(-50%) ;
+    transform: translateY(-50%);
   }
 `;
 
 const NaverShopImage = styled.div`
   background-color: gray;
+  background-size: cover;
+  background-position: center;
   height: 240px;
   width: 100%;
 `;
-
-
 
 const NaverShopData = styled.div`
   display: flex;
@@ -153,7 +189,6 @@ const NaverShopDataText = styled.div`
   box-sizing: border-box;
   padding-bottom: 5px;
   justify-content: space-between;
-
 `;
 
 const NaverShopDataType = styled.div`

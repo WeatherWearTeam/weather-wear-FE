@@ -4,13 +4,14 @@ import styled from "styled-components";
 
 interface ColorPickBarProps {
   onClick?: (color: ClothesColorType) => void;
+  selectedColor?: ClothesColorType;
 }
 
-export default function ColorPickBar({ onClick }: ColorPickBarProps) {
+export default function ColorPickBar({ onClick, selectedColor }: ColorPickBarProps) {
   return (
     <Container>
       색상
-      <ColorBar size="m" onClick={onClick} />
+      <ColorBar size="m" onClick={onClick} selectedColor={selectedColor} />
     </Container>
   );
 }

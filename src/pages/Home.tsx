@@ -18,7 +18,7 @@ const Home: React.FC = () => {
   };
 
   //✅ 임의
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   return (
     <HomeContainer>
