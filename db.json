@@ -1,97 +1,594 @@
 {
   "boards": [
     {
-      "id": 12345,
-      "userId": 12345,
-      "title": "제목입니다 1",
-      "contents": "내용입니다 1",
+      "id": "2",
+      "user": {
+        "userId": 1,
+        "nickname": "페이커",
+        "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
+      },
+      "title": "“시간은 금이다”",
+      "contents": "초크 스트라이프 울 플란넬 수트, 페어 아일 니트 베스트, 스트라이프 셔츠, 타이, 슈즈, 모두 폴로 랄프 로렌.",
       "isPrivate": false,
-      "stn": 12345,
-      "createTime": "2024-07-20T12:00:00",
-      "modifiedTime": "2024-07-20T12:00:00",
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
       "weather": {
         "id": 1,
-        "stn": 12345,
+        "stn": 1168010800,
         "ta": 25,
         "sky": 1,
-        "prep": "2024-07-20T12:00:00"
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 2,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 2,
+          "boardId": 2,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 2,
+        "image": "https://img.gqkorea.co.kr/gq/2023/10/style_651d347c2f75c-1120x1400.jpg",
+        "boardId": 2,
+        "createdAt": "2024-07-31T16:00:00"
       }
     },
-
     {
-      "id": 23456,
-      "userId": 23456,
-      "title": "제목입니다 2",
-      "contents": "내용입니다 2",
+      "id": "3",
+      "user": {
+        "userId": 1,
+        "nickname": "페이커",
+        "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
+      },
+      "title": "페이커 FAKER",
+      "contents": "울 트윌 재킷, 베어 니트, 스트라이프 셔츠, 팬츠, 타이, 모두 폴로 랄프 로렌.",
       "isPrivate": false,
-      "stn": 23456,
-      "createTime": "2024-07-20T12:00:00",
-      "modifiedTime": "2024-07-20T12:00:00",
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
       "weather": {
         "id": 1,
-        "stn": 23456,
+        "stn": 1168010800,
         "ta": 25,
         "sky": 1,
-        "prep": "2024-07-20T12:00:00"
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 3,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 3,
+          "boardId": 3,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 3,
+        "image": "https://img.gqkorea.co.kr/gq/2023/10/style_651d346ce3035-1120x1400.jpg",
+        "boardId": 3,
+        "createdAt": "2024-07-31T16:00:00"
       }
     },
     {
-      "id": 34567,
-      "userId": 34567,
-      "title": "제목입니다 3",
-      "contents": "내용입니다 3",
+      "id": "4",
+      "user": {
+        "userId": 1,
+        "nickname": "페이커",
+        "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
+      },
+      "title": "지금처럼 쭉 배우고 성장하는 삶을 살고 싶다는 마음은 변하지 않겠죠",
+      "contents": "바시티 재킷, 케이블 니트, 셔츠, 치노 팬츠, 타이, 모두 폴로 랄프 로렌.",
       "isPrivate": false,
-      "stn": 34567,
-      "createTime": "2024-07-20T12:00:00",
-      "modifiedTime": "2024-07-20T12:00:00",
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
       "weather": {
         "id": 1,
-        "stn": 34567,
+        "stn": 1168010800,
         "ta": 25,
         "sky": 1,
-        "prep": "2024-07-20T12:00:00"
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 4,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 4,
+          "boardId": 4,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 4,
+        "image": "https://img.gqkorea.co.kr/gq/2023/10/style_651d345d3e00d-1120x1400.jpg",
+        "boardId": 4,
+        "createdAt": "2024-07-31T16:00:00"
+      }
+    },
+    {
+      "id": "5",
+      "user": {
+        "userId": 1,
+        "nickname": "페이커",
+        "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
+      },
+      "title": "페이커 폴로 랄프로렌 1",
+      "contents": "모던 개버딘 블레이저 69만9천원, 포플린 셔츠 29만9천원, 스트라이프 저지 티셔츠 12만9천원, 모두 폴로 랄프 로렌.",
+      "isPrivate": false,
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 1168010800,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 5,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 5,
+          "boardId": 5,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 5,
+        "image": "https://img.gqkorea.co.kr/gq/2024/05/style_665034b93f244.jpg",
+        "boardId": 5,
+        "createdAt": "2024-07-31T16:00:00"
+      }
+    },
+    {
+      "id": "6",
+      "user": {
+        "userId": 1,
+        "nickname": "페이커",
+        "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
+      },
+      "title": "T1 선수단의 하루",
+      "contents": "왼쪽부터 | 마드라스 체크 셔츠 21만9천원, 저지 그래픽 티셔츠 15만9천원, 플리츠 트윌 팬츠 34만9천원, 허리에 두른 블루 케이블 니트 스웨터, 베이지 스니커즈 가격 미정, 트윌 유틸리티 재킷 52만9천원, 블루 폴로 셔츠 16만9천원, 샐린저 치노 팬츠 29만9천원, 어깨에 두른 케이블 니트 스웨터 25만9천원, 시어서커 수트 재킷 69만9천원, 스트라이프 저지 럭비 셔츠 23만9천원, 헤링본 카고 팬츠 39만9천원, 스트라이프 케이블 니트 스웨터 27만9천원, 오렌지 카고 팬츠 27만9천원, 허리에 두른 타이, 블랙 스니커즈 가격 미정, 폴로 테일러드 플래드 수트 재킷 79만9천원, 핑크 옥스퍼드 셔츠 21만9천원, 스트라이프 실크 클럽 타이 19만9천원, 헤리티지 페이디드 진 25만9천원, 화이트 스니커즈 가격 미정, 모두 폴로 랄프 로렌.",
+      "isPrivate": false,
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 1168010800,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 6,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 6,
+          "boardId": 6,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 6,
+        "image": "https://img.gqkorea.co.kr/gq/2024/05/style_6650349db5c3b.jpg",
+        "boardId": 6,
+        "createdAt": "2024-07-31T16:00:00"
+      }
+    },
+    {
+      "id": "7",
+      "user": {
+        "userId": 1,
+        "nickname": "페이커",
+        "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
+      },
+      "title": "폴로 랄프 로렌을 입고 카메라 앞에 선 T1 선수단의 하루",
+      "contents": "왼쪽부터 | 테일러드 시어서커 재킷 79만9천원, 포플린 셔츠 21만9천원, 스트라이프 코튼 티셔츠 13만9천원, 플리츠 수트 팬츠 45만9천원, 스니커즈 가격 미정, 모던 개버딘 블레이저 69만9천원, 포플린 셔츠 29만9천원, 스트라이프 저지 티셔츠 12만9천원, 슬림 플리츠 팬츠 34만9천원, 브라운 벨트 가격 미정, 테일러드 수트 재킷 69만9천원, 디스트레스트 스트라이프 셔츠 34만9천원, 폴로 셔츠 25만9천원, 워시 치노 팬츠 19만9천원, 스니커즈 가격 미정, 케이블 니트 스웨터 25만9천원, 스트라이프 코튼 티셔츠 13만9천원, 플리츠 트윌 팬츠 34만9천원, 블루 스니커즈 가격 미정, 핀 스트라이프 트윌 재킷 69만9천원, 베어 옥스퍼드 셔츠 21만9천원, 랄프 티셔츠 15만9천원, 플리츠 치노 팬츠 27만9천원, 브라운 레더 슈즈 가격 미정, 모두 폴로 랄프 로렌.",
+      "isPrivate": false,
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 1168010800,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 7,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 7,
+          "boardId": 7,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 7,
+        "image": "https://img.gqkorea.co.kr/gq/2024/05/style_665034c150025.jpg",
+        "boardId": 7,
+        "createdAt": "2024-07-31T16:00:00"
+      }
+    },
+    {
+      "id": "8",
+      "user": {
+        "userId": 1,
+        "nickname": "페이커",
+        "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
+      },
+      "title": "페이커 폴로 랄프로렌",
+      "contents": "폴로 테일러드 플래드 수트 재킷 79만9천원, 핑크 옥스퍼드 셔츠 21만9천원, 스트라이프 실크 클럽 타이 19만9천원, 헤리티지 페이디드 진 25만9천원, 벨트 가격 미정, 모두 폴로 랄프 로렌.",
+      "isPrivate": false,
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 1168010800,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 8,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 8,
+          "boardId": 8,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 8,
+        "image": "https://img.gqkorea.co.kr/gq/2024/05/style_66503496e7605.jpg",
+        "boardId": 8,
+        "createdAt": "2024-07-31T16:00:00"
+      }
+    },
+    {
+      "id": "9",
+      "user": {
+        "userId": 2,
+        "nickname": "구마유시",
+        "image": "https://pbs.twimg.com/media/GTjyjXQbkAABMRk?format=jpg&name=900x900"
+      },
+      "title": "구마유시 폴로 랄프로렌",
+      "contents": "트윌 유틸리티 재킷 52만9천원, 블루 폴로 셔츠 16만9천원, 샐린저 치노 팬츠 29만9천원, 어깨에 두른 케이블 니트 스웨터 25만9천원, 벨트 가격 미정, 벨트에 단 테리 볼 캡 11만9천원, 모두 폴로 랄프 로렌.",
+      "isPrivate": false,
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 1168010800,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 9,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 9,
+          "boardId": 9,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 9,
+        "image": "https://img.gqkorea.co.kr/gq/2024/05/style_665034ac18db1.jpg",
+        "boardId": 9,
+        "createdAt": "2024-07-31T16:00:00"
+      }
+    },
+    {
+      "id": "10",
+      "user": {
+        "userId": 3,
+        "nickname": "케리아",
+        "image": "https://pbs.twimg.com/media/GTanFzdbQAAiJNg?format=jpg&name=900x900"
+      },
+      "title": "케리아 폴로 랄프로렌",
+      "contents": "스트라이프 케이블 니트 스웨터 27만9천원, 오렌지 카고 팬츠 27만9천원, 허리에 두른 타이, 블랙 스니커즈 가격 미정, 모두 폴로 랄프 로렌.",
+      "isPrivate": false,
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 1168010800,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 10,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 10,
+          "boardId": 10,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 10,
+        "image": "https://img.gqkorea.co.kr/gq/2024/05/style_66503490d6882.jpg",
+        "boardId": 10,
+        "createdAt": "2024-07-31T16:00:00"
+      }
+    },
+    {
+      "id": "11",
+      "user": {
+        "userId": 4,
+        "nickname": "오너",
+        "image": "https://pbs.twimg.com/media/GTaPlehagAIkwQo?format=jpg&name=900x900"
+      },
+      "title": "오너 폴로 랄프로렌",
+      "contents": "테일러드 수트 재킷 69만9천원, 디스트레스트 스트라이프 셔츠 34만9천원, 폴로 셔츠 25만9천원, 워시 치노 팬츠 19만9천원, 코튼 치노 볼 캡 8만9천원, 스니커즈 가격 미정, 모두 폴로 랄프 로렌.",
+      "isPrivate": false,
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 1168010800,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 11,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 11,
+          "boardId": 11,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 11,
+        "image": "https://img.gqkorea.co.kr/gq/2024/05/style_665034a4b4cbf.jpg",
+        "boardId": 11,
+        "createdAt": "2024-07-31T16:00:00"
+      }
+    },
+    {
+      "id": "12",
+      "user": {
+        "userId": 5,
+        "nickname": "제우스",
+        "image": "https://pbs.twimg.com/media/GTjoj5cbwAEOjnC?format=jpg&name=900x900"
+      },
+      "title": "제우스 폴로 랄프로렌",
+      "contents": "마드라스 체크 셔츠 21만9천원, 저지 그래픽 티셔츠 15만9천원, 플리츠 트윌 팬츠 34만9천원, 허리에 두른 블루 케이블 니트 스웨터, 베이지 스니커즈 가격 미정, 모두 폴로 랄프 로렌.",
+      "isPrivate": false,
+      "stn": 1168010800,
+      "createdAt": "2024-07-31T16:00:00",
+      "updatedAt": "2024-07-31T16:00:00",
+      "weather": {
+        "id": 1,
+        "stn": 1168010800,
+        "ta": 25,
+        "sky": 1,
+        "prep": "2024-07-31T16:00:00"
+      },
+      "comments": [],
+      "boardLikes": {
+        "boardId": 12,
+        "likeSub": 10
+      },
+      "boardTags": [
+        {
+          "id": 12,
+          "boardId": 12,
+          "color": "blue",
+          "type": "청바지"
+        }
+      ],
+      "boardImage": {
+        "id": 12,
+        "image": "https://img.gqkorea.co.kr/gq/2024/05/style_665034b252d59.jpg",
+        "boardId": 12,
+        "createdAt": "2024-07-31T16:00:00"
       }
     }
   ],
-  "clothes": [],
-  "comments": [
+  "clothes": [
     {
-      "id": 1,
-      "user_id": 2,
-      "board_id": 1,
-      "regist_date": "2024-07-20T13:00:00",
-      "update_date": "2024-07-20T13:00:00",
-      "contents": "Great post!",
-      "comment_like": true
+      "id": "1",
+      "color": "blue",
+      "type": "Shirts",
+      "image": "https://shopping-phinf.pstatic.net/main_4769367/47693670127.20240707083442.jpg?type=f290"
     },
     {
-      "id": 2,
-      "user_id": 1,
-      "board_id": 1,
-      "regist_date": "2024-07-20T13:00:00",
-      "update_date": "2024-07-20T13:00:00",
-      "contents": "Great post!",
-      "comment_like": true
+      "id": "2",
+      "color": "black",
+      "type": "Slacks",
+      "image": "https://shopping-phinf.pstatic.net/main_4875596/48755964947.20240717083633.jpg?type=f290"
+    },
+    {
+      "id": "5",
+      "color": "pink",
+      "type": "Light_knit",
+      "image": "https://shopping-phinf.pstatic.net/main_4769345/47693457618.20240513101012.jpg?type=f290"
+    },
+    {
+      "id": "6",
+      "color": "yellow",
+      "type": "Shorts",
+      "image": "https://shopping-phinf.pstatic.net/main_4645928/46459285968.20240403151001.jpg?type=f290"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "user": {
+        "userId": 2,
+        "nickname": "구마유시",
+        "image": "https://pbs.twimg.com/media/GTjyjXQbkAABMRk?format=jpg&name=900x900"
+      },
+      "boardId": 1,
+      "createdAt": "2024-07-31T20:00:00",
+      "updatedAt": "2024-07-31T20:00:00",
+      "contents": "구마유시 진이야~",
+      "commentsLike": false
+    },
+    {
+      "id": "2",
+      "user": {
+        "userId": 3,
+        "nickname": "케리아",
+        "image": "https://pbs.twimg.com/media/GTanFzdbQAAiJNg?format=jpg&name=900x900"
+      },
+      "boardId": 1,
+      "createdAt": "2024-07-31T20:00:00",
+      "updatedAt": "2024-07-31T20:00:00",
+      "contents": "케르마야~",
+      "commentsLike": true
+    },
+    {
+      "id": "3",
+      "user": {
+        "userId": 4,
+        "nickname": "오너",
+        "image": "https://pbs.twimg.com/media/GTaPlehagAIkwQo?format=jpg&name=900x900"
+      },
+      "boardId": 1,
+      "createdAt": "2024-07-31T20:00:00",
+      "updatedAt": "2024-07-31T20:00:00",
+      "contents": "스껄~",
+      "commentsLike": false
+    },
+    {
+      "id": "4",
+      "user": {
+        "userId": 5,
+        "nickname": "제우스",
+        "image": "https://pbs.twimg.com/media/GTjoj5cbwAEOjnC?format=jpg&name=900x900"
+      },
+      "boardId": 1,
+      "createdAt": "2024-07-31T20:00:00",
+      "updatedAt": "2024-07-31T20:00:00",
+      "contents": "재치있다",
+      "commentsLike": false
+    },
+    {
+      "id": "5",
+      "user": {
+        "userId": 1,
+        "nickname": "페이커",
+        "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
+      },
+      "boardId": 1,
+      "createdAt": "2024-07-31T20:00:00",
+      "updatedAt": "2024-07-31T20:00:00",
+      "contents": "엠~지하다!",
+      "commentsLike": false
     }
   ],
   "users": [
     {
-      "email": "user123@example.com",
-      "nickname": "user123@example.com",
-      "password": "password123",
-      "passwordCheck": "password123",
-      "stn": 12345,
+      "id": "1",
+      "email": "faker@gmail.com",
+      "nickname": "페이커",
+      "password": "faker123",
+      "passwordCheck": "faker123",
+      "stn": 1168010800,
       "gender": "Male",
-      "birthday": "1990-01-01"
+      "birthday": "1996-05-07",
+      "image": "https://pbs.twimg.com/media/GSwqo6mboAAxj_U?format=jpg&name=900x900"
     },
     {
-      "email": "user000@example.com",
-      "nickname": "user000@example.com",
-      "password": "password123",
-      "passwordCheck": "password123",
-      "stn": 12345,
-      "gender": "Female",
-      "birthday": "1990-01-01"
+      "id": "2",
+      "email": "gumayusi@gmail.com",
+      "nickname": "구마유시",
+      "password": "gumayusi123",
+      "passwordCheck": "gumayusi123",
+      "stn": 1168010800,
+      "gender": "Male",
+      "birthday": "2002-02-06",
+      "image": "https://pbs.twimg.com/media/GTjyjXQbkAABMRk?format=jpg&name=900x900"
+    },
+    {
+      "id": "3",
+      "email": "keria@gmail.com",
+      "nickname": "케리아",
+      "password": "keria123",
+      "passwordCheck": "keria123",
+      "stn": 1168010800,
+      "gender": "Male",
+      "birthday": "2002-10-14",
+      "image": "https://pbs.twimg.com/media/GTanFzdbQAAiJNg?format=jpg&name=900x900"
+    },
+    {
+      "id": "4",
+      "email": "oner@gmail.com",
+      "nickname": "오너",
+      "password": "oner123",
+      "passwordCheck": "oner123",
+      "stn": 1168010800,
+      "gender": "Male",
+      "birthday": "2002-12-24",
+      "image": "https://pbs.twimg.com/media/GTaPlehagAIkwQo?format=jpg&name=900x900"
+    },
+    {
+      "id": "5",
+      "email": "zeus@gmail.com",
+      "nickname": "제우스",
+      "password": "zeus123",
+      "passwordCheck": "zeus123",
+      "stn": 1168010800,
+      "gender": "Male",
+      "birthday": "2004-01-31",
+      "image": "https://pbs.twimg.com/media/GTjoj5cbwAEOjnC?format=jpg&name=900x900"
     }
   ],
   "wishlist": []

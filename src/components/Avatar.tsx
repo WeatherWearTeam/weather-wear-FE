@@ -3,18 +3,18 @@ import styled from "styled-components";
 
 interface AvatarProps {
   size?: "s" | "m" | "lg" | "xl";
+  image: string | null;
   onClick?: () => void;
 }
 // 3rem / 4rem / 5rem / 12rem
 
-export default function Avatar({ size = "m", onClick }: AvatarProps) {
+export default function Avatar({ size = "m", image, onClick }: AvatarProps) {
   //✅ 임의 설정
-  const hasUserImage = false;
 
   return (
     <AvatarWrapper $size={size} onClick={onClick}>
-      {hasUserImage ? (
-        <AvatarImg $size={size} src={`#`} alt="user image" />
+      {image ? (
+        <AvatarImg $size={size} src={image} alt="user image" />
       ) : (
         <DefaultUserIconWrapper $size={size}>
           {userCircleIcon}
@@ -42,6 +42,7 @@ const AvatarImg = styled.img<AvatarProps>`
   width: ${({ theme, $size = "m" }) => theme.size[$size].width};
   height: ${({ theme, $size = "m" }) => theme.size[$size].height};
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 const DefaultUserIconWrapper = styled.div<AvatarProps>`

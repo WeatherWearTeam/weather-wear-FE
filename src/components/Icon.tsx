@@ -9,6 +9,7 @@ export default function Icon({ icon }: IconProps) {
 }
 
 const Wrapper = styled.div`
+  display: flex;
   width: 2rem;
   height: 2rem;
 `;

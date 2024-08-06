@@ -15,7 +15,6 @@ export default function Input({
   label,
   name,
   type = "text",
-  maxLength = 30,
 }: InputProps) {
   return (
     <StInput
@@ -26,7 +25,6 @@ export default function Input({
       type={type}
       placeholder={label}
       autoComplete="off"
-      maxLength={maxLength}
     />
   );
 }
