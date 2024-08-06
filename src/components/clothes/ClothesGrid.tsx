@@ -1,19 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import ClothesItem from "@components/clothes/ClothesItem";
+import { ClothesItem as ClothesItemType } from "@api/clothesApi";
 
-interface OOTDItem {
-  id: string;
-  color: string;
-  type: string;
-}
+// interface OOTDItem {
+//   id: string;
+//   color: string;
+//   type: string;
+// }
 
 interface ClothesGridProps {
-  items: OOTDItem[];
-  onItemClick: (id: string) => void;
+  items: ClothesItemType[];
+  onItemClick: (id: number) => void;
+  onEditClick: (id: number) => void;
+  onDeleteClick: (id: number) => void;
 }
 
-const ClothesGrid: React.FC<ClothesGridProps> = ({ items, onItemClick }) => {
+const ClothesGrid: React.FC<ClothesGridProps> = ({ items, onItemClick, onEditClick, onDeleteClick }) => {
   return (
     <ContentsMain>
       {items.map((item) => (
@@ -21,10 +24,15 @@ const ClothesGrid: React.FC<ClothesGridProps> = ({ items, onItemClick }) => {
           <ClothesItem
             color={item.color}
             type={item.type}
-            showTag={false}
-            showData={true}
-            showTitle={true}
+            image={item.image}
+            showTag={true}
+            showData={false}
+            showTitle={false}
           />
+          <ButtonContainer>
+            <EditButton onClick={() => onEditClick(item.id)}>수정</EditButton>
+            <DeleteButton onClick={() => onDeleteClick(item.id)}>삭제</DeleteButton>
+          </ButtonContainer>
         </ClothesItemWrapper>
       ))}
     </ContentsMain>
@@ -53,4 +61,32 @@ const ContentsMain = styled.div`
 
 const ClothesItemWrapper = styled.div`
   cursor: pointer;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+const EditButton = styled.button`
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+const DeleteButton = styled.button`
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #e53935;
+  }
 `;

@@ -9,54 +9,84 @@ import useClothesTagStore, {
 } from "@store/clothesTagStore";
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { useCreateClothesItem } from "@queries/clothesQueries";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { getClothesItemById, updateClothesItem } from "@api/clothesApi";
 
-export default function ClosetAdd() {
-  const createClothesItem = useCreateClothesItem();
+export default function ClosetEdit() {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  //////////////////////////////////////////////////////////////
-  // zustand 사용해 옷 타입, 컬러 태그 선택 관리 > 전역으로 관리
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+  // 초기 상태 설정 수정
+  const [selectedType, setSelectedType] = useState<ClothesType | null>(null);
+  const [selectedColor, setSelectedColor] = useState<ClothesColorType | null>(null);
+
   const {
-    selectedType,
-    selectedColor,
     newTagList,
-    setSelectedType,
-    setSelectedColor,
-    setIsSingleTag,
     addTag,
     removeTag,
     resetTag,
   } = useClothesTagStore();
 
-  // 선택한 타입과 색상이 모두 있을 때 태그 추가
+  // 데이터 로드
   useEffect(() => {
-    setIsSingleTag(true);
-    if (selectedType !== "옷 종류" && selectedColor) {
+    const fetchItem = async () => {
+      try {
+        const item = await getClothesItemById(Number(id));
+        setSelectedType(item.type as ClothesType);
+        setSelectedColor(item.color as ClothesColorType);
+        setImageSrc(item.image);
+
+        // 태그 초기화 및 추가
+        resetTag();
+        addTag({
+          id: item.id,
+          type: item.type as ClothesType,
+          color: item.color as ClothesColorType,
+        });
+      } catch (error) {
+        console.error("Failed to load item", error);
+      }
+    };
+
+    fetchItem();
+  }, [id, addTag, resetTag]);
+
+  // selectedType과 selectedColor가 변경될 때마다 newTagList 업데이트
+  useEffect(() => {
+    if (selectedType && selectedColor) {
+      resetTag();
       addTag({
         id: Number(new Date().getTime()),
         type: selectedType,
         color: selectedColor,
       });
     }
-  }, [selectedType, selectedColor, addTag, setIsSingleTag]);
+  }, [selectedType, selectedColor, addTag, resetTag]);
+  
+  useEffect(() => {
+    console.log("New Tag List updated:", newTagList);
+  }, [newTagList]);
+
+  useEffect(() => {
+    console.log("Selected Type:", selectedType);
+    console.log("Selected Color:", selectedColor);
+    console.log("New Tag List:", newTagList);
+  }, [selectedType, selectedColor, newTagList]);
 
   const handleSelectedType = (type: ClothesType) => {
+    console.log("Selected Type:", type);
     setSelectedType(type);
   };
 
   const handleSelectedColor = (color: ClothesColorType) => {
+    console.log("Selected Color:", color);
     setSelectedColor(color);
   };
 
-  //////////////////////////////////////////////////////////////
-  //파일 선택 및 프리뷰 보기
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageSrc, setImageSrc] = useState<string | null>(null); //임시 url 만들기(string 타입으로 src에 넣기 위함)
-
   const uploadImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (file) {
       setImageFile(file);
       const previewUrl = URL.createObjectURL(file);
@@ -64,97 +94,59 @@ export default function ClosetAdd() {
     }
   };
 
-  //////////////////////////////////////////////////////////////
-  //등록하기 버튼 클릭했을 때 실행하는 handleSubmit 함수
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 예외처리: 이미지파일이 안들어 왔다면 return
-    if (!imageFile) {
+    if (!imageSrc) {
       alert("이미지 파일을 선택해주세요.");
       return;
     }
 
-    // 예외처리: 옷 종류-컬러 1세트 없으면 return
     if (newTagList.length === 0) {
       alert("옷 종류와 색상을 선택해주세요.");
       return;
     }
 
-    // 폼 데이터 제출하는 로직 짜기
     const formData = new FormData();
-    formData.append("image", imageFile);
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
     formData.append("type", newTagList[0].type);
     formData.append("color", newTagList[0].color);
 
-    // 데이터 로깅
-  console.log('Submitting data:', {
-    image: imageFile,
-    type: newTagList[0].type,
-    color: newTagList[0].color
-  });
+    // console.log("Submitting data:");
+    // console.log("Type:", newTagList[0].type);
+    // console.log("Color:", newTagList[0].color);
+    // console.log("Image File:", imageFile);
 
-    // mutateCreateClothes로 요청 보내기
-    createClothesItem.mutate(formData, {
-      onSuccess: () => {
-        alert("옷이 성공적으로 등록되었습니다.");
+    updateClothesItem(Number(id), formData)
+      .then(() => {
+        alert("옷이 성공적으로 수정되었습니다.");
         navigate("/mypage/closet");
-      },
-      onError: (error) => {
-        alert("옷 등록에 실패했습니다. 다시 시도해주세요.");
+      })
+      .catch((error) => {
+        alert("옷 수정에 실패했습니다. 다시 시도해주세요.");
         console.error(error);
-      },
-    });
-
-    // 상태 리셋하기
-    resetTag();
-    setImageFile(null);
-    setImageSrc(null);
+      });
   };
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault(); // 새로고침 방지
 
-  //   //🌟 예외처리 하는 로직 작성
-  //   //예외처리: 이미지파일이 안들어 왔다면 return
-  //   //예외처리:옷 종류-컬러 1세트 없으면 return
-
-  //   //🌟 폼 데이터 제출하는 로직 짜기
-  //   //이미지
-  //   if (imageFile) {
-  //     const formData = new FormData();
-  //     formData.append("image", imageFile);
-  //   }
-
-  //   // 🌟 mutateCreateClothes로 요청 보내기
-
-  //   //상태 리셋하기
-  //   resetTag();
-  // };
-
-  //////////////////////////////////////////////////////////////
-  // imageSrc 상태 변하면 프리뷰 세팅
   useEffect(() => {
-    //클린업 펑션
     return () => {
       if (imageSrc) {
         URL.revokeObjectURL(imageSrc);
       }
     };
   }, [imageSrc]);
-  //////////////////////////////////////////////////////////////
-
-  
 
   return (
     <Container>
       <TitleContainer>
         <Title>내 옷장</Title>
-        <SubTitle>옷 등록하기</SubTitle>
+        <SubTitle>옷 수정하기</SubTitle>
       </TitleContainer>
       <Form onSubmit={handleSubmit}>
         <GridContainer>
           <Column>
-            {/* / */}
             <LeftWrapper>
               <Label htmlFor="clothesImage">
                 <PreviewWrapper>
@@ -169,14 +161,12 @@ export default function ClosetAdd() {
                 onChange={uploadImageFile}
               />
             </LeftWrapper>
-            {/* / */}
           </Column>
           <Column>
-            {/* / */}
             <RightWrapper>
               <RowWrapper>
                 <Select onClick={handleSelectedType} value={selectedType} />
-                <ColorPickBar onClick={handleSelectedColor} />
+                <ColorPickBar onClick={handleSelectedColor} selectedColor={selectedColor} />
                 <SelectedTagContainer>
                   {newTagList.map((tag) => (
                     <SelectedTag
@@ -191,11 +181,10 @@ export default function ClosetAdd() {
               </RowWrapper>
               <ButtonWrapper>
                 <Button type="submit" buttonType="primary">
-                  등록하기
+                  수정하기
                 </Button>
               </ButtonWrapper>
             </RightWrapper>
-            {/* / */}
           </Column>
         </GridContainer>
       </Form>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import WishItem from "@components/wish/WishItem";
 
 export interface WishItemType {
+  id: string;
   productId: number;
   title: string;
   link: string;
@@ -9,24 +10,27 @@ export interface WishItemType {
   lprice: number;
   hprice: number;
   mallName: string;
-  maker: string;
   brand: string;
+  maker: string;
   category1: string;
   category2: string;
   category3: string;
   category4: string;
+  type: string;
 }
 
-interface WishsGridProps extends WishItemType {
+interface WishsGridProps {
   onClick: () => void;
   data: WishItemType[];
+  onDelete: (id: string) => void;
 }
 
-export default function WishsGrid({ onClick, data }: WishsGridProps) {
+export default function WishsGrid({ onClick, data, onDelete }: WishsGridProps) {
+
   return (
     <ContentsMain>
       {data.map((item) => (
-        <WishItem onClick={onClick} item={item} />
+        <WishItem key={item.id} item={item} onClick={onClick} onDelete={onDelete} />
       ))}
     </ContentsMain>
   );

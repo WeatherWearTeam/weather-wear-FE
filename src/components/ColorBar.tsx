@@ -1,3 +1,4 @@
+
 import { ClothesColorType } from "@store/clothesTagStore";
 import ColorChip from "@components/ColorChip";
 import styled from "styled-components";
@@ -5,9 +6,10 @@ import styled from "styled-components";
 interface ColorBarProps {
   size?: "s" | "m";
   onClick?: (color: ClothesColorType) => void;
+  selectedColor?: ClothesColorType;
 }
 
-function ColorBar({ size = "s", onClick }: ColorBarProps) {
+function ColorBar({ size = "s", onClick, selectedColor }: ColorBarProps) {
   const colorBarList: ClothesColorType[] = [
     "white",
     "gray",
@@ -29,6 +31,7 @@ function ColorBar({ size = "s", onClick }: ColorBarProps) {
   const onSelectedClick = (color: ClothesColorType) => {
     onClick && onClick(color);
   };
+  
   return (
     <ColorContainer>
       {colorBarList.map((color, index) => (
@@ -36,8 +39,9 @@ function ColorBar({ size = "s", onClick }: ColorBarProps) {
           key={index}
           color={color}
           size={size}
+          isSelected={color === selectedColor} // 선택된 색상 여부를 전달
           onClick={() => onSelectedClick(color)}
-        ></ColorChip>
+        />
       ))}
     </ColorContainer>
   );

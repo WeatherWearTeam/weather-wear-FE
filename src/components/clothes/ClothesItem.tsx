@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import ClothesTag from "./ClothesTag";
 
-interface ClothesTagProps {
+interface ClothesItemProps {
   color: string;
   type: string;
+  image: string;
   showTag?: boolean; // ClothesTag 표시 여부
   showData?: boolean; // ContentsItemData 표시 여부
   showTitle?: boolean; // ContentsItemTitle 표시 여부
@@ -12,14 +13,14 @@ interface ClothesTagProps {
 function ClothesItem({ 
   color,
   type,
+  image,
   showTag = false,
   showData = false,
   showTitle = false
-  }: ClothesTagProps) {
+}: ClothesItemProps) {
   return (
     <ContentsItem>
-      <ContentsItemImage>
-        마이페이지 이미지
+      <ContentsItemImage image={image}>
         {showTag && (
           <TagWrapper>
             <ClothesTag color={color} type={type} />
@@ -32,7 +33,7 @@ function ClothesItem({
           <Color color={color} />
         </ContentsItemData>
       )}
-      {showTitle && <ContentsItemTitle>이미지 제목</ContentsItemTitle>}
+      {showTitle && <ContentsItemTitle>{type}</ContentsItemTitle>}
     </ContentsItem>
   );
 }
@@ -45,8 +46,8 @@ const ContentsItem = styled.div`
   box-sizing: border-box;
 `;
 
-const ContentsItemImage = styled.div`
-  background-color: gray;
+const ContentsItemImage = styled.div<{ image: string }>`
+  background-image: url(${props => props.image});
   width: 250px;
   height: 270px;
   box-sizing: border-box;
@@ -83,6 +84,6 @@ const ContentsItemTitle = styled.div`
 const Color = styled.div<{ color: string }>`
   width: 1rem;
   height: 1rem;
-  background-color: ${({ color, theme }) => theme.colors[color]};
+  background-color: ${({ color }) => color};
   border: ${({ theme }) => theme.borders.buttonBorder};
 `;
