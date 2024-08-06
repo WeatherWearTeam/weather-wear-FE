@@ -47,7 +47,7 @@ export type ClothesColorType =
   | "purple"
   | "pink";
 
-interface ClothesTag {
+export interface ClothesTag {
   id: number;
   type: ClothesType;
   color: ClothesColorType;
