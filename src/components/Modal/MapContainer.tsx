@@ -15,9 +15,13 @@ declare global {
 
 interface MapContainerProps {
   onClose: () => void;
+  onGetCurrLocation: () => void;
 }
 
-export default function MapContainer({ onClose }: MapContainerProps) {
+export default function MapContainer({
+  onClose,
+  onGetCurrLocation,
+}: MapContainerProps) {
   //   //index.html에서 스크립트로 map api 작성해 두면
   //   //window 전역 객체에 들어가게 되므로 window.kakao 객체를 구조분해할당으로 가져온다.
   const { kakao } = window;
@@ -71,6 +75,7 @@ export default function MapContainer({ onClose }: MapContainerProps) {
 
   const handleMyLocationCheck = () => {
     console.log("서버로 현재 위치/코드 정보 보내기: ", currentAddressAndCode);
+    onGetCurrLocation(currentAddressAndCode);
     //모달 창 닫기
     onClose();
   };
