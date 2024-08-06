@@ -1,7 +1,7 @@
 {
   "boards": [
     {
-      "id": 12345,
+      "id": "12345",
       "userId": 12345,
       "title": "제목입니다 1",
       "contents": "내용입니다 1",
@@ -17,9 +17,8 @@
         "prep": "2024-07-20T12:00:00"
       }
     },
-
     {
-      "id": 23456,
+      "id": "23456",
       "userId": 23456,
       "title": "제목입니다 2",
       "contents": "내용입니다 2",
@@ -36,7 +35,7 @@
       }
     },
     {
-      "id": 34567,
+      "id": "34567",
       "userId": 34567,
       "title": "제목입니다 3",
       "contents": "내용입니다 3",
@@ -53,10 +52,35 @@
       }
     }
   ],
-  "clothes": [],
+  "clothes": [
+    {
+      "id": "1",
+      "color": "blue",
+      "type": "Shirts",
+      "image": "https://shopping-phinf.pstatic.net/main_4769367/47693670127.20240707083442.jpg?type=f290"
+    },
+    {
+      "id": "2",
+      "color": "black",
+      "type": "Slacks",
+      "image": "https://shopping-phinf.pstatic.net/main_4875596/48755964947.20240717083633.jpg?type=f290"
+    },
+    {
+      "id": "5",
+      "color": "pink",
+      "type": "Light_knit",
+      "image": "https://shopping-phinf.pstatic.net/main_4769345/47693457618.20240513101012.jpg?type=f290"
+    },
+    {
+      "id": "6",
+      "color": "yellow",
+      "type": "Shorts",
+      "image": "https://shopping-phinf.pstatic.net/main_4645928/46459285968.20240403151001.jpg?type=f290"
+    }
+  ],
   "comments": [
     {
-      "id": 1,
+      "id": "1",
       "user_id": 2,
       "board_id": 1,
       "regist_date": "2024-07-20T13:00:00",
@@ -65,7 +89,7 @@
       "comment_like": true
     },
     {
-      "id": 2,
+      "id": "2",
       "user_id": 1,
       "board_id": 1,
       "regist_date": "2024-07-20T13:00:00",
@@ -82,7 +106,8 @@
       "passwordCheck": "password123",
       "stn": 12345,
       "gender": "Male",
-      "birthday": "1990-01-01"
+      "birthday": "1990-01-01",
+      "id": "8e80"
     },
     {
       "email": "user000@example.com",
@@ -91,8 +116,95 @@
       "passwordCheck": "password123",
       "stn": 12345,
       "gender": "Female",
-      "birthday": "1990-01-01"
+      "birthday": "1990-01-01",
+      "id": "66a8"
     }
   ],
-  "wishlist": []
+  "wishlist": [
+    {
+      "id": "3760",
+      "productId": 47952060223,
+      "title": "베네통 베네통 크리스탈 쥬얼 샌들",
+      "link": "https://search.shopping.naver.com/catalog/47952060223",
+      "image": "https://shopping-phinf.pstatic.net/main_4795206/47952060223.20240524141001.jpg",
+      "hprice": 0,
+      "lprice": 66000,
+      "mallName": "네이버",
+      "brand": "베네통",
+      "maker": "",
+      "category1": "패션잡화",
+      "category2": "여성신발",
+      "category3": "샌들",
+      "category4": "스트랩샌들",
+      "type": "신발"
+    },
+    {
+      "id": "2c24",
+      "productId": 47952060223,
+      "title": "베네통 베네통 크리스탈 쥬얼 샌들",
+      "link": "https://search.shopping.naver.com/catalog/47952060223",
+      "image": "https://shopping-phinf.pstatic.net/main_4795206/47952060223.20240524141001.jpg",
+      "lprice": 66000,
+      "hprice": 0,
+      "mallName": "네이버",
+      "brand": "베네통",
+      "maker": "",
+      "category1": "패션잡화",
+      "category2": "여성신발",
+      "category3": "샌들",
+      "category4": "스트랩샌들",
+      "type": "신발"
+    },
+    {
+      "id": "d8e5",
+      "productId": 48960143476,
+      "title": "유라타임 3부 4부 쿨썸머 히든밴딩 하이웨스트 A라인 청반바지 4C",
+      "link": "https://search.shopping.naver.com/catalog/48960143476",
+      "image": "https://shopping-phinf.pstatic.net/main_4896014/48960143476.20240706143655.jpg",
+      "lprice": 17500,
+      "hprice": 0,
+      "mallName": "네이버",
+      "brand": "유라타임",
+      "maker": "",
+      "category1": "패션의류",
+      "category2": "여성의류",
+      "category3": "청바지",
+      "category4": "",
+      "type": "바지"
+    },
+    {
+      "id": "11c9",
+      "productId": 48935646623,
+      "title": "헌터 오리지날 투어 톨 레인부츠 WFT2210RMA",
+      "link": "https://search.shopping.naver.com/catalog/48935646623",
+      "image": "https://shopping-phinf.pstatic.net/main_4893564/48935646623.20240705113653.jpg",
+      "lprice": 171880,
+      "hprice": 206000,
+      "mallName": "네이버",
+      "brand": "헌터",
+      "maker": "",
+      "category1": "패션잡화",
+      "category2": "여성신발",
+      "category3": "부츠",
+      "category4": "롱부츠",
+      "type": "신발"
+    },
+    {
+      "id": "3760",
+      "productId": 47952060223,
+      "title": "베네통 베네통 크리스탈 쥬얼 샌들",
+      "link": "https://search.shopping.naver.com/catalog/47952060223",
+      "image": "https://shopping-phinf.pstatic.net/main_4795206/47952060223.20240524141001.jpg",
+      "lprice": 66000,
+      "hprice": 0,
+      "mallName": "네이버",
+      "brand": "베네통",
+      "maker": "",
+      "category1": "패션잡화",
+      "category2": "여성신발",
+      "category3": "샌들",
+      "category4": "스트랩샌들",
+      "type": "신발"
+    }
+  ]
 }

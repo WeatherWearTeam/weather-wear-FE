@@ -1,27 +1,24 @@
 import styled from "styled-components";
 
+interface ClothesTypesProps {
+  onTypeClick: (type: string) => void;
+}
 
+export default function ClothesTypes({ onTypeClick }: ClothesTypesProps) {
+  const handleClick = (type: string) => {
+    onTypeClick(type);
+  };
 
-
-export default function ClothesTypes() {
-    return (
-        <ClothesTypeContainer>
-            <StSelectButton><a>All</a></StSelectButton>
-            <StSelectButton><a>나시</a></StSelectButton>
-            <StSelectButton><a>티셔츠</a></StSelectButton>
-            <StSelectButton><a>셔츠/블라우스</a></StSelectButton>
-            <StSelectButton><a>맨투맨/후드</a></StSelectButton>
-            <StSelectButton><a>니트/스웨터</a></StSelectButton>
-            <StSelectButton><a>반바지</a></StSelectButton>
-            <StSelectButton><a>바지/청바지</a></StSelectButton>
-            <StSelectButton><a>치마</a></StSelectButton>
-            <StSelectButton><a>원피스</a></StSelectButton>
-            <StSelectButton><a>가디건</a></StSelectButton>
-            <StSelectButton><a>아우터</a></StSelectButton>
-        </ClothesTypeContainer>
-      
-    );
-  }
+  return (
+    <ClothesTypeContainer>
+      {['All', '나시', '티셔츠', '셔츠/블라우스', '맨투맨/후드', '니트/스웨터', '반바지', '바지/청바지', '치마', '원피스', '가디건', '아우터'].map(type => (
+        <StSelectButton key={type} onClick={() => handleClick(type)}>
+          <a>{type}</a>
+        </StSelectButton>
+      ))}
+    </ClothesTypeContainer>
+  );
+}
 
 const ClothesTypeContainer = styled.div`
   display: flex;
