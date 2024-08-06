@@ -15,6 +15,7 @@ import MyAccount from "@pages/MyAccount";
 import MyAccountEdit from "@pages/MyAccountEdit";
 import PostEdit from "@pages/PostEdit";
 import useAuth from "@queries/useAuth";
+import ClosetEdit from "@pages/ClosetEdit";
 
 // PrivateRoute : 로그인이 필요한 페이지에 접근할 수 있도록 하는 컴포넌트
 // 로그인이 되어있지 않은 사용자는 login 페이지로 리다이렉트
@@ -57,7 +58,7 @@ const Router = () => {
           </Route>
 
           <Route path="/mypage/closet/add" element={<ClosetAdd />} />
-          <Route path="/mypage/closet/:id/edit" element={<ClosetEdit />} />
+          <Route path="/mypage/closet/edit/:id" element={<ClosetEdit />} />
 
           <Route path="/ootd" element={<Trend />} />
 
