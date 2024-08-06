@@ -117,6 +117,7 @@ import Hot from "@components/WeatherBackground/Hot";
 
 export default function WeatherSection() {
   const navigate = useNavigate();
+
   const { isVisible, openModal, closeModal } = useModal();
 
   const { geolocation } = useGeolocation(); //geolocation으로 내 위치의 위도경도 구하기
@@ -165,6 +166,15 @@ export default function WeatherSection() {
 
     getAddressAndCode(geolocation.lon, geolocation.lat);
   }, [geolocation]);
+
+  const [currLocation, setCurrLocation] = useState<{
+    address: string;
+    code: string;
+  } | null>(null);
+
+  const getCurrLocation = (currLocation) => {
+    setCurrLocation(currLocation);
+  };
   return (
     <Container>
       <GridContainer>
@@ -179,9 +189,9 @@ export default function WeatherSection() {
           <RightColum>
             <GeolocationSelect onClick={() => openModal()}>
               <Icon icon={focusIcon} />
-              {currentAddressAndCode
+              {!currLocation
                 ? currentAddressAndCode?.address
-                : "위치 정보를 가져올 수 없습니다."}
+                : currLocation?.address}
               <Icon icon={navigationFillIcon} />
             </GeolocationSelect>
 
@@ -206,7 +216,10 @@ export default function WeatherSection() {
             {isVisible && (
               <ModalPortal>
                 <ModalLayout onClose={closeModal}>
-                  <MapContainer onClose={closeModal} />
+                  <MapContainer
+                    onClose={closeModal}
+                    onGetCurrLocation={getCurrLocation}
+                  />
                 </ModalLayout>
               </ModalPortal>
             )}
@@ -215,7 +228,11 @@ export default function WeatherSection() {
         <Column>
           <ContentContainer>
             <ContentTitle>
-              오늘 {currentAddressAndCode?.address}의 날씨
+              오늘{" "}
+              {!currLocation
+                ? currentAddressAndCode?.address
+                : currLocation?.address}
+              의 날씨
               <br />
               기온은 {"24"}도
               <br />
