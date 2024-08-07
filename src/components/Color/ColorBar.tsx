@@ -1,7 +1,7 @@
-
 import { ClothesColorType } from "@store/clothesTagStore";
-import ColorChip from "@components/ColorChip";
+import ColorChip from "@components/Color/ColorChip";
 import styled from "styled-components";
+import colorTypeList from "@shared/colorTypeList";
 
 interface ColorBarProps {
   size?: "s" | "m";
@@ -10,31 +10,13 @@ interface ColorBarProps {
 }
 
 function ColorBar({ size = "s", onClick, selectedColor }: ColorBarProps) {
-  const colorBarList: ClothesColorType[] = [
-    "white",
-    "gray",
-    "black",
-    "red",
-    "yellow",
-    "sand",
-    "beige",
-    "brown",
-    "khaki",
-    "green",
-    "cyan",
-    "blue",
-    "indigo",
-    "purple",
-    "pink",
-  ];
-
   const onSelectedClick = (color: ClothesColorType) => {
     onClick && onClick(color);
   };
-  
+
   return (
     <ColorContainer>
-      {colorBarList.map((color, index) => (
+      {colorTypeList.map((color, index) => (
         <ColorChip
           key={index}
           color={color}
