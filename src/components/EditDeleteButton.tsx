@@ -10,13 +10,13 @@ import { useNavigate } from "react-router-dom";
 
 interface EditDeleteButtonProps {
   id: number;
-  onMutateDelete: (id: number) => void;
   editPath: string;
+  onMutateDelete: (id: number) => void;
 }
 export default function EditDeleteButton({
   id,
-  onMutateDelete,
   editPath,
+  onMutateDelete,
 }: EditDeleteButtonProps) {
   const { openModal, closeModal, isVisible } = useModal();
   const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
@@ -24,7 +24,7 @@ export default function EditDeleteButton({
 
   // 수정 클릭 했을 때 실행 되는 함수
   const handleEdit = () => {
-    console.log("수정 시작");
+    console.log("수정");
     navigate(editPath);
     closeModal();
   };
@@ -33,7 +33,7 @@ export default function EditDeleteButton({
   const handleDelete = () => {
     alert("정말 삭제하시겠습니까?");
     console.log("삭제할 boardId", id);
-    // onMutateDelete(id);
+    onMutateDelete(id);
     closeModal();
   };
 
