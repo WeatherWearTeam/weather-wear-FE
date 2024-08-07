@@ -299,11 +299,11 @@ const RecommendedItem = styled.div`
   height: 13rem;
   border: 1px solid
     ${({ theme }) => css`
-      ${theme.colors.white}80; //투명도 30% 4d, 20% 26
+      ${theme.colors.WHITE}80; //투명도 30% 4d, 20% 26
     `};
   border-radius: 10rem;
   background-color: ${({ theme }) => css`
-    ${theme.colors.white}26; //투명도 30% 4d, 20% 26
+    ${theme.colors.WHITE}26; //투명도 30% 4d, 20% 26
   `};
   box-shadow: 1px 5px 20px 1px rgba(198, 198, 198, 0.2);
 
@@ -396,15 +396,15 @@ const WeatherInfo = styled.div`
 
 const GeolocationSelect = styled.div`
   background-color: ${({ theme }) => css`
-    ${theme.colors.white}4d; //투명도 30%
+    ${theme.colors.WHITE}4d; //투명도 30%
   `};
   border: 1px solid
     ${({ theme }) => css`
-      ${theme.colors.white}99; //투명도 60%
+      ${theme.colors.WHITE}99; //투명도 60%
     `};
   padding: 1rem;
   font-size: medium;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
 
   border-radius: 5rem;
   display: flex;
@@ -416,7 +416,7 @@ const GeolocationSelect = styled.div`
   &:hover,
   &:focus {
     ${({ theme }) => css`
-      background-color: ${theme.colors.white}26; //투명도 20%  33//15% 26
+      background-color: ${theme.colors.WHITE}26; //투명도 20%  33//15% 26
     `};
   }
 `;

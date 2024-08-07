@@ -1,12 +1,6 @@
-import { testUser } from "@api/userApi";
-import Button from "@components/Button";
-import Icon from "@components/Icon";
-import Input from "@components/Input";
-import SelectButton from "@components/SelectButton";
 import SignupForm from "@components/Signup/SignupForm";
-import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { weatherSunCloudyIcon } from "@shared/icons";
+
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -16,7 +10,7 @@ export default function Signup() {
   //   queryFn: testUser,
   // });
   // console.log(data);
-  
+
   return (
     <Container>
       <GridContainer>
@@ -29,14 +23,6 @@ export default function Signup() {
               패션과 날씨,
               <br />
               이제 웨더웨어에서 한 번에!
-              {/* 지금 웨더웨어에서
-            <br />
-            스마트한 OOTD 스타일링을
-            <br />
-            시작하세요! */}
-              {/* 날씨에 딱 맞는 옷차림,
-            <br />
-            웨더웨어에서 찾으세요! */}
             </Title>
             <Text>
               웨더웨어에 가입하시면 날씨를 고려한 개인 맞춤형 옷차림을
@@ -124,7 +110,7 @@ const Circle = styled.div`
   width: 30rem;
   height: 30rem;
   border-radius: 50%;
-  border: 1rem solid ${({ theme }) => theme.colors.white};
+  border: 1rem solid ${({ theme }) => theme.colors.WHITE};
 `;
 
 const BackgroundCloudWrapper = styled.div`
@@ -151,12 +137,12 @@ const TextContainer = styled.div`
 const Title = styled.h2`
   font-size: xx-large;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.WHITE};
 `;
 
 const Text = styled.div`
   font-size: medium;
-  color: ${({ theme }) => theme.colors.gray};
+  color: ${({ theme }) => theme.colors.GRAY};
 `;
 
 //✅ 오른쪽
@@ -181,7 +167,7 @@ const FormTextContainer = styled.div`
 const FormTitle = styled.h1`
   font-size: xx-large;
   font-weight: 800;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
 `;
 
 const FormText = styled.p`
@@ -204,6 +190,6 @@ const LinkWrapper = styled.div`
   gap: 0.5rem;
 `;
 const LinkToLogin = styled(Link)`
-  color: ${({ theme }) => theme.colors.blue};
+  color: ${({ theme }) => theme.colors.BLUE};
   font-size: small;
 `;

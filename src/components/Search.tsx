@@ -60,7 +60,7 @@ const SearchInput = styled.input`
 
   &:focus,
   &:focus-visible {
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 1px solid ${({ theme }) => theme.colors.BLACK};
   }
 `;
 
@@ -73,11 +73,11 @@ const SearchButton = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.gray};
+  color: ${({ theme }) => theme.colors.GRAY};
   transition: color 0.25s linear;
 
   &:hover,
   &:focus {
-    color: ${({ theme }) => theme.colors.black}; /* 호버 시 색상 변경 */
+    color: ${({ theme }) => theme.colors.BLACK}; /* 호버 시 색상 변경 */
   }
 `;

@@ -32,6 +32,6 @@ const StTextArea = styled.textarea`
   &:hover,
   &:focus,
   &:focus-visible {
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 1px solid ${({ theme }) => theme.colors.BLACK};
   }
 `;

@@ -8,22 +8,22 @@ interface AddButtonProps {
 
 export default function AddButton({ onClick }: AddButtonProps) {
   return (
-    <PostAddButton onClick={onClick}>
+    <BoardAddButton onClick={onClick}>
       <Icon icon={plusIcon} />
-    </PostAddButton>
+    </BoardAddButton>
   );
 }
 
-const PostAddButton = styled.button`
+const BoardAddButton = styled.button`
   position: fixed;
   bottom: 3rem;
   right: 3rem;
   width: 4rem;
   height: 4rem;
-  background-color: ${({ theme }) => theme.colors.black};
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.BLACK};
+  border: 1px solid ${({ theme }) => theme.colors.BLACK};
   border-radius: 50%;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.WHITE};
   font-size: 24px;
   display: flex;
   justify-content: center;
@@ -33,7 +33,7 @@ const PostAddButton = styled.button`
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme }) => theme.colors.WHITE};
+    color: ${({ theme }) => theme.colors.BLACK};
   }
 `;

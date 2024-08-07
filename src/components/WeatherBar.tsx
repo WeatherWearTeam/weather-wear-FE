@@ -44,7 +44,7 @@ export default function WeatherBar() {
 const Container = styled.div`
   width: 380px;
   border: ${({ theme }) => theme.borders.containerBorder};
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.WHITE};
   padding: 1rem;
   border-radius: 10rem;
   display: flex;

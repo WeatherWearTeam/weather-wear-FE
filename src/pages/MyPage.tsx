@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 const MyPage = () => {
@@ -50,7 +50,7 @@ const TabContainer = styled.div`
 `;
 
 const Title = styled.div`
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
   width: 100%;
   height: 50%;
   text-align: left; /* 텍스트를 왼쪽 정렬 */
@@ -61,7 +61,7 @@ const Title = styled.div`
 `;
 
 const Tabs = styled.div`
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
   width: 100%;
   font-size: 2em; /* h1 크기 */
   box-sizing: border-box;
@@ -80,14 +80,14 @@ const StNavLink = styled(NavLink)`
 
   &:hover,
   &:focus {
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.BLACK};
     font-weight: 600;
   }
 
   &.active {
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.BLACK};
     font-weight: 600;
-    border-bottom: 1.5px solid ${({ theme }) => theme.colors.black}; /* 하단의 수평선 */
+    border-bottom: 1.5px solid ${({ theme }) => theme.colors.BLACK}; /* 하단의 수평선 */
   }
 `;
 

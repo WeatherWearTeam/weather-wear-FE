@@ -163,7 +163,7 @@ const Circle = styled.div`
   width: 30rem;
   height: 30rem;
   border-radius: 50%;
-  border: 1rem solid ${({ theme }) => theme.colors.white};
+  border: 1rem solid ${({ theme }) => theme.colors.WHITE};
 `;
 
 const BackgroundCloudWrapper = styled.div`
@@ -190,12 +190,12 @@ const TextContainer = styled.div`
 const Title = styled.h2`
   font-size: xx-large;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.WHITE};
 `;
 
 // const Text = styled.div`
 //   font-size: medium;
-//   color: ${({ theme }) => theme.colors.gray};
+//   color: ${({ theme }) => theme.colors.GRAY};
 // `;
 
 //✅ 오른쪽
@@ -221,7 +221,7 @@ const FormTextContainer = styled.div`
 const FormTitle = styled.h1`
   font-size: xx-large;
   font-weight: 800;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
 `;
 
 // const FormText = styled.p`

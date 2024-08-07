@@ -132,12 +132,12 @@ const StNavLink = styled(NavLink)`
 
   &:hover,
   &:focus {
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.BLACK};
     font-weight: 600;
   }
 
   &.active {
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.BLACK};
     font-weight: 600;
   }
 `;
@@ -147,7 +147,7 @@ const StLink = styled(NavLink)`
 
   &:hover,
   &:focus {
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.BLACK};
     font-weight: 600;
   }
 `;
@@ -157,7 +157,7 @@ const StLink = styled(NavLink)`
 
 //   &:hover,
 //   &:focus {
-//     color: ${({ theme }) => theme.colors.black};
+//     color: ${({ theme }) => theme.colors.BLACK};
 //     font-weight: 600;
 //   }
 // `;
