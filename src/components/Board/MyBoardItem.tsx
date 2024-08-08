@@ -3,49 +3,33 @@ import ClothesTag from "@components/ClothesTag";
 import { getCreatedTime } from "@utils/getTime";
 import EditDeleteButton from "@components/EditDeleteButton";
 import { ClothesColorType } from "@shared/colorTypeList";
-import { ClothesType } from "@shared/clothesTypeList";
+import { ClothesKoreanType, ClothesType } from "@shared/clothesTypeList";
 
-interface ClosetItemProps {
+interface MyBoardItemProps {
   item?: any;
-  id: number;
-  color: ClothesColorType;
-  type: ClothesType;
   image: string;
-  editPath: string;
-  onMutateDelete: (id: number) => void;
+
   showTag?: boolean; // ClothesTag 표시 여부
   showData?: boolean; // ItemDataContainer 표시 여부
   showTitle?: boolean; // ItemTitle 표시 여부
 }
 
-function ClosetItem({
+function MyBoardItem({
   item,
-  id,
-  color,
-  type,
   image,
-  editPath,
-  onMutateDelete,
   showTag = false,
   showData = false,
   showTitle = false,
-}: ClosetItemProps) {
-  console.log("🌈", type);
-  console.log("🌈", item);
+}: MyBoardItemProps) {
   return (
     <ContentsItem>
       <ImageWrapper>
-        <ContentsItemImage src={image} alt={"clothes image"} />
-        <ButtonWrapper>
-          <EditDeleteButton
-            id={id}
-            editPath={editPath}
-            onMutateDelete={onMutateDelete}
-          />
-        </ButtonWrapper>
+        <ContentsItemImage src={image} alt={"ootd image"} />
         {showTag && (
           <TagWrapper>
-            <ClothesTag color={color} type={type} />
+            {item.tags.map((tag) => (
+              <ClothesTag color={tag.color} type={tag.type} />
+            ))}
           </TagWrapper>
         )}
       </ImageWrapper>
@@ -60,13 +44,13 @@ function ClosetItem({
   );
 }
 
-export default ClosetItem;
+export default MyBoardItem;
 
 const ContentsItem = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  /* background-color: red; */
+  background-color: blue;
 `;
 
 const ImageWrapper = styled.div`
@@ -74,7 +58,7 @@ const ImageWrapper = styled.div`
   height: 100%;
   box-sizing: border-box;
   position: relative;
-  /* padding: 2rem; */
+  padding: 2rem;
   border: ${({ theme }) => theme.borders.containerBorder};
 `;
 
@@ -85,16 +69,13 @@ const ContentsItemImage = styled.img`
   box-sizing: border-box;
 `;
 
-const ButtonWrapper = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-`;
-
 const TagWrapper = styled.div`
   position: absolute;
   right: 1rem;
   bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const ItemDataContainer = styled.div`

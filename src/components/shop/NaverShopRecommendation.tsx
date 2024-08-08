@@ -8,9 +8,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import styled from 'styled-components';
 
-
-
-
 interface NaverShopRecommendationProps {
   liked: boolean[];
   toggleLike: (index: number) => void;
@@ -22,12 +19,9 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked
 
   // 전체 조회 훅 호출
   // const { data: slideData = { content: [] }, isLoading, error } = useWishlistItem(id);
+
   const { mutate: createWishlistItem } = useCreateWishlistItem();
   const { mutate: deleteWishlistItem } = useDeleteWishlistItem();
-
-  useEffect(() => {
-    // 필요한 경우, id 값을 동적으로 설정
-  }, []);
 
   console.log("데이터", data)
 
@@ -59,19 +53,21 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked
             breakpoints={{
               1200: { slidesPerView: 3, spaceBetween: 20 },
               980: { slidesPerView: 3, spaceBetween: 20 },
-              768: { slidesPerView: 2, spaceBetween: 20 }
+              768: { slidesPerView: 2, spaceBetween: 20 },
             }}
             className="mySwiper"
           >
             {data.map((slide, index) => (
               <SwiperSlide key={slide.productId}>
-                <NaverShopImage style={{ backgroundImage: `url(${slide.image})` }} />
                 <NaverShopData>
                   <NaverShopDataText>
                     <NaverShopDataType>{slide.type}</NaverShopDataType>
                     <NaverShopDataTitle>{slide.title}</NaverShopDataTitle>
                   </NaverShopDataText>
-                  <LikeButton active={liked[index]} onClick={() => handleLikeClick(index)} />
+                  <LikeButton
+                    active={liked[index]}
+                    onClick={() => handleLikeClick(index)}
+                  />
                 </NaverShopData>
               </SwiperSlide>
             ))}
@@ -80,8 +76,10 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked
         <NaverShopText>
           <HomeTitle>네이버 쇼핑에서 추천해요</HomeTitle>
           <HomeContent>
-            요즘 날씨에 맞는 구매하기 좋은 옷을 추천드려요!<br />
-            저희가 추천드린 옷이 마음에 든다면 하트를 눌러 위시리스트에 저장해 보세요.
+            요즘 날씨에 맞는 구매하기 좋은 옷을 추천드려요!
+            <br />
+            저희가 추천드린 옷이 마음에 든다면 하트를 눌러 위시리스트에 저장해
+            보세요.
           </HomeContent>
         </NaverShopText>
       </NaverShopGrid>
@@ -102,14 +100,14 @@ const HomeContents5 = styled.div`
 `;
 
 const NaverShopGrid = styled.div`
-  justify-content: center; 
+  justify-content: center;
   display: grid;
   padding: 10px;
   grid-template-columns: 1090px;
   grid-template-rows: 300px auto;
-  grid-template-areas: 
-      'slider'
-      'a';
+  grid-template-areas:
+    "slider"
+    "a";
   gap: 20px;
 
   @media (max-width: 1200px) {
@@ -118,17 +116,17 @@ const NaverShopGrid = styled.div`
 
   @media (max-width: 980px) {
     grid-template-columns: 660px;
-    grid-template-areas: 
-      'slider'
-      'a';
+    grid-template-areas:
+      "slider"
+      "a";
   }
 
   @media (max-width: 768px) {
     grid-template-columns: 300px;
     grid-template-rows: auto auto;
-    grid-template-areas: 
-      'slider'
-      'a';
+    grid-template-areas:
+      "slider"
+      "a";
   }
 `;
 
@@ -163,7 +161,7 @@ const NaverShopData = styled.div`
   box-sizing: border-box;
   font-size: 12px;
   height: 50px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
 `;
 
 const NaverShopDataText = styled.div`

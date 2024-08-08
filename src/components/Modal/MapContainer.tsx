@@ -13,6 +13,11 @@ declare global {
   }
 }
 
+// interface currLocationType{
+//   address: string;
+//   code: string;
+// } | null
+
 interface MapContainerProps {
   onClose: () => void;
   onGetCurrLocation: () => void;

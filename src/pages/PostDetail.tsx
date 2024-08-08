@@ -1,23 +1,37 @@
-import ClothesTag from "@components/clothes/ClothesTag";
+import { getTimesAgo } from "@utils/getTime";
+import { getSkyState } from "@utils/getWeather";
 import Comments from "@components/Comment/Comments";
 import EditIcon from "@components/EditIcon";
 import Icon from "@components/Icon";
+import { useBoardById, useDeleteBoard } from "@queries/boardQueries";
 import {
   atIcon,
-  ellipsisIcon,
   eyeIcon,
   eyeOffIcon,
   heartFillIcon,
   heartIcon,
   weatherSunIcon,
 } from "@shared/icons";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import EditDeleteButton from "@components/EditDeleteButton";
+import ClothesTag from "@components/ClothesTag";
 
 export default function PostDetail() {
-  //임의
-  const isPublic = true;
+  //❌ 좋아요 기능 아직 구현 안함 ->  근우님꺼 가져다 쓰기 ㅇㅇ
   const isClickedLike = false;
 
+  //////////////////////////////////////////////////////////////////
+  const { id: boardId } = useParams(); //현재 Board id url에서 가져오기
+
+  const { board, isPending, isError, isSuccess } = useBoardById(
+    Number(boardId)
+  );
+  //🌈 isPending, isError, isSuccess 값 사용해서 UX 개선하기
+
+  console.log(board);
+
+  const { mutateDeleteBoard } = useDeleteBoard();
   return (
     <Container>
       <TitleContainer>
@@ -27,22 +41,23 @@ export default function PostDetail() {
       <GridContainer>
         <Column>
           <ImageWrapper>
-            <img
-              src="https://image.msscdn.net/images/goods_img/20240705/4234925/4234925_17205047158757_500.jpg"
-              alt="ootd사진"
-            />
+            <img src={board?.boardImage.image} alt="ootd 사진" />
             {/* 이미지 로드 실패 시 예외 처리 필요 */}
           </ImageWrapper>
           {/*  */}
           <FlexRowIconContainer>
-            {isPublic ? <Icon icon={eyeIcon} /> : <Icon icon={eyeOffIcon} />}
+            {!board?.isPrivate ? (
+              <Icon icon={eyeIcon} />
+            ) : (
+              <Icon icon={eyeOffIcon} />
+            )}
             <span>조회수 10</span>
             {isClickedLike ? (
               <Icon icon={heartFillIcon} />
             ) : (
               <Icon icon={heartIcon} />
             )}
-            <span>좋아요 10</span>
+            <span>좋아요 {board?.boardLikes.likeSub}</span>
           </FlexRowIconContainer>
           {/*  */}
         </Column>
@@ -55,16 +70,26 @@ export default function PostDetail() {
               {/*  */}
               <FlexRow>
                 <FlexRowUser>
-                  <UserImage></UserImage>
+                  <UserImage>
+                    <AvatarImg src={board?.user.image} />
+                  </UserImage>
                   <FlexColumnUser>
                     <FlexRowUser>
                       <UserInfoText>
-                        {`유저명`} · {`1시간 전`}
+                        {board?.user.nickname} ·{" "}
+                        {getTimesAgo(board?.createdAt as string)}
                       </UserInfoText>
                     </FlexRowUser>
-                    <WeatherInfo>
-                      <Icon icon={atIcon} /> {`대구`} {`온도`} {`스카이`}
-                    </WeatherInfo>
+                    {board?.weather && (
+                      <WeatherInfo>
+                        <Location>
+                          <Icon icon={atIcon} />
+                          <span>{board?.weather.stn}</span>
+                        </Location>
+                        <span>{board?.weather.ta}°C </span>
+                        <span>{getSkyState(board?.weather?.sky)}</span>
+                      </WeatherInfo>
+                    )}
                   </FlexColumnUser>
                 </FlexRowUser>
                 <IconWrapper>
@@ -74,23 +99,24 @@ export default function PostDetail() {
               {/*  */}
               {/*  */}
               <FlexColumn>
-                <ContentTitle>제목입니다. 제목입니다.</ContentTitle>
-                <ContentText>
-                  내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다.
-                  내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다.
-                  내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다.
-                  내용입니다. 내용입니다.
-                </ContentText>
+                <ContentTitle>{board?.title}</ContentTitle>
+                <ContentText>{board?.contents}</ContentText>
               </FlexColumn>
               {/*  */}
             </FlexColumn>
             {/*  */}
             <FlexRow>
               <ClothesTagWrapper>
-                <ClothesTag color="white" type="아우터" />
-                <ClothesTag color="black" type="바지" />
+                {board?.boardTags.map((tag) => (
+                  <ClothesTag key={tag.id} color={tag.color} type={tag.type} />
+                ))}
               </ClothesTagWrapper>
-              <EditIcon /> {/* 여기는 navigate 하는 함수 보내기 */}
+              <EditDeleteButton
+                id={Number(boardId)}
+                editPath={`/ootd/${boardId}/edit`}
+                onMutateDelete={mutateDeleteBoard}
+              />
+              {/* 여기는 navigate 하는 함수 보내기 */}
             </FlexRow>
             {/*  */}
           </ContentContainer>
@@ -100,7 +126,14 @@ export default function PostDetail() {
         <FullWidthColumn>
           {/*  */}
           <CommentWrapper>
-            <Comments board_id={"board_id"} user_id={"테스트유저"} />
+            {/* <Comments
+              //임시로 json-server 특성상 쿼리 불가 해서 프롭 드릴링 ㄱㄱ
+              userId={board?.user.userId as number}
+              image={board?.user.image as string}
+              nickname={board?.user?.nickname as string}
+              comments={board?.comments}
+              boardId={board?.id as number}
+            /> */}
           </CommentWrapper>
           {/*  */}
         </FullWidthColumn>
@@ -113,7 +146,7 @@ export default function PostDetail() {
 const ImageWrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.WHITE};
   border: ${({ theme }) => theme.borders.containerBorder};
 
   img {
@@ -155,7 +188,14 @@ const UserImage = styled.div`
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.gray};
+  background-color: ${({ theme }) => theme.colors.GRAY};
+`;
+
+const AvatarImg = styled.img`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
 `;
 
 const FlexColumnUser = styled.div`
@@ -177,10 +217,17 @@ const WeatherInfo = styled.div`
   font-size: x-small;
   display: flex;
   flex-direction: row;
+  gap: 0.5rem;
+
   svg {
     width: 1.5rem;
     height: 1.5rem;
   }
+`;
+
+const Location = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const IconWrapper = styled.div`
@@ -190,7 +237,7 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.yellow};
+  background-color: ${({ theme }) => theme.colors.YELLOW};
 `;
 
 //글 박스 안
@@ -241,7 +288,7 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
   margin-bottom: 2rem;
   gap: 1rem;
 `;

@@ -26,8 +26,10 @@ const WishDetail: React.FC<WishItemProps> = ({ item }) => {
           <RightWrapper>
             <UpContainer>
               <CategoryWrapper>
+                {product.category1} / {product.category2} / {product.category3} /{" "}
+                {product.category4}
                 {/* 카테고리 정보가 없는 경우 처리 필요 */}
-                {product.type}
+                {/* {product.type} */}
               </CategoryWrapper>
               <ProductNameWrapper>
                 <ProductName>{product.title}</ProductName>
@@ -73,7 +75,7 @@ export default WishDetail;
 const ImageWrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.WHITE};
   border: ${({ theme }) => theme.borders.containerBorder};
 
   img {
@@ -150,14 +152,14 @@ const ProductName = styled.h2`
   width: 100%;
   font-size: x-large;
   padding-bottom: 2rem;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
 
   /* transition: border-bottom 0.25s linear; */
   /* 
   &:hover,
   &:focus {
-    color: ${({ theme }) => theme.colors.black};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.BLACK};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.BLACK};
   } */
 `;
 
@@ -181,19 +183,19 @@ const InfoData = styled.p`
 const LowHighlight = styled.h4`
   font-size: x-large;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.blue};
+  color: ${({ theme }) => theme.colors.BLUE};
 `;
 
 const LowPrice = styled.h4`
   font-size: x-large;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
 `;
 
 const HighHighlight = styled.h5`
   font-size: small;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.red};
+  color: ${({ theme }) => theme.colors.RED};
 `;
 
 const HightPrice = styled.h5`
@@ -222,7 +224,7 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
   margin-bottom: 2rem;
   gap: 1rem;
 `;

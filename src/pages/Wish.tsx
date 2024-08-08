@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PageMoveButton from "@components/PageMoveButton";
-import ClothesType from "@components/clothes/ClothesTypes";
 import WishsGrid from "@components/wish/WishsGrid";
 import useModal from "@hooks/useModal";
 import ModalPortal from "@components/Modal/ModalPortal";
 import ModalLayout from "@components/Modal/ModalLayout";
 import WishDetail from "@pages/WishDetail";
-import { useWishlistItems, useDeleteWishlistItem, useWishlistItem } from "@/queries/wishlistQueries";
+import {
+  useWishlistItems,
+  useDeleteWishlistItem,
+  useWishlistItem,
+} from "@/queries/wishlistQueries";
 
 function Wish() {
   const { isVisible, openModal, closeModal } = useModal();
@@ -30,14 +33,11 @@ function Wish() {
   
   const selectedItem = wishlistItems?.content?.find((item) => item.id === selectedItemId);
 
-
   if (isPending) return <div>Loading...</div>;
   if (isError) return <div>위시리스트를 불러오지 못했습니다. 위시리스트를 추가해주세요.</div>;
   if (isSuccess) return (
     <MypageContentsContainer>
-      <ContentsHeader>
-        <ClothesType />
-      </ContentsHeader>
+      <ContentsHeader>{/* <ClothesTypes /> */}</ContentsHeader>
       <ContentsMain>
         <WishsGrid
           onClick={handleItemClick}
