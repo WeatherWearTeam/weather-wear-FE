@@ -10,5 +10,5 @@ export default function AlertText({ children }: AlertTextProps) {
 
 const Text = styled.div`
   font-size: small;
-  color: ${({ theme }) => theme.colors.red};
+  color: ${({ theme }) => theme.colors.RED};
 `;

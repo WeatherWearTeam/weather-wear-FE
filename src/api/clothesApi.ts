@@ -1,56 +1,59 @@
 import api from "@api/api";
+import { ClothesType } from "@shared/clothesTypeList";
+import { ClothesColorType } from "@shared/colorTypeList";
 
-export type ClothesItem = {
-    id: number,
-    color: string,
-    type: string,
-    image: string
-}
-
-// 전체 데이터 조회
-export const getClothesItems = async (): Promise<ClothesItem[]> => {
-    const response = await api.get('/clothes');
-    // console.log("리스폰스 데이터", response.data);
-    return response.data;
+export type ClothesItemType = {
+  id: number;
+  type: ClothesType;
+  color: ClothesColorType;
+  image: string;
 };
 
-
-// 개별 데이터 조회
-export const getClothesItemById  = async (id: number): Promise<ClothesItem> => {
-    const response = await api.get(`/clothes/${id}`);
-    return response.data;
+export type ClothesItemsResponse = {
+  content: ClothesItemType[]; //옷 아이템 든 배열
 };
 
+//전체 데이터 조회
+export const getClothesItems = async (): Promise<ClothesItemsResponse> => {
+  const response = await api.get("/api/clothes");
+  console.log("clothes 데이터", response.data);
+  return response.data;
+};
+
+// 개별 데이터 조회 //하나씩 수정할 때 필요함
+export const getClothesItemById = async (
+  id: number
+): Promise<ClothesItemsResponse> => {
+  const response = await api.get(`/api/clothes/${id}`);
+  return response.data;
+};
 
 // 생성
-// export const createClothesItem  = async (item: ClothesItem): Promise<ClothesItem> => {
-//     const response = await api.post('/clothes', item);
-//     return response.data;
-// };
-
-// 생성2  //
-export const createClothesItem = async (formData: FormData): Promise<ClothesItem> => {
-    const response = await api.post('/clothes', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
-  };
-
-
-// 수정
-export const updateClothesItem = async (id: number, formData: FormData): Promise<ClothesItem> => {
-  const response = await api.put(`/clothes/${id}`, formData, {
-      headers: {
-          'Content-Type': 'multipart/form-data',
-      },
+export const createClothesItem = async (
+  formData: FormData
+): Promise<ClothesItemsResponse> => {
+  const response = await api.post("/api/clothes", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
   return response.data;
 };
 
+// 수정
+export const updateClothesItem = async (
+  formData: FormData
+): Promise<ClothesItemsResponse> => {
+  const response = await api.put(`/api/clothes`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  console.log(response.data);
+  return response.data;
+};
 
 // 삭제
-export const deleteClothesItem = async (id: number): Promise<void> => {
-    await api.delete(`/clothes/${id}`);
+export const deleteClothesItem = async (clothesId: number): Promise<void> => {
+  await api.delete(`/api/clothes/${clothesId}`);
 };

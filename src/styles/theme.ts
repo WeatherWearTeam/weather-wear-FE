@@ -1,21 +1,21 @@
 import { css } from "styled-components";
 
 const colors = {
-  white: "#FFFFFF",
-  gray: "#AEAEB2",
-  black: "#000000",
-  red: "#FF3E3E",
-  yellow: "#FFCC00",
-  sand: "#EBE7DB",
-  beige: "#F2D7A4",
-  brown: "#B26E18",
-  khaki: "#6D7F00",
-  green: "#34C759",
-  cyan: "#32ADE6",
-  blue: "#007AFF",
-  indigo: "#252497",
-  purple: "#AF52DE",
-  pink: "#FF6885",
+  WHITE: "#FFFFFF",
+  GRAY: "#AEAEB2",
+  BLACK: "#000000",
+  RED: "#FF3E3E",
+  YELLOW: "#FFCC00",
+  SAND: "#EBE7DB",
+  BEIGE: "#F2D7A4",
+  BROWN: "#B26E18",
+  KHAKI: "#6D7F00",
+  GREEN: "#34C759",
+  CYAN: "#32ADE6",
+  BLUE: "#007AFF",
+  INDIGO: "#252497",
+  PURPLE: "#AF52DE",
+  PINK: "#FF6885",
   //
   main: "#5E5E5E", //메인 텍스트 컬러
   borderGray: "#A3A3A3", //버튼 보더 컬러
@@ -30,31 +30,31 @@ const borders = {
 
 const buttons = {
   primary: {
-    backgroundColor: `${colors.black}`,
-    border: `1px solid ${colors.black}`,
-    color: `${colors.white}`,
+    backgroundColor: `${colors.BLACK}`,
+    border: `1px solid ${colors.BLACK}`,
+    color: `${colors.WHITE}`,
 
     hover: css`
-      background-color: ${colors.white};
-      border: 1px solid ${colors.black};
-      color: ${colors.black};
+      background-color: ${colors.WHITE};
+      border: 1px solid ${colors.BLACK};
+      color: ${colors.BLACK};
     `,
     focus: css`
-      background-color: ${colors.white};
-      border: 1px solid ${colors.black};
-      color: ${colors.black};
+      background-color: ${colors.WHITE};
+      border: 1px solid ${colors.BLACK};
+      color: ${colors.BLACK};
     `,
   },
   secondary: {
-    backgroundColor: `${colors.white}`,
+    backgroundColor: `${colors.WHITE}`,
     border: `${borders.containerBorder}`,
     hover: css`
-      border: 1px solid ${colors.black};
-      color: ${colors.black};
+      border: 1px solid ${colors.BLACK};
+      color: ${colors.BLACK};
     `,
     focus: css`
-      border: 1px solid ${colors.black};
-      color: ${colors.black};
+      border: 1px solid ${colors.BLACK};
+      color: ${colors.BLACK};
     `,
   },
 };

@@ -48,6 +48,12 @@ export default function MyAccountEdit() {
     }
   };
 
+  //사용자가 이미지 프리뷰/기존 이미지/파일도 안올리고 싶은 경우
+  const handleDeleteImage = () => {
+    setImageSrc(null);
+    setImageFile(null);
+  };
+
   // 🌟 FormData의 내용을 콘솔에 출력하는 함수
   function logFormData(formData: FormData) {
     for (const pair of formData.entries()) {
@@ -65,12 +71,25 @@ export default function MyAccountEdit() {
         return;
       }
 
-      if (userNickname === me.nickname && !imageFile) {
+      if (
+        userNickname === me.nickname &&
+        !imageFile &&
+        imageSrc === me?.image
+      ) {
         alert(
           "변경된 사항이 없습니다. 변경하실 사항이 없으면 취소를 버튼을 눌러 주세요."
         );
         return;
       }
+
+      // return console.log(
+      //   "userNickname",
+      //   userNickname,
+      //   "imageFile",
+      //   imageFile,
+      //   "imageSrc",
+      //   imageSrc
+      // );
 
       // const jsonPayloadNickname = JSON.stringify({
       //   nickname: userNickname,
@@ -93,25 +112,47 @@ export default function MyAccountEdit() {
       // 닉네임은 변경하든 말든 그냥 다 보냄
       formData.append("nickname", userNickname);
 
+      //기존 이미지 없는 경우
       if (me.image === null) {
-        formData.append("url", "");
+        // formData.append("url", "");
+
         if (imageFile) {
+          //새 파일 있는 경우
+          formData.append("deleteImage", "false");
           formData.append("file", imageFile);
+          console.log("기존 이미지 X, 이미지 삭제 X, 파일 올리기 O");
         } else {
+          //새 파일 없는 경우
+          formData.append("deleteImage", "false");
           formData.append(
             "file",
             new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
           );
+          console.log("기존 이미지 X, 이미지 삭제 X, 파일 올리기 X");
         }
       } else {
-        formData.append("url", me.image as string);
+        //기존 이미지 있는 경우
+        // formData.append("url", me.image as string);
         if (imageFile) {
+          //새 파일 올림
+          formData.append("deleteImage", "true");
           formData.append("file", imageFile);
-        } else {
+          console.log("기존 이미지 O, 이미지 삭제 O, 파일 올리기 O");
+        } else if (Boolean(!imageFile) && Boolean(!imageSrc)) {
+          formData.append("deleteImage", "true");
           formData.append(
             "file",
             new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
           );
+          console.log("기존 이미지 O, 이미지 삭제 O, 파일 올리기 X");
+        } else {
+          //새 파일 안올림 && 기존 이미지도 X인 경우
+          formData.append("deleteImage", "false");
+          formData.append(
+            "file",
+            new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
+          );
+          console.log("기존 이미지 O, 이미지 삭제 X, 파일 올리기 X");
         }
       }
 
@@ -182,7 +223,18 @@ export default function MyAccountEdit() {
                   id="userImage"
                   onChange={uploadImageFile}
                 />
+                <ImageDeleteButtonWrapper>
+                  <Button
+                    type="button"
+                    buttonType="secondary"
+                    onClick={handleDeleteImage}
+                    disabled={Boolean(!imageSrc)}
+                  >
+                    사진 삭제
+                  </Button>
+                </ImageDeleteButtonWrapper>
               </ImageEditContainer>
+
               <InputContainer>
                 <Input
                   label="닉네임"
@@ -273,7 +325,7 @@ const Circle = styled.div`
   width: 30rem;
   height: 30rem;
   border-radius: 50%;
-  border: 1rem solid ${({ theme }) => theme.colors.white};
+  border: 1rem solid ${({ theme }) => theme.colors.WHITE};
 `;
 
 const BackgroundCloudWrapper = styled.div`
@@ -300,12 +352,12 @@ const TextContainer = styled.div`
 const Title = styled.h2`
   font-size: xx-large;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.WHITE};
 `;
 
 // const Text = styled.div`
 //   font-size: medium;
-//   color: ${({ theme }) => theme.colors.gray};
+//   color: ${({ theme }) => theme.colors.GRAY};
 // `;
 
 //✅ 오른쪽
@@ -331,7 +383,7 @@ const FormTextContainer = styled.div`
 const FormTitle = styled.h1`
   font-size: xx-large;
   font-weight: 800;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.BLACK};
 `;
 
 // const FormText = styled.p`
@@ -417,12 +469,12 @@ const LinkWrapper = styled.div`
   gap: 0.5rem;
 `;
 const LinkToPassEdit = styled(Link)`
-  color: ${({ theme }) => theme.colors.blue};
+  color: ${({ theme }) => theme.colors.BLUE};
   font-size: small;
 `;
 
 const LinkToDeleteUser = styled.div`
-  color: ${({ theme }) => theme.colors.blue};
+  color: ${({ theme }) => theme.colors.BLUE};
   font-size: small;
   cursor: pointer;
 `;
@@ -430,8 +482,10 @@ const LinkToDeleteUser = styled.div`
 
 const ImageEditContainer = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 2rem;
   height: 100%;
   width: 100%;
 `;
@@ -480,6 +534,22 @@ export const HiddenInput = styled.input`
 `;
 
 //✅ 버튼
+
+const ImageDeleteButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 8rem;
+  gap: 2rem;
+  button {
+    &:disabled {
+      &:hover,
+      &:focus {
+        border: ${({ theme }) => theme.borders.containerBorder};
+        color: ${({ theme }) => theme.colors.main};
+      }
+    }
+  }
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;

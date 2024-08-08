@@ -36,7 +36,7 @@ const StSelectButton = styled.div`
 
   &:hover,
   &:focus {
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 1px solid ${({ theme }) => theme.colors.BLACK};
   }
 
   svg {

@@ -1,5 +1,5 @@
 import { ClothesColorType } from "@store/clothesTagStore";
-import ColorBar from "@components/ColorBar";
+import ColorBar from "@components/Color/ColorBar";
 import styled from "styled-components";
 
 interface ColorPickBarProps {
