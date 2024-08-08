@@ -5,6 +5,9 @@ import OOTDTrend from "@components/trend/OOTDTrend";
 import NaverShopRecommendation from "@components/shop/NaverShopRecommendation";
 import WeatherSection from "@components/WeatherSection";
 import SignupRecommendation from "@components/SignupRecommendation";
+import useAuth from "@queries/useAuth";
+import { useHomeRecommandsItems } from "@queries/wishlistQueries";
+import { useHomeWeatherDatas } from "@queries/weatherQueries";
 
 const Home: React.FC = () => {
   const [liked, setLiked] = useState<boolean[]>([false, false, false]);
@@ -17,12 +20,24 @@ const Home: React.FC = () => {
     });
   };
 
-  //✅ 임의
-  const isLoggedIn = true;
+  const { isLoggedIn } = useAuth();
+
+  const { homeRecommandsData, isPending, isError, isSuccess } =
+    useHomeRecommandsItems(1);
+
+  const [addressId, setAddressId] = useState();
+
+  const getAddressCode = (code) => {
+    setAddressId(code);
+  };
+  console.log("addressId", Number(addressId));
+
+  const { homeWeatherDatas, weatherPending, weatherError, weatherSuccess } =
+    useHomeWeatherDatas(Number(addressId));
 
   return (
     <HomeContainer>
-      <WeatherSection />
+      <WeatherSection onGetAddressCode={getAddressCode} />
 
       {!isLoggedIn ? (
         <>
@@ -37,7 +52,13 @@ const Home: React.FC = () => {
           <OOTDTrend />
 
           <Divider />
-          <NaverShopRecommendation liked={liked} toggleLike={toggleLike} />
+          {isSuccess && (
+            <NaverShopRecommendation
+              liked={liked}
+              toggleLike={toggleLike}
+              data={homeRecommandsData[1]}
+            />
+          )}
 
           <Divider />
         </>
