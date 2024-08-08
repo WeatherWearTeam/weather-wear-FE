@@ -1,21 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import { useCreateWishlistItem, useDeleteWishlistItem, useWishlistItem, useWishlistItems } from '@/queries/wishlistQueries';
-import LikeButton from '@components/LikeButton';
-import { NaverProduct, WishlistItem } from '@/api/wishlistApi';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import {
+  useCreateWishlistItem,
+  useDeleteWishlistItem,
+  useWishlistItem,
+  useWishlistItems,
+} from "@/queries/wishlistQueries";
+import LikeButton from "@components/LikeButton";
+import { NaverProduct, WishlistItem } from "@/api/wishlistApi";
+import "swiper/css";
+import "swiper/css/navigation";
+import styled from "styled-components";
 
 interface NaverShopRecommendationProps {
   liked: boolean[];
   toggleLike: (index: number) => void;
-  data : NaverProduct[];
+  data: NaverProduct[];
 }
 
-const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked, toggleLike, data }) => {
-  const [id, setId] = useState(1); 
+const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
+  liked,
+  toggleLike,
+  data,
+}) => {
+  const [id, setId] = useState(1);
 
   // 전체 조회 훅 호출
   // const { data: slideData = { content: [] }, isLoading, error } = useWishlistItem(id);
@@ -23,15 +32,15 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked
   const { mutate: createWishlistItem } = useCreateWishlistItem();
   const { mutate: deleteWishlistItem } = useDeleteWishlistItem();
 
-  console.log("데이터", data)
+  console.log("데이터", data);
 
   const handleLikeClick = (index: number) => {
     const updatedLiked = [...liked];
     updatedLiked[index] = !updatedLiked[index];
     toggleLike(index);
 
-    const item = data[index];  // 수정
-    
+    const item = data[index]; // 수정
+
     if (updatedLiked[index]) {
       createWishlistItem(item);
     } else {
@@ -59,6 +68,9 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked
           >
             {data.map((slide, index) => (
               <SwiperSlide key={slide.productId}>
+                <NaverShopImage
+                  style={{ backgroundImage: `url(${slide.image})` }}
+                />
                 <NaverShopData>
                   <NaverShopDataText>
                     <NaverShopDataType>{slide.type}</NaverShopDataType>
