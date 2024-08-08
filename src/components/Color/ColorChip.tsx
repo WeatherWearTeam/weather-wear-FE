@@ -1,4 +1,3 @@
-
 import { ClothesColorType } from "@store/clothesTagStore";
 import styled from "styled-components";
 
@@ -10,34 +9,41 @@ interface ColorChipProps {
 }
 
 function ColorChip({ color, size = "s", isSelected, onClick }: ColorChipProps) {
-  return <Color color={color} $size={size} isSelected={isSelected} onClick={onClick} />;
+  return (
+    <Color
+      $color={color}
+      $size={size}
+      $isSelected={isSelected}
+      onClick={onClick}
+    />
+  );
 }
 
 export default ColorChip;
 
 interface ColorProps {
-  color: ClothesColorType;
+  $color: ClothesColorType;
   $size: "s" | "m";
-  isSelected?: boolean; // 선택 여부를 나타내는 prop 추가
+  $isSelected?: boolean; // 선택 여부를 나타내는 prop 추가
 }
 
 const Color = styled.div<ColorProps>`
   width: ${({ $size }) => ($size === "s" ? "1rem" : "1.5rem")};
   height: ${({ $size }) => ($size === "s" ? "1rem" : "1.5rem")};
-  background-color: ${({ color }) => color};
+  background-color: ${({ $color, theme }) => theme.colors[$color]};
   border: 1px solid ${({ theme }) => theme.colors.borderGray};
   transition: border 0.1s ease-out;
   cursor: pointer;
 
   // 선택된 색상에 대한 스타일 추가
-  ${({ isSelected, theme }) =>
-    isSelected &&
+  ${({ $isSelected, theme }) =>
+    $isSelected &&
     `
-      border: 2px solid ${theme.colors.black};
+      border: 2px solid ${theme.colors.BLACK};
     `}
 
   &:hover,
   &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.BLACK};
   }
 `;

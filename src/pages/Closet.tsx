@@ -1,120 +1,164 @@
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PageMoveButton from "@components/PageMoveButton";
 import AddButton from "@components/AddButton";
-import ColorBar from "@components/ColorBar";
-import ClothesTypes from "@components/clothes/ClothesTypes";
-import ClothesGrid from "@components/clothes/ClothesGrid";
-import { useNavigate } from "react-router-dom";
-import { useClothestItems } from "@queries/clothesQueries";
-import { deleteClothesItem } from "@api/clothesApi"; // Ensure you import this correctly
+import { useLocation, useNavigate } from "react-router-dom";
+import { useClothesItems, useDeleteClothesItem } from "@queries/clothesQueries";
+import ColorPickBar from "@components/Color/ColorPickBar";
+import clothesTypeList from "@shared/clothesTypeList";
+import ClosetList from "@components/Closet/ClosetList";
+import Select from "@components/Select/Select";
+import { ClothesKoreanType, ClothesType } from "@store/clothesTagStore";
+import { ClothesColorType } from "@shared/colorTypeList";
+
+interface SelectedClothesState {
+  type: ClothesType | null;
+  typeKorean: ClothesKoreanType | "옷 종류";
+}
 
 function Closet() {
   const navigate = useNavigate();
-  const { clothestItems, isPending, isError, refetch } = useClothestItems(); // Add refetch
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const location = useLocation();
 
-  if (isPending) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching data</div>;
+  //////////////////////////////////////////////////////////////
+  const [selectedClothesType, setSelectedClothesType] =
+    useState<SelectedClothesState>({
+      type: null,
+      typeKorean: "옷 종류", // 초기값을 null로 설정
+    });
 
-  // 선택된 색상에 따라 필터링된 아이템 리스트
-  const filteredItems = clothestItems?.filter(item => {
-    const matchesColor = selectedColor ? item.color === selectedColor : true;
-    const matchesType = selectedType && selectedType !== 'All' ? item.type === selectedType : true;
-    return matchesColor && matchesType;
-  });
+  const handleSelectType = (
+    type: ClothesType,
+    typeKorean: ClothesKoreanType
+  ) => {
+    console.log("✅", selectedClothesType);
 
-  // 수정 버튼 클릭 시 처리 로직
-  const handleEditClick = (id: number) => {
-    navigate(`/mypage/closet/edit/${id}`); // 수정 페이지로 이동
+    setSelectedClothesType((prev) => ({
+      ...prev,
+      type,
+      typeKorean,
+    }));
   };
 
+  //////////////////////////////////////////////////////////////
   // 삭제 버튼 클릭 시 처리 로직
-  const handleDeleteClick = async (id: number) => {
-    try {
-      await deleteClothesItem(id);
-      alert("아이템이 삭제되었습니다.");
-      refetch(); // 데이터 새로고침
-    } catch (error) {
-      alert("아이템 삭제에 실패했습니다.");
-      console.error(error);
-    }
+  const { mutateDeleteClothesItem } = useDeleteClothesItem();
+  const handleDeleteClick = (id: number) => {
+    const isConfirmed = confirm("아이템이 삭제되었습니다.");
+    isConfirmed && mutateDeleteClothesItem(id);
   };
+
+  //////////////////////////////////////////////////////////////
+  //생성
+  const { clothesItems, isPending, isError, isSuccess } = useClothesItems();
+
+  const [selectedColor, setSelectedColor] = useState<ClothesColorType | null>(
+    null
+  );
 
   // 색상 클릭 핸들러
-  const handleColorClick = (color: string | null) => {
-    console.log("Clicked Color:", color);
+  const handleColorClick = (color: ClothesColorType) => {
+    console.log("🌈", color);
     setSelectedColor(color);
   };
 
-  // 타입 클릭 핸들러
-  const handleTypeClick = (type: string) => {
-    console.log("Clicked Type:", type);
-    setSelectedType(type);
-  };
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
 
-  console.log("Selected Color:", selectedColor);
-  console.log("Selected Type:", selectedType);
-  console.log("Filtered Items:", filteredItems);
+    if (selectedClothesType.type) {
+      queryParams.set("type", selectedClothesType.type);
+    } else {
+      queryParams.delete("type");
+    }
+
+    if (selectedColor) {
+      queryParams.set("color", selectedColor);
+    } else {
+      queryParams.delete("color");
+    }
+
+    navigate(`?${queryParams.toString()}`);
+  }, [selectedClothesType, selectedColor, navigate, location.search]);
+
+  if (isPending) return <div>로딩중...</div>;
+  if (isError) return <div>에러 발생!</div>;
 
   return (
-    <>
-      <MypageContentsContainer>
-        <ContentsHeader>
-          <ClothesTypes onTypeClick={handleTypeClick} />
-          <ColorBar onClick={handleColorClick} />
-        </ContentsHeader>
-        <ClothesGrid
-          items={filteredItems || []}
-          onEditClick={handleEditClick}
+    <MyPageContentsContainer>
+      <HeaderContainer>
+        {/* <ClothesTypes onTypeClick={handleTypeClick} /> */}
+        <SelectWrapper>
+          <Select
+            list={clothesTypeList}
+            onClick={handleSelectType}
+            value={selectedClothesType.typeKorean}
+          />
+        </SelectWrapper>
+        <SelectWrapper>
+          <ColorPickBar onClick={handleColorClick} />
+        </SelectWrapper>
+      </HeaderContainer>
+      {isSuccess && clothesItems?.content && (
+        <ClosetList
+          items={clothesItems.content}
           onDeleteClick={handleDeleteClick}
         />
-        <ContentsFooter>
-          <PageMoveButton />
-          <AddButton onClick={() => navigate(`/mypage/closet/add`)} />
-        </ContentsFooter>
-      </MypageContentsContainer>
-    </>
+      )}
+      <ContentsFooter>
+        <PageMoveButton />
+        <AddButton onClick={() => navigate(`/mypage/closet/add`)} />
+      </ContentsFooter>
+    </MyPageContentsContainer>
   );
 }
 
 export default Closet;
 
-const MypageContentsContainer = styled.div`
+const MyPageContentsContainer = styled.div`
+  overflow-y: auto;
   width: 100%;
-  height: 80vh;
+  height: calc(100vh - 16rem);
   position: fixed;
-  top: 175px;
+  /* top: 17.5rem; */
+  top: 16.2rem; //픽스 위치 조정
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 15px;
-  overflow-y: auto;
+  padding: 0 2rem;
 `;
 
-const ContentsHeader = styled.div`
-  background-color: white;
+const HeaderContainer = styled.div`
   width: 100%;
-  height: 60px;
-  max-width: 1090px;
-  flex-shrink: 0;
+  /* max-width: 1220px; */
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
+  padding: 2rem;
+  gap: 2rem;
   box-sizing: border-box;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
+
+const SelectWrapper = styled.div`
+  flex: 1;
+  width: 37rem;
+  max-width: 37rem;
+  box-sizing: border-box; /* 박스 사이징 모델을 설정하여 패딩과 보더를 포함하도록 설정 */
 `;
 
 const ContentsFooter = styled.div`
-  width: 85%;
-  height: 50px;
+  padding: 4rem;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
   max-width: 1220px;
-  flex-shrink: 0;
+  /* flex-shrink: 0; */
 `;

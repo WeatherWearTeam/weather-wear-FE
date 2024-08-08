@@ -1,6 +1,6 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const MyOOTDRecommendation: React.FC = () => {
   const navigate = useNavigate();
@@ -12,10 +12,12 @@ const MyOOTDRecommendation: React.FC = () => {
             <ContentTitle>My OOTD 추천</ContentTitle>
             <HeaderContentContainer>
               <ContentDescription>
-                오늘 날씨에는 내 옷장의 이런 옷들을 추천합니다!<br />
-                더 다양한 스타일 추천을 원한다면 옷을 추가해주세요!
+                오늘 날씨에는 내 옷장의 이런 옷들을 추천합니다!
+                <br />더 다양한 스타일 추천을 원한다면 옷을 추가해주세요!
               </ContentDescription>
-              <StyledButton onClick={() => navigate('/mypage/closet')}>내 옷장 바로가기</StyledButton>
+              <StyledButton onClick={() => navigate("/mypage/closet")}>
+                내 옷장 바로가기
+              </StyledButton>
             </HeaderContentContainer>
           </HeaderLeft>
         </OOTDHeader>
@@ -42,41 +44,41 @@ const ContentContainer = styled.div`
 
 const OOTDGrid = styled.div`
   width: 100%;
-  justify-content: center; 
+  justify-content: center;
   display: grid;
   padding: 10px;
   grid-template-columns: repeat(4, 200px);
   grid-template-rows: 200px 250px;
   grid-gap: 5px 50px;
-  grid-template-areas: 
-      'header header header header'
-      'img1 img2 img3 img4';
+  grid-template-areas:
+    "header header header header"
+    "img1 img2 img3 img4";
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(3, 200px);
     grid-template-rows: 200px 250px;
-    grid-template-areas: 
-      'header header header'
-      'img1 img2 img3';
+    grid-template-areas:
+      "header header header"
+      "img1 img2 img3";
   }
 
   @media (max-width: 980px) {
     grid-template-columns: repeat(2, 200px);
     grid-template-rows: 200px 250px;
-    grid-template-areas: 
-      'header header'
-      'img1 img2';
+    grid-template-areas:
+      "header header"
+      "img1 img2";
   }
 
   @media (max-width: 768px) {
     grid-template-columns: 300px;
     grid-template-rows: 250px 250px 250px 250px;
-    grid-template-areas: 
-      'header'
-      'img1'
-      'img2'
-      'img3'
-      'img4';
+    grid-template-areas:
+      "header"
+      "img1"
+      "img2"
+      "img3"
+      "img4";
   }
 `;
 
@@ -145,8 +147,8 @@ const ContentDescription = styled.p`
 
 const StyledButton = styled.button`
   background-color: ${({ theme }) => theme.buttons.secondary.backgroundColor};
-  border: ${({ theme }) => theme.buttons.secondary.border || 'inherit'};
-  color: ${({ theme }) => theme.buttons.secondary.color || 'inherit'};
+  border: ${({ theme }) => theme.buttons.secondary.border || "inherit"};
+  color: ${({ theme }) => theme.buttons.secondary.color || "inherit"};
   width: 150px;
   height: 35px;
   cursor: pointer;
@@ -154,15 +156,15 @@ const StyledButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.black};
-    border: 1px solid ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.BLACK};
+    border: 1px solid ${({ theme }) => theme.colors.BLACK};
+    color: ${({ theme }) => theme.colors.WHITE};
   }
 
   &:focus {
-    background-color: ${({ theme }) => theme.colors.black};
-    border: 1px solid ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.BLACK};
+    border: 1px solid ${({ theme }) => theme.colors.BLACK};
+    color: ${({ theme }) => theme.colors.WHITE};
   }
 
   &:disabled {

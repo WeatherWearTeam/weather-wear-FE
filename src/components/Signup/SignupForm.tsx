@@ -1,20 +1,10 @@
-import { User } from "@store/authStore";
 import Button from "@components/Button";
 import Input from "@components/Input";
 import { useCreateUser } from "@queries/userQueries";
 import { useState } from "react";
 import styled from "styled-components";
 
-interface SignupFormProps {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent) => Promise<void>;
-  signUpUser: User;
-}
-
 export default function SignupForm() {
-  //   onChange,
-  //   onSubmit,
-  //   signUpUser
   const [signUpUser, setSignUpUser] = useState({
     EMAIL: "",
     NICKNAME: "",

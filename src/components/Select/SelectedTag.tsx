@@ -1,4 +1,4 @@
-import ColorChip from "@components/ColorChip";
+import ColorChip from "@components/Color/ColorChip";
 import Icon from "@components/Icon";
 import { closeIcon } from "@shared/icons";
 import styled from "styled-components";
@@ -21,7 +21,7 @@ export default function SelectedTag({
         <ColorChip color={color} />
         {selectedTypeOption}
       </TagContainer>
-      <button onClick={() => onRemoveTag(id)}>
+      <button type="button" onClick={() => onRemoveTag(id)}>
         <Icon icon={closeIcon} />
       </button>
     </Container>

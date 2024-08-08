@@ -1,8 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-type ButtonType = 'primary' | 'secondary';
+type ButtonType = "primary" | "secondary";
 
 interface ButtonProps {
   $buttonType?: ButtonType;
@@ -18,10 +18,11 @@ const OOTDTrend: React.FC = () => {
         <TrendText>
           <HomeTitle>OOTD Trend 추천</HomeTitle>
           <HomeContent>
-            오늘 다른 사람들은 어떻게 입었을 까요?<br />
+            오늘 다른 사람들은 어떻게 입었을 까요?
+            <br />
             오늘의 인기있는 OOTD 트랜드를 확인해보세요!
           </HomeContent>
-          <TrendMore onClick={() => navigate('/ootd')}>MORE</TrendMore>
+          <TrendMore onClick={() => navigate("/ootd")}>MORE</TrendMore>
         </TrendText>
         <TrendImage2 />
         <TrendImage3 />
@@ -55,40 +56,39 @@ const HomeContents4 = styled.div`
 
 const TrendGrid = styled.div`
   width: 100%;
-  justify-content: center; 
+  justify-content: center;
   display: grid;
   padding: 10px;
   grid-template-columns: repeat(5, 200px);
   grid-gap: 20px;
   grid-template-rows: 200px 250px;
-  grid-template-areas: 
-    'a a b b b'
-    'a a c d e';
+  grid-template-areas:
+    "a a b b b"
+    "a a c d e";
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(4, 200px);
-    grid-template-areas: 
-      'a a b b'
-      'a a c d';
+    grid-template-areas:
+      "a a b b"
+      "a a c d";
   }
 
-    @media (max-width: 980px) {
+  @media (max-width: 980px) {
     grid-template-columns: repeat(3, 200px);
     grid-template-rows: 250px 200px;
-    grid-template-areas: 
-      'a a b '
-      'a a c ';
+    grid-template-areas:
+      "a a b "
+      "a a c ";
   }
-
 
   @media (max-width: 768px) {
     grid-template-columns: 300px;
     grid-template-rows: 200px 250px 250px 250px;
-    grid-template-areas: 
-      'b'
-      'a'
-      'c'
-      'd';
+    grid-template-areas:
+      "b"
+      "a"
+      "c"
+      "d";
   }
 `;
 
@@ -113,12 +113,12 @@ const TrendText = styled.div`
 `;
 
 const TrendMore = styled.button<ButtonProps>`
-  background-color: ${({ theme, $buttonType = 'primary' }) =>
+  background-color: ${({ theme, $buttonType = "primary" }) =>
     theme.buttons[$buttonType].backgroundColor};
-  border: ${({ theme, $buttonType = 'primary' }) =>
-    theme.buttons[$buttonType].border || 'inherit'};
-  color: ${({ theme, $buttonType = 'primary' }) =>
-    theme.buttons[$buttonType].color || 'inherit'};
+  border: ${({ theme, $buttonType = "primary" }) =>
+    theme.buttons[$buttonType].border || "inherit"};
+  color: ${({ theme, $buttonType = "primary" }) =>
+    theme.buttons[$buttonType].color || "inherit"};
   width: 100px;
   height: 38px;
   cursor: pointer;
@@ -127,17 +127,17 @@ const TrendMore = styled.button<ButtonProps>`
   outline: none;
 
   &:hover {
-    background-color: ${({ theme, $buttonType = 'primary' }) =>
-      $buttonType === 'secondary' ? theme.colors.black : theme.colors.white};
-    border: 1px solid ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme, $buttonType = "primary" }) =>
+      $buttonType === "secondary" ? theme.colors.BLACK : theme.colors.WHITE};
+    border: 1px solid ${({ theme }) => theme.colors.BLACK};
+    color: ${({ theme }) => theme.colors.BLACK};
   }
-  
+
   &:focus {
-    background-color: ${({ theme, $buttonType = 'primary' }) =>
-      $buttonType === 'secondary' ? theme.colors.black : theme.colors.white};
-    border: 1px solid ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme, $buttonType = "primary" }) =>
+      $buttonType === "secondary" ? theme.colors.BLACK : theme.colors.WHITE};
+    border: 1px solid ${({ theme }) => theme.colors.BLACK};
+    color: ${({ theme }) => theme.colors.BLACK};
   }
 
   &:disabled {

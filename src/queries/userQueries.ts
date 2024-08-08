@@ -8,7 +8,7 @@ import {
   updateUser,
 } from "@api/userApi";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import axios, { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 
 ///////////////////////////////////////////////////////////////
@@ -113,13 +113,6 @@ export const useUpdateUser = () => {
         errorMessage = `${error.response.data}`;
         console.log(errorMessage);
       }
-
-      //   //   dispatch(
-      //   //     setAlert({
-      //   //       formId: "signForm",
-      //   //       message: errorMessage,
-      //   //     })
-      //   //   );
     },
   });
 
@@ -152,13 +145,6 @@ export const useUpdatePassword = () => {
         errorMessage = `${error.response.data}`;
         console.log(errorMessage);
       }
-
-      //   //   dispatch(
-      //   //     setAlert({
-      //   //       formId: "signForm",
-      //   //       message: errorMessage,
-      //   //     })
-      //   //   );
     },
   });
 

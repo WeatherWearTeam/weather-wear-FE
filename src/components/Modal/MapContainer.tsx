@@ -475,7 +475,7 @@ const GetMyLocationButton = styled.button`
   right: 0.5rem;
   z-index: 2;
   background-color: rgba(0, 0, 0, 0.8);
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.WHITE};
   border-radius: 50%;
   padding: 0.5rem;
   transition: background-color 0.25s linear;

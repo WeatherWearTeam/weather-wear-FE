@@ -1,86 +1,119 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createClothesItem, getClothesItems, deleteClothesItem, ClothesItem, getClothesItemById, updateClothesItem } from '@api/clothesApi';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  createClothesItem,
+  getClothesItems,
+  deleteClothesItem,
+  getClothesItemById,
+  updateClothesItem,
+} from "@api/clothesApi";
+import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 
 // 전체 조회
-export const useClothestItems = () => {
-    const {
-        data: clothestItems,
-        isPending,
-        isError,
-        isSuccess,
-    } = useQuery<ClothesItem[]>({
-        queryKey: ['clothestItems'],
-        queryFn: getClothesItems
-    });
-
-    return { clothestItems, isPending, isError, isSuccess };
+export const useClothesItems = () => {
+  const {
+    data: clothesItems,
+    isPending,
+    isError,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["clothesItems"],
+    queryFn: getClothesItems,
+  });
+  return { clothesItems, isPending, isError, isSuccess };
 };
 
 // 개별 데이터 조회
 export const useClothesItemById = (id: number) => {
-    const {
-        data: clothesItem,
-        isLoading,
-        isError,
-        isSuccess,
-    } = useQuery<ClothesItem>({
-        queryKey: ['clothesItem', id],
-        queryFn: () => getClothesItemById(id)
-    });
-
-    return { clothesItem, isLoading, isError, isSuccess };
+  const {
+    data: clothesItem,
+    isPending,
+    isError,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["clothesItem", id],
+    queryFn: () => getClothesItemById(id),
+  });
+  return { clothesItem, isPending, isError, isSuccess };
 };
-
 
 // 생성 기능
 export const useCreateClothesItem = () => {
-    const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const {
+    mutate: mutateCreateClothesItem,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: createClothesItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["clothesItems"] });
+      navigate(`/mypage/closet`, { replace: true }); //히스토리 스택 대체
+      window.history.go(-1); // add 페이지 자체 히스토리에서 빼고 가기
+    },
+    onError: (error: AxiosError) => {
+      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
+      if (error.response) {
+        errorMessage = `${error.response.data}`;
+        console.log(errorMessage);
+      }
+    },
+  });
 
-    return useMutation<ClothesItem, Error, FormData>({
-        mutationFn: createClothesItem,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['clothestItems'] });
-        },
-        onError: (error) => {
-            // 에러 처리
-            console.error("Error creating clothes item:", error);
-        }
-    });
+  return { mutateCreateClothesItem, isPending, isError, isSuccess };
 };
-
 
 // 수정 기능
 export const useUpdateClothesItem = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation<ClothesItem, Error, { id: number, formData: FormData }>({
-        mutationFn: ({ id, formData }) => updateClothesItem(id, formData),
-        onSuccess: () => {
-            // 데이터 수정 후, 전체 데이터 무효화
-            queryClient.invalidateQueries({ queryKey: ['clothesItems'] });
-        },
-        onError: (error) => {
-            // 에러 처리
-            console.error("Error updating clothes item:", error);
-        }
-    });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const {
+    mutate: mutateUpdateClothesItem,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: updateClothesItem,
+    onSuccess: () => {
+      // 데이터 수정 후, 전체 데이터 무효화
+      queryClient.invalidateQueries({ queryKey: ["clothesItems"] });
+      navigate(`/mypage/closet`, { replace: true }); //히스토리 스택 대체
+      window.history.go(-1); // add 페이지 자체 히스토리에서 빼고 가기
+    },
+    onError: (error: AxiosError) => {
+      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
+      if (error.response) {
+        errorMessage = `${error.response.data}`;
+        console.log(errorMessage);
+      }
+    },
+  });
+  return { mutateUpdateClothesItem, isPending, isError, isSuccess };
 };
-
 
 // 삭제 기능
 export const useDeleteClothesItem = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation<void, Error, number>({
-        mutationFn: deleteClothesItem,
-        onSuccess: () => {
-            // 데이터 삭제 후, 전체 데이터 무효화
-            queryClient.invalidateQueries({ queryKey: ['clothesItems'] });
-        },
-        onError: (error) => {
-            // 에러 처리
-            console.error("Error deleting clothes item:", error);
-        }
-    });
+  const queryClient = useQueryClient();
+  const {
+    mutate: mutateDeleteClothesItem,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: deleteClothesItem,
+    onSuccess: () => {
+      // 데이터 삭제 후, 전체 데이터 무효화
+      queryClient.invalidateQueries({ queryKey: ["clothesItems"] });
+    },
+    onError: (error: AxiosError) => {
+      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
+      if (error.response) {
+        errorMessage = `${error.response.data}`;
+        console.log(errorMessage);
+      }
+    },
+  });
+  return { mutateDeleteClothesItem, isPending, isError, isSuccess };
 };
-
