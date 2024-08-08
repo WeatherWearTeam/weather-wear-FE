@@ -2,12 +2,14 @@ import styled, { css } from "styled-components";
 import ClothesTag from "@components/ClothesTag";
 import { getCreatedTime } from "@utils/getTime";
 import EditDeleteButton from "@components/EditDeleteButton";
+import { ClothesColorType } from "@shared/colorTypeList";
+import { ClothesType } from "@shared/clothesTypeList";
 
 interface ClosetItemProps {
   item?: any;
   id: number;
-  color: string;
-  type: string;
+  color: ClothesColorType;
+  type: ClothesType;
   image: string;
   editPath: string;
   onMutateDelete: (id: number) => void;
@@ -28,6 +30,8 @@ function ClosetItem({
   showData = false,
   showTitle = false,
 }: ClosetItemProps) {
+  console.log("🌈", type);
+  console.log("🌈", item);
   return (
     <ContentsItem>
       <ImageWrapper>
@@ -70,7 +74,7 @@ const ImageWrapper = styled.div`
   height: 100%;
   box-sizing: border-box;
   position: relative;
-  padding: 2rem;
+  /* padding: 2rem; */
   border: ${({ theme }) => theme.borders.containerBorder};
 `;
 

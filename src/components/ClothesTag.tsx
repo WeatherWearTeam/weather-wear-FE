@@ -1,17 +1,20 @@
 import ColorChip from "@components/Color/ColorChip";
-import { ClothesColorType, ClothesKoreanType } from "@store/clothesTagStore";
+
 import styled, { css } from "styled-components";
+import getKoreanType from "@utils/getKoreanType";
+import { ClothesType } from "@shared/clothesTypeList";
+import { ClothesColorType } from "@shared/colorTypeList";
 
 interface ClothesTagProps {
   color: ClothesColorType;
-  type: ClothesKoreanType;
+  type: ClothesType;
 }
 
 function ClothesTag({ color, type }: ClothesTagProps) {
   return (
     <Container>
       <ColorChip color={color} />
-      <ClothesType>{type}</ClothesType>
+      <ClothesTypeText>{getKoreanType(type)}</ClothesTypeText>
     </Container>
   );
 }
@@ -33,6 +36,6 @@ const Container = styled.div`
   `};
 `;
 
-const ClothesType = styled.p`
+const ClothesTypeText = styled.p`
   font-size: small;
 `;

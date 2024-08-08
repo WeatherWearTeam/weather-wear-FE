@@ -1,24 +1,33 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PageMoveButton from "@components/PageMoveButton";
-import ClothesType from "@components/clothes/ClothesTypes";
 import WishsGrid from "@components/wish/WishsGrid";
 import useModal from "@hooks/useModal";
 import ModalPortal from "@components/Modal/ModalPortal";
 import ModalLayout from "@components/Modal/ModalLayout";
 import WishDetail from "@pages/WishDetail";
-import { useWishlistItems, useDeleteWishlistItem, useWishlistItem } from "@/queries/wishlistQueries";
+import {
+  useWishlistItems,
+  useDeleteWishlistItem,
+  useWishlistItem,
+} from "@/queries/wishlistQueries";
 
 function Wish() {
   const { isVisible, openModal, closeModal } = useModal();
   const { wishlistItems, isPending, isError } = useWishlistItems();
   const { mutate: deleteWishlistItem } = useDeleteWishlistItem();
-  
+
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-  const { data: itemData, isLoading, error } = useWishlistItem(selectedItemId ? parseInt(selectedItemId) : undefined);
+  const {
+    data: itemData,
+    isLoading,
+    error,
+  } = useWishlistItem(selectedItemId ? parseInt(selectedItemId) : undefined);
 
   //find 하나만 찾기 ***********중요
-  const selectedItem = wishlistItems?.find((item) => item.id === selectedItemId);
+  const selectedItem = wishlistItems?.find(
+    (item) => item.id === selectedItemId
+  );
   // console.log(wishlistItems);
 
   useEffect(() => {
@@ -48,12 +57,10 @@ function Wish() {
 
   return (
     <MypageContentsContainer>
-      <ContentsHeader>
-        <ClothesType />
-      </ContentsHeader>
+      <ContentsHeader>{/* <ClothesTypes /> */}</ContentsHeader>
       <ContentsMain>
-        <WishsGrid 
-          onClick={handleItemClick} 
+        <WishsGrid
+          onClick={handleItemClick}
           data={wishlistItems}
           onDelete={handleDelete}
         />
@@ -63,7 +70,8 @@ function Wish() {
         {isVisible && selectedItemId && (
           <ModalPortal>
             <ModalLayout onClose={closeModal}>
-              <WishDetail item={selectedItem} /> {/* itemData가 올바르게 전달됨 */}
+              <WishDetail item={selectedItem} />{" "}
+              {/* itemData가 올바르게 전달됨 */}
             </ModalLayout>
           </ModalPortal>
         )}

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import getKoreanType from "@utils/getKoreanType";
 import { ClothesItemType } from "@api/clothesApi";
 import ClosetItem from "@components/Closet/ClosetItem";
+import { ClothesKoreanType } from "@shared/clothesTypeList";
 
 interface ClosetListProps {
   items: ClothesItemType[];
@@ -18,7 +19,7 @@ const ClosetList: React.FC<ClosetListProps> = ({ items, onDeleteClick }) => {
             id={item.id}
             item={item}
             color={item.color}
-            type={getKoreanType(item.type) as string}
+            type={item.type}
             image={item.image}
             editPath={`/mypage/closet/${item.id}/edit`}
             onMutateDelete={onDeleteClick}

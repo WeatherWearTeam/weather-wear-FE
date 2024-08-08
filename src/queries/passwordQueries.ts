@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 //비밀번호 리셋 메일 발송
 export const useCreateFindCode = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const {
@@ -17,7 +17,7 @@ export const useCreateFindCode = () => {
     mutationFn: createFindCode,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["password"] }); //전체 보드
-      //   navigate(`/my/setting`, { replace: true }); //히스토리 스택 대체
+      navigate(`/my/setting`, { replace: true }); //히스토리 스택 대체
       //   window.history.go(-2); // 비번 수정 & 내 정보 수정 페이지 자체 히스토리에서 빼고 가기
     },
     onError: (error: AxiosError) => {
@@ -26,13 +26,6 @@ export const useCreateFindCode = () => {
         errorMessage = `${error.response.data}`;
         console.log(errorMessage);
       }
-
-      //   //   dispatch(
-      //   //     setAlert({
-      //   //       formId: "signForm",
-      //   //       message: errorMessage,
-      //   //     })
-      //   //   );
     },
   });
 
@@ -68,13 +61,6 @@ export const useResetPassword = () => {
         errorMessage = `${error.response.data}`;
         console.log(errorMessage);
       }
-
-      //   //   dispatch(
-      //   //     setAlert({
-      //   //       formId: "signForm",
-      //   //       message: errorMessage,
-      //   //     })
-      //   //   );
     },
   });
 
