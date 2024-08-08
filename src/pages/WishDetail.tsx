@@ -4,59 +4,59 @@ import styled from "styled-components";
 import { WishlistItem } from "@api/wishlistApi";
 
 interface WishItemProps {
-  item?: WishlistItem | undefined; // WishlistItem | undefined로 수정
+  item: any;
 }
 
 const WishDetail: React.FC<WishItemProps> = ({ item }) => {
-  if (!item) {
-    return null;
-  }
+  const { product } = item;
 
   return (
     <Container>
       <TitleContainer>
         <SubTitle>위시 리스트</SubTitle>
-        <Title>{item.title}</Title>
+        <Title>{product.title}</Title>
       </TitleContainer>
       <GridContainer>
         <Column>
           <ImageWrapper>
-            <img src={item.image} alt="네이버 쇼핑 추천 아이템" />
+            <img src={product.image} alt="네이버 쇼핑 추천 아이템" />
           </ImageWrapper>
         </Column>
         <Column>
           <RightWrapper>
             <UpContainer>
               <CategoryWrapper>
-                {item.category1} / {item.category2} / {item.category3} /{" "}
-                {item.category4}
+                {product.category1} / {product.category2} / {product.category3} /{" "}
+                {product.category4}
+                {/* 카테고리 정보가 없는 경우 처리 필요 */}
+                {/* {product.type} */}
               </CategoryWrapper>
               <ProductNameWrapper>
-                <ProductName>{item.title}</ProductName>
+                <ProductName>{product.title}</ProductName>
               </ProductNameWrapper>
               <DataWrapper>
                 <InfoLabel>제조사</InfoLabel>
-                <InfoData>{item.maker}</InfoData>
+                <InfoData>{product.maker}</InfoData>
               </DataWrapper>
               <DataWrapper>
                 <InfoLabel>브랜드</InfoLabel>
-                <InfoData>{item.brand}</InfoData>
+                <InfoData>{product.brand}</InfoData>
               </DataWrapper>
               <DataWrapper>
                 <InfoLabel>판매처</InfoLabel>
-                <InfoData>{item.mallName}</InfoData>
+                <InfoData>{product.mallName}</InfoData>
               </DataWrapper>
             </UpContainer>
             <DownContainer>
               <FlexRow>
                 <LowHighlight>최저</LowHighlight>
-                <LowPrice>{item.lprice}원</LowPrice>
+                <LowPrice>{product.lprice}원</LowPrice>
                 <HighHighlight>최고</HighHighlight>
-                <HightPrice>{item.hprice}원</HightPrice>
+                <HightPrice>{product.hprice}원</HightPrice>
               </FlexRow>
               <Button
                 onClick={() => {
-                  window.location.href = `${item.link}`;
+                  window.location.href = `${product.link}`;
                 }}
               >
                 사러가기

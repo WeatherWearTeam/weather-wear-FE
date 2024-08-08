@@ -14,64 +14,46 @@ import {
 
 function Wish() {
   const { isVisible, openModal, closeModal } = useModal();
-  const { wishlistItems, isPending, isError } = useWishlistItems();
-  const { mutate: deleteWishlistItem } = useDeleteWishlistItem();
-
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-  const {
-    data: itemData,
-    isLoading,
-    error,
-  } = useWishlistItem(selectedItemId ? parseInt(selectedItemId) : undefined);
-
-  //find 하나만 찾기 ***********중요
-  const selectedItem = wishlistItems?.find(
-    (item) => item.id === selectedItemId
-  );
-  // console.log(wishlistItems);
-
-  useEffect(() => {
-    if (itemData) {
-      // 선택된 아이템의 데이터가 변경되면 해당 데이터로 상태를 업데이트
-      setSelectedItemId(itemData.id.toString());
-    }
-  }, [itemData]);
-
-  useEffect(() => {
-    if (error) {
-      console.error("Error loading wishlist item:", error);
-    }
-  }, [error]);
-
-  if (isPending || isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading wishlist items</div>;
+  const [page, setPage] = useState(1);
+  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+  const [type, setType] = useState<string | null>(null);
+  
+  const { wishlistItems, isPending, isError, isSuccess } = useWishlistItems(page, type);
+  const { mutateDeleteWishlistItem, isPendingDelete, isErrorDelete, isSuccessDelete } = useDeleteWishlistItem();
+  console.log(wishlistItems);
 
   const handleDelete = (productId: number) => {
-    deleteWishlistItem(productId);
+    mutateDeleteWishlistItem(productId);
   };
 
-  const handleItemClick = (id: string) => {
+  const handleItemClick = (id: number) => {
     setSelectedItemId(id);
     openModal();
   };
+  
+  const selectedItem = wishlistItems?.content?.find((item) => item.id === selectedItemId);
 
-  return (
+  if (isPending) return <div>Loading...</div>;
+  if (isError) return <div>위시리스트를 불러오지 못했습니다. 위시리스트를 추가해주세요.</div>;
+  if (isSuccess) return (
     <MypageContentsContainer>
       <ContentsHeader>{/* <ClothesTypes /> */}</ContentsHeader>
       <ContentsMain>
         <WishsGrid
           onClick={handleItemClick}
-          data={wishlistItems}
+          data={wishlistItems.content}
           onDelete={handleDelete}
         />
       </ContentsMain>
       <ContentsFooter>
-        <PageMoveButton />
-        {isVisible && selectedItemId && (
+        <PageMoveButton
+          currentPage={page}
+          onPageChange={(newPage) => setPage(newPage)}
+        />
+        {isVisible && (
           <ModalPortal>
             <ModalLayout onClose={closeModal}>
-              <WishDetail item={selectedItem} />{" "}
-              {/* itemData가 올바르게 전달됨 */}
+              <WishDetail item={selectedItem!} />
             </ModalLayout>
           </ModalPortal>
         )}

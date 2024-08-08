@@ -1,75 +1,46 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import LikeButton from "@components/LikeButton";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import {
-  useCreateWishlistItem,
-  useDeleteWishlistItem,
-} from "@/queries/wishlistQueries";
-import { WishlistItem } from "@/api/wishlistApi";
-
-import "swiper/css";
-import "swiper/css/navigation";
+import React, { useState, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import { useCreateWishlistItem, useDeleteWishlistItem, useWishlistItem, useWishlistItems } from '@/queries/wishlistQueries';
+import LikeButton from '@components/LikeButton';
+import { NaverProduct, WishlistItem } from '@/api/wishlistApi';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import styled from 'styled-components';
 
 interface NaverShopRecommendationProps {
   liked: boolean[];
   toggleLike: (index: number) => void;
+  data : NaverProduct[];
 }
 
-const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
-  liked,
-  toggleLike,
-}) => {
-  const [slideData, setSlideData] = useState<WishlistItem[]>([]);
+const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({ liked, toggleLike, data }) => {
+  const [id, setId] = useState(1); 
+
+  // 전체 조회 훅 호출
+  // const { data: slideData = { content: [] }, isLoading, error } = useWishlistItem(id);
+
   const { mutate: createWishlistItem } = useCreateWishlistItem();
   const { mutate: deleteWishlistItem } = useDeleteWishlistItem();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/wishlist");
-        const wishlistItems: WishlistItem[] = response.data;
-        setSlideData(wishlistItems);
-      } catch (error) {
-        console.error("Error fetching data", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  console.log("데이터", data)
 
   const handleLikeClick = (index: number) => {
     const updatedLiked = [...liked];
     updatedLiked[index] = !updatedLiked[index];
     toggleLike(index);
 
-    const item = slideData[index];
-
+    const item = data[index];  // 수정
+    
     if (updatedLiked[index]) {
-      const wishlistItem: WishlistItem = {
-        productId: item.productId,
-        title: item.title,
-        link: item.link,
-        image: item.image,
-        lprice: item.lprice,
-        hprice: item.hprice,
-        mallName: item.mallName,
-        brand: item.brand,
-        maker: item.maker,
-        category1: item.category1,
-        category2: item.category2,
-        category3: item.category3,
-        category4: item.category4,
-        type: item.type,
-        id: item.id,
-      };
-      createWishlistItem(wishlistItem);
+      createWishlistItem(item);
     } else {
-      deleteWishlistItem(item.productId);
+      deleteWishlistItem(item.id);
     }
   };
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error loading data</div>;
 
   return (
     <HomeContents5>
@@ -86,14 +57,11 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
             }}
             className="mySwiper"
           >
-            {slideData.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <NaverShopImage
-                  style={{ backgroundImage: `url(${slide.image})` }}
-                />
+            {data.map((slide, index) => (
+              <SwiperSlide key={slide.productId}>
                 <NaverShopData>
                   <NaverShopDataText>
-                    <NaverShopDataType>{slide.category3}</NaverShopDataType>
+                    <NaverShopDataType>{slide.type}</NaverShopDataType>
                     <NaverShopDataTitle>{slide.title}</NaverShopDataTitle>
                   </NaverShopDataText>
                   <LikeButton

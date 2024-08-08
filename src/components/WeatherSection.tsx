@@ -101,7 +101,7 @@ import WindyIcon from "@assets/icons/windy.svg?react";
 
 import Icon from "@components/Icon";
 import { focusIcon, navigationFillIcon } from "@shared/icons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useGeolocation from "@hooks/useGeolocation";
 import axios from "axios";
 import Rainy from "@components/WeatherBackground/Rainy";
@@ -111,11 +111,22 @@ import Windy from "@components/WeatherBackground/Windy";
 import Cloudy from "@components/WeatherBackground/Cloudy";
 import Sunny from "@components/WeatherBackground/Sunny";
 import Hot from "@components/WeatherBackground/Hot";
+import {
+  getWeatherByLocation,
+  getSpecificWeather,
+  WeatherData,
+} from "@/api/weatherApi";
+import { useHomeWeatherDatas } from "@queries/weatherQueries";
 // vite-plugin-svgr (4.0.0 이상 버전)에서는 사용 방법이 살짝 다르다.
 // SVG 파일을 가져올 때, ?react라는 접미사를 붙여 앨리어싱을 건너뛰어 기본 내보내기를 사용할 수 있다.
 // 이렇게 사용할 경우 svg.d.ts 파일을 생성해야 한다.
+interface WeatherSectionProps {
+  onGetAddressCode: (code) => void;
+}
 
-export default function WeatherSection() {
+export default function WeatherSection({
+  onGetAddressCode,
+}: WeatherSectionProps) {
   const navigate = useNavigate();
 
   const { isVisible, openModal, closeModal } = useModal();
@@ -128,6 +139,7 @@ export default function WeatherSection() {
     code: string;
   } | null>(null);
 
+  /////////////////////////////////////////////////////////////////////////////
   useEffect(() => {
     if (!geolocation) {
       return console.log("위치 정보를 가져올 수 없어요. ~~설정해주세요!");
@@ -173,8 +185,14 @@ export default function WeatherSection() {
   } | null>(null);
 
   const getCurrLocation = (currLocation) => {
+    console.log("currLocation", currLocation);
+
     setCurrLocation(currLocation);
   };
+
+  onGetAddressCode(currLocation?.code);
+  //////////////////////////////////////////////////////////////////////////////
+
   return (
     <Container>
       <GridContainer>
