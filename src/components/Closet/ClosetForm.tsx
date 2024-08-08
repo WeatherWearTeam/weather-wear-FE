@@ -2,7 +2,10 @@ import Button from "@components/Button";
 import ColorPickBar from "@components/Color/ColorPickBar";
 import Select from "@components/Select/Select";
 import SelectedTag from "@components/Select/SelectedTag";
-import clothesTypeList, { ClothesKoreanType, ClothesType } from "@shared/clothesTypeList";
+import clothesTypeList, {
+  ClothesKoreanType,
+  ClothesType,
+} from "@shared/clothesTypeList";
 import { ClothesColorType } from "@shared/colorTypeList";
 import { imageAddIcon } from "@shared/icons";
 
@@ -131,16 +134,11 @@ export default function ClosetForm({
 
     if (data) {
       if (imageFile) {
-        formData.append("file", imageFile);
-        console.log("새로운 사진 선택함~");
+        formData.append("file", imageFile as File);
+        console.log("새로운 사진 선택함");
       } else {
         //파일 선택 안하면 빈값
-        // formData.append(
-        //   "file",
-        //   new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
-        // );
-        //아에 보내지 말기 ㅇㅇㅇㅇ
-        console.log("새로운 사진 선택 안함, 빈값~");
+        console.log("새로운 사진 선택 안함");
       }
     } else {
       // data가 없을 때
