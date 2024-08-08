@@ -1,36 +1,20 @@
 import styled from "styled-components";
 import WishItem from "@components/wish/WishItem";
+import { WishlistItem } from "@api/wishlistApi";
 
-export interface WishItemType {
-  id: string;
-  productId: number;
-  title: string;
-  link: string;
-  image: string;
-  lprice: number;
-  hprice: number;
-  mallName: string;
-  brand: string;
-  maker: string;
-  category1: string;
-  category2: string;
-  category3: string;
-  category4: string;
-  type: string;
-}
 
 interface WishsGridProps {
-  onClick: () => void;
-  data: WishItemType[];
-  onDelete: (id: string) => void;
+  onClick: (id: number) => void;
+  data: WishlistItem[];
+  onDelete: (id: number) => void;
 }
 
 export default function WishsGrid({ onClick, data, onDelete }: WishsGridProps) {
-
+  console.log(data)
   return (
     <ContentsMain>
       {data.map((item) => (
-        <WishItem key={item.id} item={item} onClick={onClick} onDelete={onDelete} />
+        <WishItem key={item.id} item={item.product} onClick={() => onClick(item.id)} onDelete={() =>onDelete(item.id)} />
       ))}
     </ContentsMain>
   );
