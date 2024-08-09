@@ -4,7 +4,6 @@ import { Navigation } from "swiper/modules";
 import {
   useCreateWishlistItem,
   useDeleteRecommendWishlistItem,
-  useDeleteWishlistItem,
 } from "@/queries/wishlistQueries";
 import LikeButton from "@components/LikeButton";
 import { NaverProduct } from "@/api/wishlistApi";
@@ -27,7 +26,7 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
     data.map(() => null)
   );
   const { mutateCreateWishlistItem } = useCreateWishlistItem();
-  const { mutateDeleteRecommendWishlistItem } =
+  const { mutateDeleterecommendWishlistItem } =
     useDeleteRecommendWishlistItem();
 
   const handleLikeClick = (index: number, productId: number) => {

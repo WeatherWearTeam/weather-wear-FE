@@ -3,13 +3,12 @@ import styled from "styled-components";
 import MyOOTDRecommendation from "@components/ootd/MyOOTDRecommendation";
 import OOTDTrend from "@components/trend/OOTDTrend";
 import NaverShopRecommendation from "@components/shop/NaverShopRecommendation";
-import WeatherSection, { AddressInfo } from "@components/WeatherSection";
+import WeatherSection from "@components/WeatherSection";
 import SignupRecommendation from "@components/SignupRecommendation";
 import useAuth from "@queries/useAuth";
 import { useHomeRecommendsItems } from "@queries/wishlistQueries";
 import { useWeatherData } from "@queries/weatherQueries";
-import { WeatherData } from "@api/weatherApi";
-import MapSelector from "@components/Weather/MapSelector";
+import MapSelector, { AddressInfo } from "@components/Weather/MapSelector";
 import useModal from "@hooks/useModal";
 
 const Home: React.FC = () => {

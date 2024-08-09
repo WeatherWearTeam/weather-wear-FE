@@ -1,18 +1,20 @@
-import React from 'react';
-import styled, { keyframes, css } from 'styled-components';
-import { heartFillIcon, heartIcon } from '@shared/icons';
+import React from "react";
+import styled, { keyframes, css } from "styled-components";
+import { heartFillIcon, heartIcon } from "@shared/icons";
 
 interface LikeButtonProps {
-    active: boolean;
-    onClick: () => void;
+  active: boolean;
+  onClick: () => void;
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({ active, onClick }) => {
-    return (
-        <StyledLikeButton active={active} onClick={onClick}>
-            <IconWrapper active={active}>{active ? heartFillIcon : heartIcon}</IconWrapper>
-        </StyledLikeButton>
-    );
+  return (
+    <StyledLikeButton $isActive={active} onClick={onClick}>
+      <IconWrapper $isActive={active}>
+        {active ? heartFillIcon : heartIcon}
+      </IconWrapper>
+    </StyledLikeButton>
+  );
 };
 
 export default LikeButton;
@@ -24,7 +26,7 @@ const beating = keyframes`
   100% { transform: scale(1); }
 `;
 
-const StyledLikeButton = styled.button<{ active: boolean }>`
+const StyledLikeButton = styled.button<{ $isActive: boolean }>`
   width: 35px;
   height: 35px;
   background: none;
@@ -35,14 +37,14 @@ const StyledLikeButton = styled.button<{ active: boolean }>`
   display: block;
 
   ${(props) =>
-        props.active &&
-        css`
+    props.$isActive &&
+    css`
       animation: ${beating} 0.5s 1 alternate;
     `}
 `;
 
-const IconWrapper = styled.div<{ active: boolean }>`
+const IconWrapper = styled.div<{ $isActive: boolean }>`
   svg {
-    fill: ${(props) => (props.active ? 'red' : 'currentColor')};
+    fill: ${(props) => (props.$isActive ? "red" : "currentColor")};
   }
 `;
