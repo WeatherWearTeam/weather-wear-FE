@@ -1,52 +1,64 @@
 import CommentForm from "@components/Comment/CommentForm";
 import CommentList from "@components/Comment/CommentList";
+import {
+  Comment,
+  CommentUser,
+  useCommentsByBoardId,
+  useCreateComment,
+} from "@queries/commentQueries";
+import useAuth from "@queries/useAuth";
+import { useMe, useUser } from "@queries/userQueries";
 import styled from "styled-components";
 
-//✅ 데이터 연결시 타입 확인 필요
-export interface Comment_like {
-  id: string;
-  user_id: string;
-  comment_id: string;
-}
-
-//✅ 데이터 연결시 타입 확인 필요
-export interface Comment extends Comment_like {
-  id: string;
-  user_id: string;
-  board_id: string;
-  regist_date: string;
-  update_date: string;
-  contents: string;
-  comment_like: Comment_like[];
-}
-
 interface CommentsProps {
-  board_id: string;
-  user_id: string;
+  userId: number;
+  boardId: number;
+  // image: string;
+  // nickname: string;
+  // comments: Comment[];
 }
 
-export default function Comments({ board_id, user_id }: CommentsProps) {
-  // const { createComment, isPending, isError } = useCreateComment();
+export default function Comments({
+  userId,
+  boardId,
+}: // image,
+// nickname,
+// comments,
+CommentsProps) {
+  const { mutateCreateComment, isPending, isError, isSuccess } =
+    useCreateComment();
 
-  // const onCreateComment = (newComment: Omit<Comment, "id">) => {
-  //   createComment(newComment);
-  // };
+  //comment 생성
+  const handleCreateComment = (newComment: Omit<Comment, "id">) => {
+    mutateCreateComment(newComment);
+  };
 
+  //////////🌈🌈🌈이거 셋 병렬처리 ////////////////////////////////////////////////////////////////
+  //boardId 별 comments 조회
+  const { comments, isErrorComments, isPendingComments, isSuccessComments } =
+    useCommentsByBoardId(boardId);
+
+    
+  const { isLoggedIn } = useAuth();
+  const { me } = useMe(isLoggedIn);
+
+  console.log("🌈", comments);
   return (
     <>
       <CommentsContainer>
-        {/*  */}
         <CommentListWrapper>
-          <CommentList board_id={board_id} />
+          <CommentList boardId={boardId} comments={comments!} isSuccessComments={isSuccessComments} />
+          {/* boardOwner={}  */}
         </CommentListWrapper>
-        {/*  */}
         <CommentForm
-          user_id={user_id}
-          board_id={board_id}
+          myId={me?.id as number}
+          myImage={me?.image as string}
+          myNickname={me?.nickname as string}
+          boardId={boardId}
           formId={"createCommentForm"}
-          // isPending={isPending}
-          // isError={isError}
-          // onCreateComment={onCreateComment}
+          isPending={isPending}
+          isError={isError}
+          onCreateComment={handleCreateComment}
         />
       </CommentsContainer>
     </>

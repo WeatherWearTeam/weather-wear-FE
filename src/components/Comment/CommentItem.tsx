@@ -1,32 +1,40 @@
-// import useEditComment from "@/hooks/useEditComment";
-// import useUser from "@/hooks/useUser";
+// import useEditComment from "@hooks/useEditComment";
+// import useUser from "@hooks/useUser";
+import { getTimesAgo } from "@utils/getTime";
 import CommentForm from "@components/Comment/CommentForm";
-import { Comment } from "@components/Comment/Comments";
 import EditIcon from "@components/EditIcon";
+import { Comment, useUpdateComment } from "@queries/commentQueries";
 
 interface CommentItemProps {
-  id: string;
-  board_id: string;
-  user_id: string;
-  contents: string;
+  // commentId: number;
+  // boardId: number;
+  // userId: number;
+  // nickname: string;
+  // image: string;
+  // contents: string;
+  comment: Comment;
   isEditing: boolean;
   onEditStart: () => void;
   onEditEnd: () => void;
 }
 export default function CommentItem({
-  id,
-  board_id,
-  user_id,
-  contents,
+  // commentId,
+  // boardId,
+  // userId,
+  // nickname,
+  // image,
+  // contents,
+  comment,
   isEditing,
   onEditStart,
   onEditEnd,
 }: CommentItemProps) {
   // const { id: myId } = useUser();
-  // const { editMutate, isPending, isError } = useEditComment();
+  const { mutateUpdateComment, isPending, isError, isSuccess } =
+    useUpdateComment();
 
-  const onEditComment = (updatedComment: Comment) => {
-    // editMutate(updatedComment);
+  const handleEditComment = (updatedComment: UpdatedCommentRequest) => {
+    mutateUpdateComment(updatedComment);
     console.log("댓글 수정 비동기 요청 보내기");
   };
 
@@ -34,17 +42,19 @@ export default function CommentItem({
     <>
       {!isEditing && (
         <CommentContainer>
-          <Avatar>{/* <AvatarImg alt={`avatar`} /> */}</Avatar>
+          <AvatarWrapper>
+            <Avatar image={comment.user.image} size="m" />
+          </AvatarWrapper>
           <TextContainer>
             <TextareaWrapper>
               <TextUserId>
-                {user_id} · {`1시간 전`}
+                {comment.user.nickname} · {getTimesAgo(comment.createdAt)}
               </TextUserId>
-              <TextContent>{contents}</TextContent>
+              <TextContent>{comment.contents}</TextContent>
             </TextareaWrapper>
           </TextContainer>
-          {/* {user_id === myId && ( */}
-          <EditIcon onEditStart={onEditStart} commentId={id} />
+          {/* {userId === myId && ( */}
+          <EditIcon onEditStart={onEditStart} commentId={comment.id} />
           {/* )} */}
           {/* 모달 메뉴 열고 수정 선택해야 에디팅 시작하기 때문에 더 내려주기 */}
         </CommentContainer>
@@ -52,16 +62,21 @@ export default function CommentItem({
       {isEditing && (
         <CommentContainer>
           <CommentForm
-            user_id={user_id}
-            board_id={board_id}
-            id={id}
-            preComment={contents}
+            myId={comment.user.userId}
+            myImage={comment.user.image as string}
+            myNickname={comment.user.nickname as string}
+            boardId={comment.boardId}
+            /////////////////////////////////
             formId={"editCommentForm"}
-            onEditComment={onEditComment}
+            isPending={isPending}
+            isError={isError}
+            commentId={comment.id}
+            /////////////////////////////////
+            onEditComment={handleEditComment}
+            preComment={comment.contents} //기존 댓글
+            /////////////////////////////////
             isEditing={isEditing}
             onEditEnd={onEditEnd}
-            // isPending={isPending}
-            // isError={isError}
           />
         </CommentContainer>
       )}
@@ -70,6 +85,8 @@ export default function CommentItem({
 }
 
 import styled from "styled-components";
+import Avatar from "@components/Avatar";
+import { UpdatedCommentRequest } from "@api/commentApi";
 
 export const CommentContainer = styled.div`
   font-size: small;
@@ -79,22 +96,22 @@ export const CommentContainer = styled.div`
   /* border-bottom: ${({ theme }) => theme.borders.containerBorder}; */
 `;
 
-export const Avatar = styled.div`
+export const AvatarWrapper = styled.div`
   position: absolute;
   margin-right: 1rem;
   box-sizing: border-box;
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.gray};
+  background-color: ${({ theme }) => theme.colors.GRAY};
 `;
 
-export const AvatarImg = styled.img`
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  object-fit: cover;
-`;
+// export const AvatarImg = styled.img`
+//   width: 4rem;
+//   height: 4rem;
+//   border-radius: 50%;
+//   object-fit: cover;
+// `;
 
 export const TextContainer = styled.div`
   display: flex;

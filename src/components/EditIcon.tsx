@@ -1,22 +1,23 @@
 import Icon from "@components/Icon";
 import { ellipsisIcon } from "@shared/icons";
 import styled from "styled-components";
-import useDropdownPosition from "@/hooks/useDropdownPosition";
-import useModal from "@/hooks/useModal";
+import useDropdownPosition from "@hooks/useDropdownPosition";
+import useModal from "@hooks/useModal";
 import ModalPortal from "@components/Modal/ModalPortal";
 import DropdownLayout from "@components/Modal/DropdownLayout";
 import Dropdown from "@components/Modal/Dropdown";
-// import useDeleteComment from "@/hooks/useDeleteComment";
+import { useDeleteComment } from "@queries/commentQueries";
+// import useDeleteComment from "@hooks/useDeleteComment";
 
 interface EditIconProps {
   onEditStart: () => void;
-  commentId: string;
+  commentId: number;
 }
 export default function EditIcon({ onEditStart, commentId }: EditIconProps) {
   const { openModal, closeModal, isVisible } = useModal();
   const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
 
-  // const { deleteCommentMutate } = useDeleteComment();
+  const { mutateDeleteComment } = useDeleteComment();
 
   // //모달 열고 난 뒤 수정/삭제 클릭 했을 때 실행 되는 함수
   const handleEditComment = () => {
@@ -25,9 +26,10 @@ export default function EditIcon({ onEditStart, commentId }: EditIconProps) {
     closeModal(); //그리고 메뉴 모달은 꺼짐
   };
 
-  const handleDeleteComment = () => {
-    // deleteCommentMutate(commentId);
-    console.log("수정 완료");
+  const handleDeleteComment = (id: number) => {
+    mutateDeleteComment(id);
+    alert("정말 삭제하시겠습니까?");
+    console.log("commentId 리소스 삭제:", id);
     closeModal();
   };
 
@@ -44,7 +46,7 @@ export default function EditIcon({ onEditStart, commentId }: EditIconProps) {
           >
             <Dropdown
               onEdit={handleEditComment}
-              onDelete={handleDeleteComment}
+              onDelete={() => handleDeleteComment(commentId)}
             />
           </DropdownLayout>
         </ModalPortal>
