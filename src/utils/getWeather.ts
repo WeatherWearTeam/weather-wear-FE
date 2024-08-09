@@ -8,15 +8,16 @@ export const getSkyState = (SKY: number) => {
       return "구름많음";
     case 4:
       return "흐림";
-
     default:
       1;
       break;
   }
 };
 
-export const getPrepState = (PREP: number) => {
-  switch (PREP) {
+export const getPtyState = (PTY: number) => {
+  switch (PTY) {
+    case 0:
+      return "비 소식 없음";
     case 1:
       return "비";
     case 2:
@@ -24,10 +25,9 @@ export const getPrepState = (PREP: number) => {
     case 3:
       return "눈";
     case 4:
-      return "눈과 비";
-
+      return "소나기";
     default:
-      1;
+      0;
       break;
   }
 };
