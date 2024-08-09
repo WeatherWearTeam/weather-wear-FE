@@ -39,22 +39,30 @@ export default function WeatherSection({
                 wsd={weatherData?.wsd as number}
               />
               <WeatherInfo>
-                <ContentTitle>{weatherData?.tmp}°C</ContentTitle>
+                <WeatherTemperature>{weatherData?.tmp}°C</WeatherTemperature>
                 <ContentDescription>
-                  {getSkyState(weatherData?.sky as number)}
-                  <br />
-                  {getPtyState(weatherData?.pty as number)}
-                  <br />
-                  <div>
-                    체감{" "}
-                    {getFeelsLikeTemperature(
-                      weatherData?.tmp as number,
-                      weatherData?.reh as number,
-                      weatherData?.wsd as number
-                    )}
-                  </div>
-                  <div>습도 {weatherData?.reh}%</div>
-                  <div>강수확률 {weatherData?.pop}%</div>
+                  <WeatherInfoMainWrapper>
+                    <WeatherInfoMainText>
+                      {getSkyState(weatherData?.sky as number)}
+                    </WeatherInfoMainText>
+                    <WeatherInfoMainText>
+                      | {getPtyState(weatherData?.pty as number)}
+                    </WeatherInfoMainText>
+                  </WeatherInfoMainWrapper>
+                  <WeatherInfoSubWrapper>
+                    <WeatherInfoSubTitle>체감</WeatherInfoSubTitle>
+                    <WeatherInfoSubText>
+                      {getFeelsLikeTemperature(
+                        weatherData?.tmp as number,
+                        weatherData?.reh as number,
+                        weatherData?.wsd as number
+                      )}
+                    </WeatherInfoSubText>
+                    <WeatherInfoSubTitle>습도</WeatherInfoSubTitle>
+                    <WeatherInfoSubText>{weatherData?.reh}%</WeatherInfoSubText>
+                    <WeatherInfoSubTitle>강수확률</WeatherInfoSubTitle>
+                    <WeatherInfoSubText>{weatherData?.pop}%</WeatherInfoSubText>
+                  </WeatherInfoSubWrapper>
                 </ContentDescription>
               </WeatherInfo>
             </WeatherWrapper>
@@ -106,15 +114,50 @@ const ContentTitle = styled.h2`
   }
 `;
 
-const WeatherAnnouncement = styled.p`
+const WeatherAnnouncement = styled.div`
   color: black;
   font-size: large;
   white-space: pre-wrap;
 `;
 
-const ContentDescription = styled.p`
+const ContentDescription = styled.div`
   color: black;
   font-size: large;
+`;
+
+const WeatherTemperature = styled.h3`
+  font-size: 5rem;
+  color: black;
+  font-weight: bold;
+`;
+
+const WeatherInfoMainWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  width: 25rem;
+`;
+
+const WeatherInfoMainText = styled.h3`
+  font-size: x-large;
+`;
+
+const WeatherInfoSubWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  width: 25rem;
+`;
+
+const WeatherInfoSubTitle = styled.div`
+  font-size: small;
+  font-weight: bolder;
+`;
+const WeatherInfoSubText = styled.div`
+  font-size: small;
+  font-weight: lighter;
 `;
 
 const RecommendedContainer = styled.div`
