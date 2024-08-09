@@ -1,6 +1,7 @@
 import Button from "@components/Button";
 import Icon from "@components/Icon";
 import Input from "@components/Input";
+import { AddressInfo } from "@components/WeatherSection";
 import useGeolocation from "@hooks/useGeolocation";
 import { focusIcon } from "@shared/icons";
 import axios from "axios";
@@ -13,14 +14,9 @@ declare global {
   }
 }
 
-// interface currLocationType{
-//   address: string;
-//   code: string;
-// } | null
-
 interface MapContainerProps {
   onClose: () => void;
-  onGetCurrLocation: () => void;
+  onGetCurrLocation: (addressInfo: AddressInfo) => void;
 }
 
 export default function MapContainer({
@@ -47,10 +43,8 @@ export default function MapContainer({
     lon: string;
   } | null>(null);
 
-  const [currentAddressAndCode, setCurrentAddressAndCode] = useState<{
-    address: string;
-    code: string;
-  } | null>(null);
+  const [currentAddressAndCode, setCurrentAddressAndCode] =
+    useState<AddressInfo | null>(null);
 
   //----------------------------------------------------------------------------
 
@@ -80,7 +74,7 @@ export default function MapContainer({
 
   const handleMyLocationCheck = () => {
     console.log("서버로 현재 위치/코드 정보 보내기: ", currentAddressAndCode);
-    onGetCurrLocation(currentAddressAndCode);
+    onGetCurrLocation(currentAddressAndCode!);
     //모달 창 닫기
     onClose();
   };

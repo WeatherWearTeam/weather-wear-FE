@@ -1,44 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Board } from "@queries/boardQueries";
 import getKoreanType from "@utils/getKoreanType";
 import { ClothesKoreanType } from "@shared/clothesTypeList";
 import MyBoardItem from "@components/Board/MyBoardItem";
-import { BoardResponse } from "@api/boardApi";
+import { BoardByIdResponse } from "@api/boardApi";
 import EditDeleteButton from "@components/EditDeleteButton";
+import { useNavigate } from "react-router-dom";
 
 interface MyBoardListProps {
-  items: BoardResponse[];
+  items: BoardByIdResponse[] | [];
   onClick: (id: number) => void;
   onDeleteClick: (id: number) => void;
+  isSuccess: boolean;
 }
 
 const MyBoardList: React.FC<MyBoardListProps> = ({
   items,
   onClick,
   onDeleteClick,
+  isSuccess,
 }) => {
-  console.log(items);
+  const navigate = useNavigate();
+  console.log("🌈🌈", items);
+
   return (
     <ContentsMain>
-      {items?.map((item) => (
-        <ItemWrapper key={item.id} onClick={() => onClick(item.id)}>
-          <MyBoardItem
-            image={item.image}
-            item={item}
-            showTag={true}
-            showData={true}
-            showTitle={true}
-          />
-          <ButtonWrapper>
-            <EditDeleteButton
-              id={item.id}
-              editPath={`/mypage/myootd/${item.id}/edit`}
-              onMutateDelete={onDeleteClick}
+      {isSuccess &&
+        items &&
+        items.map((item) => (
+          <ItemWrapper
+            key={item.id}
+            onClick={() => navigate(`/ootd/${item.id}`)}
+          >
+            <MyBoardItem
+              image={item.image}
+              item={item}
+              showTag={true}
+              showData={true}
+              showTitle={true}
             />
-          </ButtonWrapper>
-        </ItemWrapper>
-      ))}
+            <ButtonWrapper>
+              <EditDeleteButton
+                id={item.id}
+                editPath={`/mypage/myootd/${item.id}/edit`}
+                onMutateDelete={onDeleteClick}
+              />
+            </ButtonWrapper>
+          </ItemWrapper>
+        ))}
     </ContentsMain>
   );
 };
@@ -69,11 +79,14 @@ const ContentsMain = styled.div`
 const ItemWrapper = styled.div`
   cursor: pointer;
   position: relative;
-  background-color: red;
+  width: 100%;
+  height: 100%;
+  /* background-color: red; */
 `;
 
 const ButtonWrapper = styled.div`
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  z-index: 10;
+  bottom: 2.5rem;
+  right: 0.2rem;
 `;

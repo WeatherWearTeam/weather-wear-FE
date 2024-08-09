@@ -4,6 +4,7 @@ import { getCreatedTime } from "@utils/getTime";
 import EditDeleteButton from "@components/EditDeleteButton";
 import { ClothesColorType } from "@shared/colorTypeList";
 import { ClothesKoreanType, ClothesType } from "@shared/clothesTypeList";
+import { getSkyState } from "@utils/getWeather";
 
 interface MyBoardItemProps {
   item?: any;
@@ -27,8 +28,8 @@ function MyBoardItem({
         <ContentsItemImage src={image} alt={"ootd image"} />
         {showTag && (
           <TagWrapper>
-            {item.tags.map((tag) => (
-              <ClothesTag color={tag.color} type={tag.type} />
+            {item.tags.map((tag, index) => (
+              <ClothesTag key={index} color={tag.color} type={tag.type} />
             ))}
           </TagWrapper>
         )}
@@ -36,6 +37,9 @@ function MyBoardItem({
       {showData && (
         <ItemDataContainer>
           <ItemCreatedAt>{getCreatedTime(item.createdAt)}</ItemCreatedAt>
+          <ItemCreatedAt>
+            @{item.address} · {getSkyState(item.weather.sky)}
+          </ItemCreatedAt>
         </ItemDataContainer>
       )}
       {showTitle && <ItemTitle>{item.title}</ItemTitle>}
@@ -50,16 +54,21 @@ const ContentsItem = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  background-color: blue;
 `;
 
 const ImageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 25rem;
+  height: 30rem;
+  /* width: 100%;
+  height: 100%; */
   box-sizing: border-box;
   position: relative;
-  padding: 2rem;
+  /* padding: 2rem; */
   border: ${({ theme }) => theme.borders.containerBorder};
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 50rem;
+  }
 `;
 
 const ContentsItemImage = styled.img`
@@ -82,7 +91,6 @@ const ItemDataContainer = styled.div`
   padding-top: 1rem;
   font-size: small;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 const ItemCreatedAt = styled.p`
@@ -105,9 +113,9 @@ const ContentsItemTitle = styled.h2`
 //   border: ${({ theme }) => theme.borders.buttonBorder};
 // `;
 
-const Color = styled.div<{ color: string }>`
-  width: 1rem;
-  height: 1rem;
-  background-color: ${({ color }) => color};
-  border: ${({ theme }) => theme.borders.buttonBorder};
-`;
+// const Color = styled.div<{ color: string }>`
+//   width: 1rem;
+//   height: 1rem;
+//   background-color: ${({ color }) => color};
+//   border: ${({ theme }) => theme.borders.buttonBorder};
+// `;

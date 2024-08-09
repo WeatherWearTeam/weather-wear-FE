@@ -81,14 +81,14 @@ export default function MyAccountPassEdit() {
                   onChange={handleChange}
                 />
                 <Input
-                  label="바꾸는 비밀번호"
+                  label="새로운 비밀번호"
                   type="password"
                   name="newPassword"
                   value={passwords.newPassword}
                   onChange={handleChange}
                 />
                 <Input
-                  label="바꾸는 비밀번호 확인"
+                  label="새로운 비밀번호 확인"
                   type="password"
                   name="newPasswordCheck"
                   value={passwords.newPasswordCheck}

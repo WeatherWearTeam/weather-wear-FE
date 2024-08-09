@@ -1,45 +1,53 @@
+import { BoardByIdResponse } from "@api/boardApi";
 import Button from "@components/Button";
 import ColorPickBar from "@components/Color/ColorPickBar";
-// import Icon from "@components/Icon";
 import Input from "@components/Input";
 import Select from "@components/Select/Select";
-import SelectButton from "@components/Select/SelectButton";
 import SelectedTag from "@components/Select/SelectedTag";
 import Textarea from "@components/Textarea";
-import clothesTypeList from "@shared/clothesTypeList";
-import { globalIcon, imageAddIcon, lockIcon } from "@shared/icons";
-import useClothesTagStore, {
-  ClothesColorType,
+import MapSelector, { AddressInfo } from "@components/Weather/MapSelector";
+import useModal from "@hooks/useModal";
+import clothesTypeList, {
+  ClothesKoreanType,
   ClothesType,
-} from "@store/clothesTagStore";
+} from "@shared/clothesTypeList";
+import { ClothesColorType } from "@shared/colorTypeList";
+import { globalIcon, imageAddIcon, lockIcon } from "@shared/icons";
+import getKoreanType from "@utils/getKoreanType";
+
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-interface BoardTagType {
+interface ClothesTypeData {
   id: number;
-  type: ClothesType | "옷 종류";
-  color: ClothesColorType | "";
+  color: ClothesColorType | null;
+  type: ClothesType | null;
+  typeKorean: ClothesKoreanType | "옷 종류" | null;
+}
+
+interface ClothesTypeWithoutIdAndTypeKorean {
+  color: ClothesColorType;
+  type: ClothesType;
 }
 
 export interface BoardDataType {
-  userId: number;
   title: string;
   contents: string;
   isPrivate: boolean;
-  stn: number;
+  addressId: number;
   address: string;
-  boardTags: BoardTagType[];
+  tags: ClothesTypeData[];
 }
 
 /////////////////////
 
 interface BoardFormProps {
-  data?: BoardDataType;
+  data?: BoardByIdResponse;
   isPending: boolean;
   isError: boolean;
-  onUpdateBoard?: (updatedBoard: BoardDataType) => void;
-  onCreateBoard?: (newBoard: Omit<BoardDataType, "id">) => void;
+  onUpdateBoard?: (updatedBoard: FormData) => void;
+  onCreateBoard?: (newBoard: FormData) => void;
 }
 
 export default function BoardForm({
@@ -50,84 +58,95 @@ export default function BoardForm({
   onCreateBoard,
 }: BoardFormProps) {
   const navigate = useNavigate();
+  const { openModal, closeModal, isVisible } = useModal();
+  const [addressInfo, setAddressInfo] = useState<AddressInfo | null>(null);
+
+  const getAddressCode = useCallback((info: AddressInfo) => {
+    setAddressInfo(info);
+  }, []); //컴포넌트가 마운트될 때만 함수를 생성
+
+  /////////////////////////////////////////////////////////
+  const [clothesBoardData, setClothesBoardData] = useState<ClothesTypeData>({
+    id: 0, //초기값 0
+    color: null, // 초기값을 null로 설정
+    type: null,
+    typeKorean: "옷 종류",
+  });
+
   /////////////////////////////////////////////////////////
   //이미지 제외 데이터 모음
-  const [boardData, setBoardData] = useState<BoardDataType>(
-    data
-      ? data
-      : {
-          userId: 1,
-          title: "",
-          contents: "",
-          isPrivate: false,
-          stn: 1,
-          address: "",
-          boardTags: [
-            // {
-            //   id: 0,
-            //   type: "옷 종류", // 초기값으로 설정
-            //   color: "", // 빈 문자열로 설정
-            // },
-          ],
-        }
-  );
+  const [boardData, setBoardData] = useState<BoardDataType>({
+    title: "",
+    contents: "",
+    isPrivate: false,
+    addressId: 0,
+    address: "",
+    tags: [],
+    // views: 0 // 초기값 세팅이 여기서 필요한지?
+  });
   //////////////////////////////////////////////////////////////
-  // zustand 사용해 옷 타입, 컬러 태그 선택 관리 > 전역으로 관리
-  const {
-    selectedType,
-    selectedColor,
-    newTagList,
-    setSelectedType,
-    setSelectedColor,
-    setIsSingleTag,
-    addTag,
-    removeTag,
-    resetTag,
-  } = useClothesTagStore();
 
-  const handleAddTag = useCallback(
-    (newTag: BoardTagType) => {
-      addTag(newTag);
-      setBoardData((prev) => ({
-        ...prev,
-        boardTags: [...prev.boardTags, newTag],
-      }));
-    },
-    [addTag]
-  );
+  const handleSelectType = (
+    type: ClothesType,
+    typeKorean: ClothesKoreanType
+  ) => {
+    setClothesBoardData((prev) => ({
+      ...prev,
+      type,
+      typeKorean,
+    }));
+  };
 
-  const handleRemoveTag = useCallback(
-    (tagId: number) => {
-      removeTag(tagId);
-      setBoardData((prev) => ({
-        ...prev,
-        boardTags: prev.boardTags.filter((tag) => tag.id !== tagId),
-      }));
-    },
-    [removeTag]
-  );
+  const handleSelectColor = (color: ClothesColorType) => {
+    setClothesBoardData((prev) => ({
+      ...prev,
+      color,
+    }));
+  };
 
-  // 선택한 타입과 색상이 모두 있을 때 태그 추가
-  useEffect(() => {
-    setIsSingleTag(false);
-    if (selectedType !== "옷 종류" && selectedColor) {
-      const newTag = {
-        id: Number(new Date().getTime()),
-        type: selectedType,
-        color: selectedColor,
+  const addTag = useCallback(
+    (data: ClothesTypeData) => {
+      if (boardData.tags.length >= 5) {
+        alert("태그는 최대 5개까지만 추가할 수 있습니다!");
+        return;
+      }
+
+      const newClothes: ClothesTypeData = {
+        ...data,
+        id: Date.now(), //삭제할 때 id 값 필요하기 때문에 현재 시간 값으로 id 생성
       };
 
-      handleAddTag(newTag);
+      //새로 추가된 컬러-타입 boardData.tags 배열에 넣어 업데이트하기
+      setBoardData((prev) => ({
+        ...prev,
+        tags: [...prev.tags, newClothes],
+      }));
+
+      //그러고 나서 clothesBoardData 상태는 초기화해야 새로 컬러-종류 선택할 때 오류 안남
+      setClothesBoardData({
+        id: 0,
+        color: null,
+        type: null,
+        typeKorean: "옷 종류",
+      });
+    },
+    [boardData.tags.length]
+  );
+
+  const handleRemoveTag = (tagId: number) => {
+    setBoardData((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((item) => item.id !== tagId),
+    }));
+  };
+
+  // useEffect를 사용하여 clothesBoardData가 업데이트되면 태그 추가하기
+  useEffect(() => {
+    //컬러-타입 한 세트이기 때문에 이렇게 하나씩 추가해야 ㅇㅇ..
+    if (clothesBoardData.type && clothesBoardData.color) {
+      addTag(clothesBoardData);
     }
-  }, [selectedType, selectedColor, handleAddTag, setIsSingleTag]);
-
-  const handleSelectedType = (type: ClothesType) => {
-    setSelectedType(type);
-  };
-
-  const handleSelectedColor = (color: ClothesColorType) => {
-    setSelectedColor(color);
-  };
+  }, [clothesBoardData, addTag]);
 
   //////////////////////////////////////////////////////////////
   //파일 선택 및 프리뷰 보기
@@ -143,7 +162,6 @@ export default function BoardForm({
       setImageSrc(previewUrl);
     }
   };
-
   //////////////////////////////////////////////////////////////
   // 라디오 버튼 클릭
   const [visibility, setVisibility] = useState<string>("public");
@@ -168,16 +186,27 @@ export default function BoardForm({
   };
 
   //////////////////////////////////////////////////////////////
+  // 🌟 FormData의 내용을 콘솔에 출력하는 함수
+  function logFormData(formData: FormData) {
+    for (const pair of formData.entries()) {
+      // 'const' 사용
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+  }
+
+  //////////////////////////////////////////////////////////////
   //등록하기 버튼 클릭했을 때 실행하는 handleSubmit 함수
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // 새로고침 방지
 
     console.log("💕💕💕", boardData);
+    console.log("💕파일💕", imageFile);
+    console.log("💕프리뷰src💕", imageSrc);
 
     //🌟🌟🌟🌟🌟 예외처리 하는 로직 작성 🌟🌟🌟🌟🌟
 
     //예외처리: 이미지파일이 안들어 왔다면 return
-    if (!imageFile || !data?.boardImage?.image) {
+    if (!imageSrc) {
       return alert("사진을 선택해 주세요!");
     }
 
@@ -197,42 +226,88 @@ export default function BoardForm({
       return;
     }
     //예외처리:옷 종류-컬러 1세트 없으면 return
-    if (boardData.boardTags.length < 1) {
+    if (boardData.tags.length < 1) {
       return alert("옷 종류와 색상을 선택해 주세요!");
     }
+    // return console.log(boardData);
 
-    return console.log(boardData);
+    //폼 보내기 전에 아이디 없애기
+    // const tagsWithoutId = boardData.tags.map(
+    //   ({ id, typeKorean, ...rest }) => rest
+    // );
+    //비구조화 할당.. 에스린트 오류 뜸 ㅠㅠ
+
+    //타입명시하고 null 없애고 고고!
+    const tagsWithoutIdAndTypeKorean: ClothesTypeWithoutIdAndTypeKorean[] =
+      boardData.tags.map((tag) => ({
+        color: tag.color as ClothesColorType,
+        type: tag.type as ClothesType,
+      }));
+
+    // return console.log(boardData);
     //폼 데이터 제출하는 로직 짜기
-    // const formData = new FormData();
-    // formData.append("boardData", JSON.stringify(boardData));
-    // formData.append("image", imageFile);
 
-    const newBoard: Omit<BoardDataType, "id"> = {
-      ...boardData,
-      // image: imageFile ? URL.createObjectURL(imageFile) : "default-image-url",
-      image:
-        "https://image.msscdn.net/images/plan_top_img/2024072610003600000024001.jpg",
-    };
+    // return console.log(tagsWithoutIdAndTypeKorean)
 
-    //mutateCreateBoard
+    const formData = new FormData();
 
-    if (!data) {
-      //투두 생성
-      onCreateBoard?.(newBoard);
+    if (imageFile && imageSrc) {
+      formData.append("file", imageFile);
     } else {
-      //투두 수정
-      const updatedBoard: BoardDataType = {
-        ...data,
-        ...newBoard, // 수정된 부분만
-      };
-      onUpdateBoard?.(updatedBoard);
+      null;
     }
 
-    //상태 리셋하기
-    resetTag(); //태그
+    if (!data) {
+      const newJsonData = {
+        title: boardData.title,
+        contents: boardData.contents,
+        isPrivate: boardData.isPrivate,
+        addressId: boardData.addressId,
+        address: boardData.address,
+        tags: tagsWithoutIdAndTypeKorean,
+      };
+
+      formData.append(
+        "data",
+        new Blob([JSON.stringify(newJsonData)], {
+          type: "application/json",
+        })
+      );
+
+      logFormData(formData); //로그찍기
+      onCreateBoard?.(formData);
+    } else {
+      const updatedJsonData = {
+        id: data.id,
+        title: boardData.title,
+        contents: boardData.contents,
+        isPrivate: boardData.isPrivate,
+        addressId: boardData.addressId,
+        address: boardData.address,
+        tags: tagsWithoutIdAndTypeKorean,
+      };
+
+      formData.append(
+        "data",
+        new Blob([JSON.stringify(updatedJsonData)], {
+          type: "application/json",
+        })
+      );
+
+      logFormData(formData); //로그찍기
+      onUpdateBoard?.(formData);
+    }
   };
 
   //////////////////////////////////////////////////////////////
+  // formData.append("title", boardData.title);
+  // formData.append("contents", boardData.contents);
+  // formData.append("isPrivate", String(boardData.isPrivate));
+  // formData.append("addressId", String(boardData.addressId));
+  // formData.append("address", boardData.address);
+  // formData.append("tags", JSON.stringify(tagsWithoutId)); // tags를 JSON 문자열로 변환하여 추가
+  //////////////////////////////////////////////////////////////
+
   // imageSrc 상태 변하면 프리뷰 세팅
   useEffect(() => {
     //클린업 펑션
@@ -250,28 +325,45 @@ export default function BoardForm({
     if (data) {
       setBoardData((prev) => ({
         ...prev,
-        boardTags: data.boardTags,
+        title: data.title,
+        contents: data.contents,
+        isPrivate: data.isPrivate,
+        addressId: data.weather.addressId,
+        address: data.address,
+        tags: data.tags.map((tag, index) => ({
+          id: Date.now() + index * 5, //임의 값 생성 + (index값 * 5) 줘서 좀더 안전빵으로 고
+          type: tag.type,
+          color: tag.color,
+          typeKorean: getKoreanType(tag.type),
+        })),
       }));
 
-      setImageSrc(data.boardImage?.image);
+      setImageSrc(data.image);
 
-      // 전역 상태 초기화
-      resetTag();
+      // // 전역 상태 업데이트
+      // const initialTags = data.boardTags.map((tag) => ({
+      //   id: tag.id,
+      //   type: tag.type,
+      //   color: tag.color,
+      // }));
 
-      // 전역 상태 업데이트
-      const initialTags = data.boardTags.map((tag) => ({
-        id: tag.id,
-        type: tag.type,
-        color: tag.color,
-      }));
-
-      initialTags.forEach((tag) => {
-        addTag(tag);
-      });
+      // initialTags.forEach((tag) => {
+      //   addTag(tag);
+      // });
     }
-  }, [data, addTag, resetTag]);
+  }, [data]);
+
   //////////////////////////////////////////////////////////////
 
+  useEffect(() => {
+    if (addressInfo) {
+      setBoardData((prev) => ({
+        ...prev,
+        address: addressInfo.address,
+        addressId: Number(addressInfo.code),
+      }));
+    }
+  }, [addressInfo]);
   return (
     <Container>
       <TitleContainer>
@@ -361,21 +453,32 @@ export default function BoardForm({
             {/* / */}
             <RightWrapper>
               <RowWrapper>
-                <SelectButton selectedOption="위치" />
+                <MapWrapper>
+                  <div>위치</div>
+                  <MapSelector
+                    onClick={() => openModal()}
+                    closeModal={closeModal}
+                    isVisible={isVisible}
+                    onGetAddressCode={getAddressCode}
+                  />
+                </MapWrapper>
                 <Select
                   list={clothesTypeList}
-                  onClick={handleSelectedType}
-                  value={selectedType}
+                  onClick={handleSelectType}
+                  value={clothesBoardData.typeKorean}
                 />
-                <ColorPickBar onClick={handleSelectedColor} />
+                <ColorPickBar
+                  onClick={handleSelectColor}
+                  selectedColor={clothesBoardData.color!}
+                />
                 <SelectedTagContainer>
-                  {boardData.boardTags.map((tag) => (
+                  {boardData.tags.map((item) => (
                     <SelectedTag
-                      key={tag.id}
-                      id={tag.id}
-                      color={tag.color}
-                      selectedTypeOption={tag.type}
-                      onRemoveTag={handleRemoveTag}
+                      key={item.id}
+                      id={item.id}
+                      color={item.color}
+                      selectedTypeOption={item.typeKorean}
+                      onRemoveTag={() => handleRemoveTag(item.id)}
                     />
                   ))}
                 </SelectedTagContainer>
@@ -542,6 +645,29 @@ export const RowWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+`;
+
+export const MapWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: small;
+  padding: 1.5rem 1.5rem;
+  border: ${({ theme }) => theme.borders.containerBorder};
+  transition: border linear 0.25s;
+  div {
+    padding: 0;
+    font-size: small;
+  }
+
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    border: 1px solid ${({ theme }) => theme.colors.BLACK};
+  }
 `;
 
 export const SelectedTagContainer = styled.div`

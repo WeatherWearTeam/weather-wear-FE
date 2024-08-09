@@ -1,37 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-  getWeatherByLocation,
-  getWeatherRequsts,
-  getSpecificWeather,
-} from "@/api/weatherApi";
+import { getWeatherByLocation } from "@/api/weatherApi";
 
 // 전체 조회
-export const useHomeWeatherDatas = (id: number) => {
+export const useWeatherData = (addressId: number) => {
   const {
-    data: homeWeatherDatas,
-    isPending: weatherPending,
-    isError: weatherError,
-    isSuccess: weatherSuccess,
+    data: weatherData,
+    isPending: isPendingWeather,
+    isError: isErrorWeather,
+    isSuccess: isSuccessWeather,
   } = useQuery({
-    queryKey: ["homeweather"],
-    queryFn: () => getWeatherByLocation(id),
-    enabled: !!id,
+    queryKey: ["homeWeather", addressId],
+    queryFn: () => getWeatherByLocation(addressId),
+    enabled: !!addressId,
   });
 
-  return { homeWeatherDatas, weatherPending, weatherError, weatherSuccess };
-};
-
-// 특정 조회
-export const useSpecificWeatherData = (id: number) => {
-  const {
-    data: specificWeatherData,
-    isPending,
-    isError,
-    isSuccess,
-  } = useQuery({
-    queryKey: ["specificWeatherdata"],
-    queryFn: () => getSpecificWeather(id),
-  });
-
-  return { specificWeatherData, isPending, isError, isSuccess };
+  return { weatherData, isPendingWeather, isErrorWeather, isSuccessWeather };
 };

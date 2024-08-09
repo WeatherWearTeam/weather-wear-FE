@@ -13,11 +13,29 @@ export type ClothesItemsResponse = {
   content: ClothesItemType[]; //옷 아이템 든 배열
 };
 
+export type SearchKeysRequest = {
+  page: number;
+  color: ClothesColorType | null; //초기값 null
+  type: ClothesType | null; //초기값 null
+};
+
 //전체 데이터 조회
-export const getClothesItems = async (): Promise<ClothesItemsResponse> => {
-  const response = await api.get("/api/clothes");
-  console.log("clothes 데이터", response.data);
-  return response.data;
+export const getClothesItems = async (searchKeys: SearchKeysRequest) => {
+  try {
+    console.log("SearchKeysRequest", searchKeys);
+    const response = await api.get(`/api/clothes`, {
+      params: {
+        page: searchKeys.page - 1,
+        color: searchKeys.color,
+        type: searchKeys.type,
+      },
+    });
+    console.log("clothes 데이터", response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 // 개별 데이터 조회 //하나씩 수정할 때 필요함

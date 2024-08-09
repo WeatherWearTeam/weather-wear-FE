@@ -5,20 +5,26 @@ import {
   deleteClothesItem,
   getClothesItemById,
   updateClothesItem,
+  SearchKeysRequest,
 } from "@api/clothesApi";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
 // 전체 조회
-export const useClothesItems = () => {
+export const useClothesItems = (searchKeys: SearchKeysRequest) => {
   const {
     data: clothesItems,
     isPending,
     isError,
     isSuccess,
   } = useQuery({
-    queryKey: ["clothesItems"],
-    queryFn: getClothesItems,
+    queryKey: [
+      "clothesItems",
+      searchKeys.page, //쿼리 바뀔때 재요청 되어야 하니까
+      searchKeys.color,
+      searchKeys.type,
+    ],
+    queryFn: () => getClothesItems(searchKeys),
   });
   return { clothesItems, isPending, isError, isSuccess };
 };

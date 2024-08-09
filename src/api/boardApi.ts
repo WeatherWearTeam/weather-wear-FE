@@ -1,5 +1,5 @@
+import { UserBoardByIdResponse } from "./boardApi";
 import api from "@api/api";
-import { Board } from "@queries/boardQueries";
 import { ClothesType } from "@shared/clothesTypeList";
 import { ClothesColorType } from "@shared/colorTypeList";
 
@@ -27,9 +27,9 @@ export interface ClothesTag {
 }
 
 export interface BoardResponse {
-  address: string;
-  commentCount: number;
   id: number;
+  address: string;
+  // commentCount: number;
   image: string;
   likeCount: number;
   tags: ClothesTag[];
@@ -38,33 +38,107 @@ export interface BoardResponse {
   weather: WeatherResponse;
 }
 
-// 전체 Boards 리소스 조회 => 🌟 trend 페이지
-export const getBoards = async () => {
-  const response = await api.get(`/api/boards`, {
-    withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
-  });
-  return response.data;
+// Trend 리소스 조회 => 🌟 trend 페이지
+// ✅ 무한스크롤
+export const getTrendBoards = async () => {
+  try {
+    const response = await api.get(`/api/boards`, {
+      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-// 특정 Board 리소스 조회 => 🌟 OOTD 상세 페이지
+///////////////////////////////////////////////////////////////////////////
+export interface TagBoardByIdResponse {
+  color: ClothesColorType;
+  type: ClothesType;
+}
+export interface UserBoardByIdResponse {
+  id: number;
+  email: string;
+  image: string;
+  nickname: string;
+}
+export interface WeatherBoardByIdResponse {
+  addressId: number;
+  pcp: number;
+  pop: number;
+  pty: number;
+  sky: number;
+  tmp: number;
+  wsd: number;
+}
+
+export interface BoardByIdResponse {
+  id: number;
+  image: string;
+  address: string;
+  weather: WeatherBoardByIdResponse;
+  user: UserBoardByIdResponse;
+  title: string;
+  contents: string;
+  tags: TagBoardByIdResponse[];
+  createdAt: string;
+  updatedAt: string;
+  isPrivate: boolean;
+  boardLikesCount: number;
+  views: number;
+  checkLike: boolean;
+}
+// 상세페이지 Board 리소스 조회 => 🌟 OOTD 상세 페이지
 export const getBoardById = async (boardId: number) => {
-  const response = await api.get(`/api/boards/${boardId}`, {
-    withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
-  });
-  return response.data;
+  try {
+    const response = await api.get(`/api/boards/${boardId}`, {
+      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
+
+//////////////////////////////////////////////////////////////////
+// 전체 Boards 리소스 조회 => 🌟 trend 페이지
+// ✅ 페이지네이션
+export type UserBoardsSearchKeysRequest = {
+  page: number;
+  pty: number | null; //초기값
+  sky: number | null; //초기값
+  keyword: number | null; //초기값
+};
+
+export const getUserBoards = async (
+  searchKeys: UserBoardsSearchKeysRequest
+) => {
+  try {
+    const response = await api.get(`/api/users/boards`, {
+      params: {
+        page: 0,
+        // page: searchKeys.page - 1,
+        // pty: searchKeys.pty,
+        // sky: searchKeys.sky,
+        // keyword: searchKeys.keyword,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+//////////////////////////////////////////////////////////////////
 
 // Board 리소스 생성
-// FormData를 사용하는 경우 타입도 폼 데이터
-//newBoard: Omit<Board, "id">
 export const createBoard = async (newBoardFormData: FormData) => {
-  // const response =
-  await api
-    .post(`/api/boards`, newBoardFormData)
-    .then((response) => response.data) // JSON이 아닌 경우
-    .then((data) => console.log(data))
-    .catch((error) => console.error("Error:", error));
-  // return response.data;
+  const response = await api.post(`/api/boards`, newBoardFormData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
 };
 
 // DELETE Board 지우기
@@ -73,11 +147,12 @@ export const deleteBoard = async (boardId: number) => {
 };
 
 // PUT Board 업데이트하기
-export const updateBoard = async (updatedBoard: Board) => {
-  const response = await api.put(
-    `/api/boards/${updatedBoard.id}`,
-    updatedBoard
-  );
+export const updateBoard = async (updatedBoard: FormData) => {
+  const response = await api.put(`/api/boards`, updatedBoard, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return response.data;
 };
 
@@ -92,13 +167,31 @@ export const toggleHeartBoard = async (boardId: number) => {
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+export interface UserCommentsByBoardIdResponse {
+  id: number;
+  nickname: string;
+  image: string;
+}
+
+export interface CommentsByBoardIdResponse {
+  id: number;
+  boardId: number;
+  contents: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  user: UserCommentsByBoardIdResponse;
+}
 
 // 보드별 코멘트 리스트 조회 => 🌟 상세페이지의 코멘트 부분
 export const getCommentsByBoardId = async (boardId: number) => {
-  const response = await api.get(`/api/boards/${boardId}/comments`, {
-    withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
-  });
-  return response.data;
+  try {
+    const response = await api.get(`/api/boards/${boardId}/comments`, {
+      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // RESTful 원칙 준수: 자원의 계층적 관계를 명확히 표현할 수 있습니다.

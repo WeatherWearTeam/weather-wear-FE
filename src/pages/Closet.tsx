@@ -10,6 +10,8 @@ import ClosetList from "@components/Closet/ClosetList";
 import Select from "@components/Select/Select";
 import { ClothesKoreanType, ClothesType } from "@store/clothesTagStore";
 import { ClothesColorType } from "@shared/colorTypeList";
+import { SearchKeysRequest } from "@api/clothesApi";
+import Pagination from "@components/pagination";
 
 interface SelectedClothesState {
   type: ClothesType | null;
@@ -21,11 +23,51 @@ function Closet() {
   const location = useLocation();
 
   //////////////////////////////////////////////////////////////
+  const [searchKeys, setSearchKeys] = useState<SearchKeysRequest>({
+    page: 1,
+    color: null,
+    type: null,
+  });
+
+  const [selectedColor, setSelectedColor] = useState<ClothesColorType | null>(
+    null
+  );
+
   const [selectedClothesType, setSelectedClothesType] =
     useState<SelectedClothesState>({
       type: null,
       typeKorean: "옷 종류", // 초기값을 null로 설정
     });
+
+  const handlePageChange = (newPage: number) => {
+    setSearchKeys((prev) => ({
+      ...prev,
+      page: newPage,
+    }));
+  };
+
+  const handleColorChange = (newColor: ClothesColorType) => {
+    setSearchKeys((prev) => ({
+      ...prev,
+      color: newColor,
+      page: 1,
+    }));
+  };
+
+  // 색상 클릭 핸들러
+  const handleColorClick = (color: ClothesColorType) => {
+    console.log("🌈", color);
+    setSelectedColor(color); //url에 값 넣기
+    handleColorChange(color); //실제 값 변경
+  };
+
+  const handleTypeChange = (newType: ClothesType) => {
+    setSearchKeys((prev) => ({
+      ...prev,
+      type: newType,
+      page: 1,
+    }));
+  };
 
   const handleSelectType = (
     type: ClothesType,
@@ -38,7 +80,10 @@ function Closet() {
       type,
       typeKorean,
     }));
+
+    handleTypeChange(type);
   };
+  
 
   //////////////////////////////////////////////////////////////
   // 삭제 버튼 클릭 시 처리 로직
@@ -49,18 +94,6 @@ function Closet() {
   };
 
   //////////////////////////////////////////////////////////////
-  //생성
-  const { clothesItems, isPending, isError, isSuccess } = useClothesItems();
-
-  const [selectedColor, setSelectedColor] = useState<ClothesColorType | null>(
-    null
-  );
-
-  // 색상 클릭 핸들러
-  const handleColorClick = (color: ClothesColorType) => {
-    console.log("🌈", color);
-    setSelectedColor(color);
-  };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -78,10 +111,10 @@ function Closet() {
     }
 
     navigate(`?${queryParams.toString()}`);
-  }, [selectedClothesType, selectedColor, navigate, location.search]);
+  }, [selectedClothesType.type, selectedColor, navigate, location.search]);
 
-  if (isPending) return <div>로딩중...</div>;
-  if (isError) return <div>에러 발생!</div>;
+  const { clothesItems, isPending, isError, isSuccess } =
+    useClothesItems(searchKeys);
 
   return (
     <MyPageContentsContainer>
@@ -98,14 +131,28 @@ function Closet() {
           <ColorPickBar onClick={handleColorClick} />
         </SelectWrapper>
       </HeaderContainer>
-      {isSuccess && clothesItems?.content && (
-        <ClosetList
-          items={clothesItems.content}
-          onDeleteClick={handleDeleteClick}
-        />
-      )}
+      <MainContainer>
+        {isSuccess && clothesItems?.content && (
+          <ClosetList
+            items={clothesItems.content}
+            onDeleteClick={handleDeleteClick}
+          />
+        )}
+        {isSuccess && clothesItems?.content.length < 1 && (
+          <div>옷장에 옷이 없습니다.</div>
+        )}
+        {/* {isPending && <div>로딩중...</div>} */}
+        {isError && <div>에러 발생!</div>}
+      </MainContainer>
       <ContentsFooter>
-        <PageMoveButton />
+        <Pagination
+          totalPages={clothesItems?.totalPages} //총 아이템 수 //많아지면 버튼 생김
+          pageCount={5} //5페이지씩 보여주기
+          currentPage={
+            searchKeys.page && searchKeys?.page > 0 ? searchKeys?.page : 1
+          } //현재 페이지
+          onPageChange={handlePageChange}
+        />
         <AddButton onClick={() => navigate(`/mypage/closet/add`)} />
       </ContentsFooter>
     </MyPageContentsContainer>
@@ -153,6 +200,9 @@ const SelectWrapper = styled.div`
   box-sizing: border-box; /* 박스 사이징 모델을 설정하여 패딩과 보더를 포함하도록 설정 */
 `;
 
+const MainContainer = styled.div`
+  max-width: 100rem;
+`;
 const ContentsFooter = styled.div`
   padding: 4rem;
   width: 100%;

@@ -32,7 +32,7 @@ const Container = styled.div`
   padding: 0.3rem 1rem;
   border: ${({ theme }) => theme.borders.buttonBorder};
   background-color: ${({ theme }) => css`
-    ${theme.colors.WHITE}99; //투명도 60%
+    ${theme.colors.WHITE}d9; //투명도 85%
   `};
 `;
 

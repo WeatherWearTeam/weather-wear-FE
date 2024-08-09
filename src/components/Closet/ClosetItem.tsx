@@ -30,8 +30,8 @@ function ClosetItem({
   showData = false,
   showTitle = false,
 }: ClosetItemProps) {
-  console.log("🌈", type);
-  console.log("🌈", item);
+  // console.log("🌈", type);
+  // console.log("🌈", item);
   return (
     <ContentsItem>
       <ImageWrapper>
@@ -66,16 +66,21 @@ const ContentsItem = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  /* background-color: red; */
 `;
 
 const ImageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 25rem;
+  height: 30rem;
+  /* width: 100%;
+  height: 100%; */
   box-sizing: border-box;
   position: relative;
   /* padding: 2rem; */
   border: ${({ theme }) => theme.borders.containerBorder};
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 50rem;
+  }
 `;
 
 const ContentsItemImage = styled.img`
@@ -124,9 +129,9 @@ const ContentsItemTitle = styled.h2`
 //   border: ${({ theme }) => theme.borders.buttonBorder};
 // `;
 
-const Color = styled.div<{ color: string }>`
-  width: 1rem;
-  height: 1rem;
-  background-color: ${({ color }) => color};
-  border: ${({ theme }) => theme.borders.buttonBorder};
-`;
+// const Color = styled.div<{ color: string }>`
+//   width: 1rem;
+//   height: 1rem;
+//   background-color: ${({ color }) => color};
+//   border: ${({ theme }) => theme.borders.buttonBorder};
+// `;

@@ -13,28 +13,28 @@ import styled, { css } from "styled-components";
 export default function WeatherBar() {
   return (
     <Container>
-      <ButtonWrapper $hovercolor="yellow">
+      <ButtonWrapper $hovercolor="GREEN">
         <All>All</All>
       </ButtonWrapper>
-      <ButtonWrapper $hovercolor="red">
+      <ButtonWrapper $hovercolor="YELLOW">
         <Icon icon={weatherSunIcon} />
       </ButtonWrapper>
-      <ButtonWrapper $hovercolor="cyan">
+      <ButtonWrapper $hovercolor="GRAY">
         <Icon icon={weatherSunCloudyIcon} />
       </ButtonWrapper>
-      <ButtonWrapper $hovercolor="gray">
+      <ButtonWrapper $hovercolor="main">
         <Icon icon={weatherCloudyIcon} />
       </ButtonWrapper>
-      <ButtonWrapper $hovercolor="main">
+      <ButtonWrapper $hovercolor="BLACK">
         <Icon icon={weatherVeryCloudyIcon} />
       </ButtonWrapper>
-      <ButtonWrapper $hovercolor="purple">
+      {/* <ButtonWrapper $hovercolor="PURPLE">
         <Icon icon={weatherThunderstormsIcon} />
-      </ButtonWrapper>
-      <ButtonWrapper $hovercolor="indigo">
+      </ButtonWrapper> */}
+      <ButtonWrapper $hovercolor="BLUE">
         <Icon icon={weatherRainyIcon} />
       </ButtonWrapper>
-      <ButtonWrapper $hovercolor="blue">
+      <ButtonWrapper $hovercolor="CYAN">
         <Icon icon={weatherSnowIcon} />
       </ButtonWrapper>
     </Container>
