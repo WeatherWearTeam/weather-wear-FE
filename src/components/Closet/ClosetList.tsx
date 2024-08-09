@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import getKoreanType from "@utils/getKoreanType";
 import { ClothesItemType } from "@api/clothesApi";
 import ClosetItem from "@components/Closet/ClosetItem";
-import { ClothesKoreanType } from "@shared/clothesTypeList";
 
 interface ClosetListProps {
   items: ClothesItemType[];
