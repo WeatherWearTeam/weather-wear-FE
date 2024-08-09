@@ -1,11 +1,14 @@
 import { Comments } from "@components/Comment/Comments";
 import {
-  getBoards,
+  getUserBoards,
   createBoard,
   getBoardById,
   deleteBoard,
   updateBoard,
   toggleHeartBoard,
+  getTrendBoards,
+  UserBoardsSearchKeysRequest,
+  BoardByIdResponse,
 } from "@api/boardApi";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -61,10 +64,10 @@ import { AxiosError } from "axios";
 //   boardTags: BoardTag[];
 //   boardImage: BoardImage;
 // }
-
 ///////////////////////////////////////////////////////////////
 
-export const useBoards = () => {
+// 트렌드
+export const useTrendBoards = () => {
   const {
     data: boards,
     isPending,
@@ -72,14 +75,14 @@ export const useBoards = () => {
     isSuccess,
   } = useQuery({
     queryKey: ["boards"],
-    queryFn: getBoards, //✅ @api/boardApi 에 작성해둔 api 함수
+    queryFn: getTrendBoards, //✅ @api/boardApi 에 작성해둔 api 함수
   });
 
   return { boards, isPending, isError, isSuccess };
 };
 
 ///////////////////////////////////////////////////////////////
-
+// 상세페이지
 export const useBoardById = (boardId: number) => {
   const {
     data: board,
@@ -93,6 +96,28 @@ export const useBoardById = (boardId: number) => {
   });
 
   return { board, isPending, isError, isSuccess };
+};
+
+///////////////////////////////////////////////////////////////
+//마이 OOTD
+export const useMyBoards = (searchKeys: UserBoardsSearchKeysRequest) => {
+  const {
+    data: boards,
+    isPending,
+    isError,
+    isSuccess,
+  } = useQuery({
+    queryKey: [
+      "boards",
+      // searchKeys.page, //쿼리 바뀔때 재요청 되어야 하니까
+      // searchKeys.pty,
+      // searchKeys.sky,
+      // searchKeys.keyword,
+    ],
+    queryFn: () => getUserBoards(searchKeys),
+  });
+
+  return { boards, isPending, isError, isSuccess };
 };
 
 ///////////////////////////////////////////////////////////////
@@ -171,10 +196,10 @@ export const useUpdateBoard = () => {
     mutationFn: updateBoard,
     //첫 번째 인자: mutationFn이 반환하는 response.data
     //두 번째 인자: mutationFn의 인자로 보낸 업데이트된 보드 > 쓰면 안전빵..?
-    onSuccess: (_, board) => {
+    onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["boards"] }); //전체 보드
-      queryClient.invalidateQueries({ queryKey: ["board", board.id] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
-      navigate(`/boards/${board.id}`, { replace: true }); //히스토리 스택 대체
+      queryClient.invalidateQueries({ queryKey: ["board", data.id] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
+      navigate(`/boards/${data.id}`, { replace: true }); //히스토리 스택 대체
       window.history.go(-1); // 수정 페이지 자체 히스토리에서 빼고 가기
     },
     onError: (error: AxiosError) => {

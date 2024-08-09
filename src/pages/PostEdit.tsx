@@ -1,10 +1,7 @@
-import {
-  useBoardById,
-  useCreateBoard,
-  useUpdateBoard,
-} from "@queries/boardQueries";
 import BoardForm, { BoardDataType } from "@components/Board/BoardForm";
 import { useParams } from "react-router-dom";
+import { BoardByIdResponse } from "@api/boardApi";
+import { useBoardById, useUpdateBoard } from "@queries/boardQueries";
 
 export default function PostEdit() {
   const { id } = useParams<{ id: string }>();
@@ -19,6 +16,8 @@ export default function PostEdit() {
     isPending: updateIsPending,
   } = useUpdateBoard();
 
+  console.log("수정할 녀석", board);
+
   const onupdateBoard = (updatedBoard: BoardDataType) => {
     mutateUpdateBoard(updatedBoard);
   };
@@ -30,7 +29,7 @@ export default function PostEdit() {
         <div>게시글 수정 중 오류가 발생했습니다.\n다시 시도해 주세요!</div>
       )}
       <BoardForm
-        data={board}
+        data={board as BoardByIdResponse}
         isError={updateIsError}
         isPending={updateIsPending}
         onUpdateBoard={onupdateBoard}

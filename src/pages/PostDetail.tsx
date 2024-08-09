@@ -1,7 +1,6 @@
 import { getTimesAgo } from "@utils/getTime";
 import { getSkyState } from "@utils/getWeather";
 import Comments from "@components/Comment/Comments";
-import EditIcon from "@components/EditIcon";
 import Icon from "@components/Icon";
 import { useBoardById, useDeleteBoard } from "@queries/boardQueries";
 import {
@@ -16,6 +15,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import EditDeleteButton from "@components/EditDeleteButton";
 import ClothesTag from "@components/ClothesTag";
+import getWeatherIcon from "@utils/getWeatherIcon";
+import WeatherStateIcon from "@components/WeatherStateIcon";
 
 export default function PostDetail() {
   //❌ 좋아요 기능 아직 구현 안함 ->  근우님꺼 가져다 쓰기 ㅇㅇ
@@ -29,7 +30,7 @@ export default function PostDetail() {
   );
   //🌈 isPending, isError, isSuccess 값 사용해서 UX 개선하기
 
-  console.log(board);
+  console.log("🍧디테일 페이지 데이터", board);
 
   const { mutateDeleteBoard } = useDeleteBoard();
   return (
@@ -40,24 +41,29 @@ export default function PostDetail() {
       </TitleContainer>
       <GridContainer>
         <Column>
-          <ImageWrapper>
-            <img src={board?.boardImage.image} alt="ootd 사진" />
-            {/* 이미지 로드 실패 시 예외 처리 필요 */}
-          </ImageWrapper>
-          {/*  */}
+          {isSuccess && board && (
+            <ImageWrapper>
+              <img src={board.image} alt="ootd 사진" />
+              {/* 이미지 로드 실패 시 예외 처리 필요 */}
+            </ImageWrapper>
+          )}
           <FlexRowIconContainer>
-            {!board?.isPrivate ? (
-              <Icon icon={eyeIcon} />
-            ) : (
-              <Icon icon={eyeOffIcon} />
+            {isSuccess && board && (
+              <>
+                {!board.isPrivate ? (
+                  <Icon icon={eyeIcon} />
+                ) : (
+                  <Icon icon={eyeOffIcon} />
+                )}
+                <span>조회수 {board.views}</span>
+                {isClickedLike ? (
+                  <Icon icon={heartFillIcon} />
+                ) : (
+                  <Icon icon={heartIcon} />
+                )}
+                <span>좋아요 {board.boardLikesCount}</span>{" "}
+              </>
             )}
-            <span>조회수 10</span>
-            {isClickedLike ? (
-              <Icon icon={heartFillIcon} />
-            ) : (
-              <Icon icon={heartIcon} />
-            )}
-            <span>좋아요 {board?.boardLikes.likeSub}</span>
           </FlexRowIconContainer>
           {/*  */}
         </Column>
@@ -80,42 +86,61 @@ export default function PostDetail() {
                         {getTimesAgo(board?.createdAt as string)}
                       </UserInfoText>
                     </FlexRowUser>
-                    {board?.weather && (
+                    {isSuccess && board && (
                       <WeatherInfo>
                         <Location>
                           <Icon icon={atIcon} />
-                          <span>{board?.weather.stn}</span>
+                          <span>{board.address}</span>
                         </Location>
-                        <span>{board?.weather.ta}°C </span>
-                        <span>{getSkyState(board?.weather?.sky)}</span>
+                        <span>{board.weather.tmp}°C </span>
+                        <span>{getSkyState(board.weather.sky)}</span>
                       </WeatherInfo>
                     )}
                   </FlexColumnUser>
                 </FlexRowUser>
                 <IconWrapper>
-                  <Icon icon={weatherSunIcon} />
+                  {isSuccess && board.weather ? (
+                    <WeatherStateIcon
+                      pty={board.weather.pty}
+                      sky={board.weather.sky}
+                    />
+                  ) : (
+                    <Icon icon={weatherSunIcon} />
+                  )}
                 </IconWrapper>
               </FlexRow>
               {/*  */}
               {/*  */}
               <FlexColumn>
-                <ContentTitle>{board?.title}</ContentTitle>
-                <ContentText>{board?.contents}</ContentText>
+                {isSuccess && board && (
+                  <>
+                    <ContentTitle>{board?.title}</ContentTitle>
+                    <ContentText>{board?.contents}</ContentText>
+                  </>
+                )}
               </FlexColumn>
               {/*  */}
             </FlexColumn>
             {/*  */}
             <FlexRow>
               <ClothesTagWrapper>
-                {board?.boardTags.map((tag) => (
-                  <ClothesTag key={tag.id} color={tag.color} type={tag.type} />
-                ))}
+                {isSuccess &&
+                  board &&
+                  board?.tags.map((tag) => (
+                    <ClothesTag
+                      key={tag.id}
+                      color={tag.color}
+                      type={tag.type}
+                    />
+                  ))}
               </ClothesTagWrapper>
-              <EditDeleteButton
-                id={Number(boardId)}
-                editPath={`/ootd/${boardId}/edit`}
-                onMutateDelete={mutateDeleteBoard}
-              />
+              {isSuccess && board && (
+                <EditDeleteButton
+                  id={board.id}
+                  editPath={`/ootd/${board.id}/edit`}
+                  onMutateDelete={mutateDeleteBoard}
+                />
+              )}
               {/* 여기는 navigate 하는 함수 보내기 */}
             </FlexRow>
             {/*  */}
@@ -126,14 +151,13 @@ export default function PostDetail() {
         <FullWidthColumn>
           {/*  */}
           <CommentWrapper>
-            {/* <Comments
-              //임시로 json-server 특성상 쿼리 불가 해서 프롭 드릴링 ㄱㄱ
+            <Comments
               userId={board?.user.userId as number}
-              image={board?.user.image as string}
-              nickname={board?.user?.nickname as string}
-              comments={board?.comments}
               boardId={board?.id as number}
-            /> */}
+              // image={board?.user.image as string}
+              // nickname={board?.user?.nickname as string}
+              // comments={board?.comments}
+            />
           </CommentWrapper>
           {/*  */}
         </FullWidthColumn>
