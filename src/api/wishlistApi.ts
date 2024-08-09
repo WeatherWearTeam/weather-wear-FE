@@ -26,17 +26,25 @@ export type WishlistResponse = {
   status: number;
 };
 
-// 전체 데이터 조회
-export const getRecommandsItems = async (id: number) => {
-  console.log("리스폰스 아이디", id);
+// 홈 페이지 하단 네이버 추천 아이템 API
+///////////////////////////////////////////////////////////////////////////
+//네이버 추천 아이템 가져오기
+export const getRecommendsItems = async (weatherId: number) => {
   try {
-    const response = await api.get(`/api/recommends?id=${id}`);
+    const response = await api.get(`/api/recommends?id=${weatherId}`);
     return response.data;
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
+
+// 홈페이지에 렌더링되는 추천 리스트에 있는 추천 아이템 삭제
+export const deleteRecommendWishlistItem = async (productId: number) => {
+  await api.delete(`/api/recommends/wishlist/${productId}`);
+};
+
+///////////////////////////////////////////////////////////////////////////
 
 export interface RequstsParams {
   page: number;
@@ -67,9 +75,4 @@ export const createWishlistItem = async (item: NaverProduct) => {
 // 삭제
 export const deleteWishlistItem = async (wishlistId: number) => {
   await api.delete(`/api/wishlist/${wishlistId}`);
-};
-
-// 추천 리스트에서 위시리스트 아이템 삭제
-export const deleteRecommendWishlistItem = async (productId: number) => {
-  await api.delete(`/api/recommends/wishlist/${productId}`);
 };
