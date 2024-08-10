@@ -196,10 +196,11 @@ export const useUpdateBoard = () => {
     mutationFn: updateBoard,
     //첫 번째 인자: mutationFn이 반환하는 response.data
     //두 번째 인자: mutationFn의 인자로 보낸 업데이트된 보드 > 쓰면 안전빵..?
-    onSuccess: ({ data }) => {
+    onSuccess: ({ id: boardId }) => {
+      console.log(boardId);
       queryClient.invalidateQueries({ queryKey: ["boards"] }); //전체 보드
-      queryClient.invalidateQueries({ queryKey: ["board", data.id] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
-      navigate(`/boards/${data.id}`, { replace: true }); //히스토리 스택 대체
+      queryClient.invalidateQueries({ queryKey: ["board", boardId] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
+      navigate(`/boards/${boardId}`, { replace: true }); //히스토리 스택 대체
       window.history.go(-1); // 수정 페이지 자체 히스토리에서 빼고 가기
     },
     onError: (error: AxiosError) => {

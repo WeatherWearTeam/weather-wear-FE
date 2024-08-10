@@ -1,136 +1,121 @@
-import React from "react";
+import Button from "@components/Button";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const MyOOTDRecommendation: React.FC = () => {
+interface MyOotdData {
+  id: number;
+  image: string;
+}
+
+interface MyOOTDRecommendationProps {
+  data: MyOotdData[];
+}
+
+const MyOOTDRecommendation = ({ data }: MyOOTDRecommendationProps) => {
   const navigate = useNavigate();
+
+  console.log(data);
+
+  // 배열에서 4개의 요소를 랜덤으로 선택하는 함수
+  const getRandomSelection = (arr: MyOotdData[], num: number): MyOotdData[] => {
+    const result = new Set<MyOotdData>();
+    while (result.size < num) {
+      const randomIndex = Math.floor(Math.random() * arr.length);
+      result.add(arr[randomIndex]);
+    }
+    return Array.from(result);
+  };
+
+  const randomOotdData = getRandomSelection(data, 4);
+
   return (
-    <ContentContainer>
-      <OOTDGrid>
-        <OOTDHeader>
-          <HeaderLeft>
-            <ContentTitle>My OOTD 추천</ContentTitle>
-            <HeaderContentContainer>
-              <ContentDescription>
-                오늘 날씨에는 내 옷장의 이런 옷들을 추천합니다!
-                <br />더 다양한 스타일 추천을 원한다면 옷을 추가해주세요!
-              </ContentDescription>
-              <StyledButton onClick={() => navigate("/mypage/closet")}>
-                내 옷장 바로가기
-              </StyledButton>
-            </HeaderContentContainer>
-          </HeaderLeft>
-        </OOTDHeader>
-        <MyOOTDImage1 />
-        <MyOOTDImage2 />
-        <MyOOTDImage3 />
-        <MyOOTDImage4 />
-      </OOTDGrid>
-    </ContentContainer>
+    <Container>
+      <Header>
+        <ContentTitle>My OOTD 추천</ContentTitle>
+        <HeaderContentContainer>
+          <TextContainer>
+            <ContentDescription>
+              어떤 스타일을 입을지 고민 중이신가요?
+            </ContentDescription>
+            <ContentDescription>
+              오늘 같은 날씨에 입었던 나의 OOTD를 참고해보세요.
+            </ContentDescription>
+            <ContentDescription>
+              이전 아웃핏을 참고하여 오늘도 멋지게 스타일링 해보세요!
+            </ContentDescription>
+          </TextContainer>
+          <Button
+            type="button"
+            buttonType="primary"
+            onClick={() => navigate("/mypage/closet")}
+          >
+            나의 OOTD 바로가기
+          </Button>
+        </HeaderContentContainer>
+      </Header>
+      <ContentsMain>
+        {randomOotdData.map((item) => (
+          <ImageWrapper
+            key={item.id}
+            id={`${item.id}`}
+            onClick={() => navigate(`/ootd/${item.id}`)}
+          >
+            <Image src={item.image} alt="MyOOTD" />
+          </ImageWrapper>
+        ))}
+      </ContentsMain>
+    </Container>
   );
 };
 
 export default MyOOTDRecommendation;
-
-const ContentContainer = styled.div`
+const Container = styled.div`
+  /* height: calc(100vh - 7rem); */
+  height: 100%;
   width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 4rem 0;
+  box-sizing: border-box;
+  gap: 3rem;
 `;
 
-const OOTDGrid = styled.div`
-  width: 100%;
-  justify-content: center;
-  display: grid;
-  padding: 10px;
-  grid-template-columns: repeat(4, 200px);
-  grid-template-rows: 200px 250px;
-  grid-gap: 5px 50px;
-  grid-template-areas:
-    "header header header header"
-    "img1 img2 img3 img4";
-
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(3, 200px);
-    grid-template-rows: 200px 250px;
-    grid-template-areas:
-      "header header header"
-      "img1 img2 img3";
-  }
-
-  @media (max-width: 980px) {
-    grid-template-columns: repeat(2, 200px);
-    grid-template-rows: 200px 250px;
-    grid-template-areas:
-      "header header"
-      "img1 img2";
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 300px;
-    grid-template-rows: 250px 250px 250px 250px;
-    grid-template-areas:
-      "header"
-      "img1"
-      "img2"
-      "img3"
-      "img4";
-  }
-`;
-
-const OOTDHeader = styled.div`
-  grid-area: header;
+const Header = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  /* margin-bottom: 2rem; */
   @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    gap: 2rem;
   }
-`;
-
-const HeaderLeft = styled.div`
-  text-align: left;
-  width: 100%;
 `;
 
 const HeaderContentContainer = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-end;
   justify-content: space-between;
+
+  button {
+    width: 20rem;
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    gap: 2rem;
   }
 `;
 
-const MyOOTDImage = styled.div`
-  background-color: gray;
-  box-sizing: border-box;
-  border-radius: 10px;
-`;
-
-const MyOOTDImage1 = styled(MyOOTDImage)`
-  grid-area: img1;
-`;
-
-const MyOOTDImage2 = styled(MyOOTDImage)`
-  grid-area: img2;
-`;
-
-const MyOOTDImage3 = styled(MyOOTDImage)`
-  grid-area: img3;
-`;
-
-const MyOOTDImage4 = styled(MyOOTDImage)`
-  grid-area: img4;
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    align-items: center;
+  }
 `;
 
 const ContentTitle = styled.h2`
@@ -145,34 +130,76 @@ const ContentDescription = styled.p`
   margin-bottom: 1rem;
 `;
 
-const StyledButton = styled.button`
-  background-color: ${({ theme }) => theme.buttons.secondary.backgroundColor};
-  border: ${({ theme }) => theme.buttons.secondary.border || "inherit"};
-  color: ${({ theme }) => theme.buttons.secondary.color || "inherit"};
-  width: 150px;
-  height: 35px;
+///////////////////
+
+// const GridContainer = styled.div`
+//   padding-top: 3rem;
+//   height: 50rem;
+//   display: grid;
+//   grid-template-columns: repeat(4, 1fr);
+//   gap: 3rem;
+//   /* @media (max-width: 900px) {
+//     grid-template-columns: repeat(2, 1fr);
+//   } */
+
+//   @media (max-width: 900px) {
+//     grid-template-rows: 2fr;
+//   }
+
+//   @media (max-width: 900px) {
+//   }
+
+//   @media (max-width: 600px) {
+//     height: 100%;
+//   }
+// `;
+
+const ContentsMain = styled.div`
+  /* max-width: 1090px; */
+  /* display: grid; */
+  /* grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: auto;
+  gap: 2rem;
+  padding: 0 2rem;
+ */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3rem;
+  object-fit: cover;
+
+  @media (max-width: 900px) {
+    justify-content: center;
+  }
+`;
+
+const ImageWrapper = styled.div`
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-  outline: none;
+  width: 25rem;
+  height: 35rem;
+  border: ${({ theme }) => theme.borders.containerBorder};
+  /* @media (max-width: 600px) {
+    width: 80%;
+    height: 100%;
+  } */
+`;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.BLACK};
-    border: 1px solid ${({ theme }) => theme.colors.BLACK};
-    color: ${({ theme }) => theme.colors.WHITE};
-  }
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
 
-  &:focus {
-    background-color: ${({ theme }) => theme.colors.BLACK};
-    border: 1px solid ${({ theme }) => theme.colors.BLACK};
-    color: ${({ theme }) => theme.colors.WHITE};
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  @media (max-width: 768px) {
-    margin-top: 1rem;
+const Column = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  border: ${({ theme }) => theme.borders.containerBorder};
+  @media (max-width: 600px) {
+    /* grid-template-columns: 1fr; */
+    flex-wrap: wrap;
   }
 `;
