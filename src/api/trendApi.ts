@@ -12,20 +12,13 @@ export type Tag = {
 };
 
 export type Weather = {
+  addressId: number;
+  pcp: number | null;
   pop: number | null;
   pty: number | null;
-  pcp: number | null;
-  reh: number | null;
-  sno: number | null;
   sky: number | null;
   tmp: number | null;
-  tmn: number | null;
-  uuu: number | null;
-  wav: number | null;
-  tmx: number | null;
   wsd: number | null;
-  vec: number | null;
-  vvv: number | null;
 };
 
 export type TrendItem = {
@@ -41,7 +34,7 @@ export type TrendItem = {
   isPrivate: boolean;
   tags: Tag[];
   weather: Weather;
-  boardLikes: number;
+  boardLikesCount: number;
   views: number;
   commentCounts: number;
 };
