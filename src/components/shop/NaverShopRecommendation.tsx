@@ -10,6 +10,9 @@ import { NaverProduct } from "@/api/wishlistApi";
 import "swiper/css";
 import "swiper/css/navigation";
 import styled from "styled-components";
+import removeBoldTags from "@utils/removeBoldTags";
+import getKoreanType from "@utils/getKoreanType";
+import { ClothesType } from "@shared/clothesTypeList";
 
 interface NaverShopRecommendationProps {
   liked: boolean[];
@@ -26,7 +29,7 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
     data.map(() => null)
   );
   const { mutateCreateWishlistItem } = useCreateWishlistItem();
-  const { mutateDeleterecommendWishlistItem } =
+  const { mutateDeleteRecommendWishlistItem } =
     useDeleteRecommendWishlistItem();
 
   const handleLikeClick = (index: number, productId: number) => {
@@ -85,34 +88,42 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
             className="mySwiper"
           >
             {data.map((slide, index) => (
-              <SwiperSlide key={slide.productId}>
+              <SwiperSlide key={slide.id}>
                 <NaverShopImage
                   style={{ backgroundImage: `url(${slide.image})` }}
                 />
                 <NaverShopData>
-                  <NaverShopDataText>
-                    <NaverShopDataType>{slide.type}</NaverShopDataType>
-                    <NaverShopDataTitle>{slide.title}</NaverShopDataTitle>
-                  </NaverShopDataText>
-                  <LikeButton
-                    active={liked[index]}
-                    onClick={() => handleLikeClick(index, slide.productId)}
-                  />
+                  <NaverShopDataInfo>
+                    <TextWrapper>
+                      <NaverShopDataType>
+                        {getKoreanType(slide.type as ClothesType)}
+                      </NaverShopDataType>
+                      <NaverShopDataTitle>
+                        {removeBoldTags(slide.title)}
+                      </NaverShopDataTitle>
+                    </TextWrapper>
+                    <LikeButtonWrapper>
+                      <LikeButton
+                        active={liked[index]}
+                        onClick={() => handleLikeClick(index, slide.id)}
+                      />
+                    </LikeButtonWrapper>
+                  </NaverShopDataInfo>
                 </NaverShopData>
               </SwiperSlide>
             ))}
           </StyledSwiper>
         </SwiperContainer>
-        <NaverShopText>
-          <HomeTitle>네이버 쇼핑에서 추천해요</HomeTitle>
-          <HomeContent>
-            요즘 날씨에 맞는 구매하기 좋은 옷을 추천드려요!
-            <br />
-            저희가 추천드린 옷이 마음에 든다면 하트를 눌러 위시리스트에 저장해
-            보세요.
-          </HomeContent>
-        </NaverShopText>
       </NaverShopGrid>
+      <NaverShopText>
+        <HomeTitle>네이버 쇼핑에서 추천해요</HomeTitle>
+        <HomeContent>
+          요즘 날씨에 딱 맞는 옷을 네이버 쇼핑에서 추천해드려요!
+          <br />
+          마음에 드는 아이템은 하트를 눌러 위시리스트에 저장해 보세요. 편리하게
+          쇼핑하고, 멋진 옷으로 스타일을 완성해보세요!
+        </HomeContent>
+      </NaverShopText>
     </HomeContents5>
   );
 };
@@ -163,43 +174,62 @@ const NaverShopGrid = styled.div`
 const SwiperContainer = styled.div`
   grid-area: slider;
   width: 100%;
+  height: 100%;
 `;
 
 const StyledSwiper = styled(Swiper)`
   width: 100%;
+  height: 32rem;
 
   .swiper-button-next,
   .swiper-button-prev {
     color: black;
+    text-shadow: 0px 0px 5px white;
     top: 50%;
     transform: translateY(-50%);
   }
 `;
 
 const NaverShopImage = styled.div`
+  position: relative;
   background-color: gray;
   background-size: cover;
   background-position: center;
-  height: 240px;
+  height: 25rem;
   width: 100%;
+  border: ${({ theme }) => theme.borders.containerBorder};
 `;
 
 const NaverShopData = styled.div`
+  /* height: 0; */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   font-size: 12px;
-  height: 50px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
 `;
 
-const NaverShopDataText = styled.div`
+const NaverShopDataInfo = styled.div`
+  border: ${({ theme }) => theme.borders.containerBorder};
   background-color: white;
+  width: 100%;
   color: black;
   box-sizing: border-box;
-  padding-bottom: 5px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 `;
 
 const NaverShopDataType = styled.div`
@@ -211,7 +241,17 @@ const NaverShopDataTitle = styled.div`
   font-size: 14px;
   font-weight: bold;
   box-sizing: border-box;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 4rem;
 `;
+
+const LikeButtonWrapper = styled.div`
+  border-left: ${({ theme }) => theme.borders.containerBorder};
+  padding: 1rem 0 1rem 1rem;
+`;
+///////////////////////////////////////////////////
 
 const NaverShopText = styled.div`
   grid-area: a;

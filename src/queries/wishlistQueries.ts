@@ -9,9 +9,9 @@ import {
   Product,
   RequstsParams,
   deleteRecommendWishlistItem,
+  WishSearchKeysRequest,
 } from "@api/wishlistApi";
 import { Axios, AxiosError } from "axios";
-
 
 // 메인 페이전체 조회
 export const useHomeRecommendsItems = (id: number) => {
@@ -57,17 +57,16 @@ export const useDeleteRecommendWishlistItem = () => {
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 
-
 // 위시 전제 조회
-export const useWishlistItems = ({ page, type }: RequstsParams) => {
+export const useWishlistItems = (searchKeys: WishSearchKeysRequest) => {
   const {
     data: wishlistItems,
     isPending,
     isError,
     isSuccess,
   } = useQuery({
-    queryKey: ["wishlistItems"],
-    queryFn: () => getWishlistItems({ page, type }),
+    queryKey: ["wishlistItems", searchKeys.page, searchKeys.type],
+    queryFn: () => getWishlistItems(searchKeys),
   });
 
   return { wishlistItems, isPending, isError, isSuccess };

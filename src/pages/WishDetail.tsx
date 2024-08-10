@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@components/Button";
 import styled from "styled-components";
 import { WishlistItem } from "@api/wishlistApi";
+import removeBoldTags from "@utils/removeBoldTags";
 
 interface WishItemProps {
   item: any;
@@ -14,7 +15,6 @@ const WishDetail: React.FC<WishItemProps> = ({ item }) => {
     <Container>
       <TitleContainer>
         <SubTitle>위시 리스트</SubTitle>
-        <Title>{product.title}</Title>
       </TitleContainer>
       <GridContainer>
         <Column>
@@ -26,13 +26,13 @@ const WishDetail: React.FC<WishItemProps> = ({ item }) => {
           <RightWrapper>
             <UpContainer>
               <CategoryWrapper>
-                {product.category1} / {product.category2} / {product.category3} /{" "}
-                {product.category4}
+                {product.category1} / {product.category2} / {product.category3}{" "}
+                {product.category4 && ` / ${product.category4}`}
                 {/* 카테고리 정보가 없는 경우 처리 필요 */}
                 {/* {product.type} */}
               </CategoryWrapper>
               <ProductNameWrapper>
-                <ProductName>{product.title}</ProductName>
+                <ProductName>{removeBoldTags(product.title)}</ProductName>
               </ProductNameWrapper>
               <DataWrapper>
                 <InfoLabel>제조사</InfoLabel>
