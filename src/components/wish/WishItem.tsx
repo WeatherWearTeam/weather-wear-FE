@@ -1,90 +1,97 @@
-import React from "react";
+import { NaverProduct } from "@api/wishlistApi";
+import removeBoldTags from "@utils/removeBoldTags";
 import styled from "styled-components";
-import { WishItemType } from "@components/wish/WishsGrid";
 
 interface WishItemProps {
-  item: WishItemType;
+  item: NaverProduct;
   onClick: (id: string) => void;
-  onDelete: (id: string) => void;
 }
 
-function WishItem({ item, onClick, onDelete }: WishItemProps) {
+function WishItem({ item, onClick }: WishItemProps) {
   return (
     <ContentsItem>
-      <ContentsItemImage src={item.image} alt="" onClick={() => onClick(item.id)} />
-      <ContentsItemData>
-        <span>{item.category3}</span>
-      </ContentsItemData>
-      <ProducPricetWrapper>
-        <ContentsItemTitle>{item.title}</ContentsItemTitle>
-        <ContentsItemPrice>
-          {item.lprice}원
-        </ContentsItemPrice>
-      </ProducPricetWrapper>
-      <DeleteButton onClick={() => onDelete(item.id)}>삭제</DeleteButton>
+      <ImageWrapper>
+        <ContentsItemImage
+          src={item.image}
+          alt={"wishlist item image"}
+          onClick={() => {
+            onClick(`${item.id}`);
+          }}
+        />
+      </ImageWrapper>
+
+      <ItemDataContainer>
+        <ItemType>{item.category3}</ItemType>
+      </ItemDataContainer>
+
+      <ProductInfoWrapper>
+        <ItemTitle>{removeBoldTags(item.title)}</ItemTitle>
+      </ProductInfoWrapper>
     </ContentsItem>
   );
 }
 
 export default WishItem;
 
-const DeleteButton = styled.button`
-  background-color: #ff4d4f;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-top: 10px;
+const ContentsItem = styled.div`
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 `;
 
-const ContentsItem = styled.div`
-  width: 250px;
-  height: 320px;
+const ImageWrapper = styled.div`
+  width: 25rem;
+  height: 30rem;
+  /* width: 100%;
+  height: 100%; */
   box-sizing: border-box;
-  cursor: pointer;
+  position: relative;
+  /* padding: 2rem; */
+  border: ${({ theme }) => theme.borders.containerBorder};
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 50rem;
+  }
 `;
 
 const ContentsItemImage = styled.img`
-  background-color: gray;
-  width: 250px;
-  height: 270px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   box-sizing: border-box;
-  position: relative;
 `;
 
-const ContentsItemData = styled.div`
-  width: 250px;
-  height: 25px;
+const ItemDataContainer = styled.div`
+  padding-top: 1rem;
   font-size: small;
-  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+const ItemType = styled.p`
+  font-size: small;
+`;
+
+const ProductInfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
 `;
 
-const ProducPricetWrapper = styled.div`
-  display: flex; /* 수평으로 배치 */
-  justify-content: space-between; /* 양 끝에 배치 */
-  width: 250px;
-  box-sizing: border-box;
-`;
-
-const ContentsItemTitle = styled.div`
-  background-color: white;
-  color: black;
-  width: 250px;
-  height: 25px;
-  font-size: small;
+const ItemTitle = styled.h2`
+  font-size: medium;
   font-weight: bold;
-  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 25rem;
 `;
 
-const ContentsItemPrice = styled.div`
-  color: black;
-  width: 85px;
-  height: 25px;
-  margin-left: 20px;
-  font-size: small;
-  font-weight: bold;
-`;
+// const ContentsItemPrice = styled.div`
+//   color: black;
+//   width: 85px;
+//   height: 25px;
+//   margin-left: 20px;
+//   font-size: small;
+//   font-weight: bold;
+// `;

@@ -25,12 +25,11 @@ export const getClothesItems = async (searchKeys: SearchKeysRequest) => {
     console.log("SearchKeysRequest", searchKeys);
     const response = await api.get(`/api/clothes`, {
       params: {
-        page: searchKeys.page - 1,
+        page: searchKeys.page - 1, //페이네이션 실제로 0부터 시작되기 때문
         color: searchKeys.color,
         type: searchKeys.type,
       },
     });
-    console.log("clothes 데이터", response.data);
     return response.data;
   } catch (error) {
     console.log(error);

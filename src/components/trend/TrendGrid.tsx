@@ -1,7 +1,7 @@
 import React from "react";
 import { useTrendItems } from "@queries/trendQueries";
 import styled from "styled-components";
-import ClothesItem from "@components/trend/TrendItem";
+import TrendItem from "@components/trend/TrendItem";
 
 const TrendGrid: React.FC = () => {
   const { trendItemsData, isPending, isError } = useTrendItems({
@@ -11,7 +11,7 @@ const TrendGrid: React.FC = () => {
     keyword: "맑음",
   });
 
-  // console.log("Trend Items Data:", trendItemsData);
+  console.log("Trend Items Data:", trendItemsData);
   // console.log(post);
 
   if (isPending) return <div>Loading...</div>;
@@ -21,8 +21,8 @@ const TrendGrid: React.FC = () => {
 
   return (
     <ContentsMain>
-      {trendItemsData.map((post) => (
-        <ClothesItem key={post.id} {...post} />
+      {trendItemsData?.map((post) => (
+        <TrendItem key={post.id} {...post} />
       ))}
     </ContentsMain>
   );

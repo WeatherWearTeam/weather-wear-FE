@@ -6,6 +6,8 @@ import { AddressInfo } from "@components/Weather/MapSelector";
 import { getPtyState, getSkyState } from "@utils/getWeather";
 import getFeelsLikeTemperature from "@utils/getFeelsLikeTemperature";
 import WeatherDisplay from "@components/WeatherBackground/WeatherDisplay";
+import getRecommendOutfit from "@utils/getRecommendOutfit";
+import { Gender } from "@queries/userQueries";
 // vite-plugin-svgr (4.0.0 이상 버전)에서는 사용 방법이 살짝 다르다.
 // SVG 파일을 가져올 때, ?react라는 접미사를 붙여 앨리어싱을 건너뛰어 기본 내보내기를 사용할 수 있다.
 // 이렇게 사용할 경우 svg.d.ts 파일을 생성해야 한다.
@@ -13,12 +15,22 @@ import WeatherDisplay from "@components/WeatherBackground/WeatherDisplay";
 interface WeatherSectionProps {
   weatherData?: WeatherData;
   addressInfo?: AddressInfo;
+  gender?: Gender;
 }
 export default function WeatherSection({
   weatherData,
   addressInfo,
+  gender,
 }: WeatherSectionProps) {
-  //////////////////////////////////////////////////////////////////////////////
+  console.log(gender);
+  /////////////////////////////////////
+  const recommendOutfit = getRecommendOutfit(
+    weatherData?.tmp as number,
+    gender as Gender
+  );
+
+  console.log(recommendOutfit);
+  /////////////////////////////////////////
   return (
     <Container>
       <GridContainer>
@@ -70,7 +82,7 @@ export default function WeatherSection({
         </Column>
         <Column>
           <ContentContainer>
-            <ContentTitle>현재 {addressInfo?.address}의 날씨는</ContentTitle>
+            <ContentTitle>현재 {addressInfo?.address}의 날씨</ContentTitle>
             <WeatherAnnouncement>
               {getWeatherRecommendation(weatherData as WeatherData)}
             </WeatherAnnouncement>
@@ -78,9 +90,9 @@ export default function WeatherSection({
               오늘 같은 날씨에 입기 좋은 옷차림을 추천해 드릴게요!
             </ContentDescription>
             <RecommendedContainer>
-              <RecommendedItem>바람막이</RecommendedItem>
-              <RecommendedItem>우산</RecommendedItem>
-              <RecommendedItem>장화</RecommendedItem>
+              {/* {recommendOutfit?.map((item: string, index: number) => (
+                <RecommendedItem>{item[index]}</RecommendedItem>
+              ))} */}
             </RecommendedContainer>
           </ContentContainer>
         </Column>

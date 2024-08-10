@@ -12,8 +12,8 @@ const Body = styled.div`
   background: linear-gradient(
     to top,
     #ffff,
-    #ffd54f 30%,
-    #ff6600 100%
+    #ffe590 30%,
+    #ffa200 100%
   ); /* 뜨거운 날씨를 표현하는 그라디언트 */
   z-index: 1; /* 배경의 z-index 설정 */
 `;

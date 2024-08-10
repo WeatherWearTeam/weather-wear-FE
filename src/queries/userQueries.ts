@@ -153,9 +153,9 @@ export const useUpdatePassword = () => {
 
 ///////////////////////////////////////////////////////////////
 
-type Gender = "MALE" | "FEMALE";
+export type Gender = "MALE" | "FEMALE";
 
-interface UserProfile {
+export interface UserProfile {
   id: number;
   email: string;
   nickname: string;
@@ -164,7 +164,7 @@ interface UserProfile {
   birthday: string;
 }
 
-interface UseMeResponse {
+export interface UseMeResponse {
   me: UserProfile | undefined;
   isPending: boolean;
   isError: boolean;

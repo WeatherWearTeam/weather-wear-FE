@@ -27,6 +27,14 @@ interface ClothesItemProps {
   boardLikes: number;
   commentCounts: number;
   image: string;
+  createdAt: string;
+  updatedAt: string;
+  user: {
+    email: string;
+    id: number;
+    image: string;
+    nickname: string;
+  };
 }
 
 const ClothesItem: React.FC<ClothesItemProps> = ({

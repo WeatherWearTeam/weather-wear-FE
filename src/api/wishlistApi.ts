@@ -1,4 +1,5 @@
 import api from "@api/api";
+import { ClothesType } from "@shared/clothesTypeList";
 
 export type NaverProduct = {
   brand: string;
@@ -12,14 +13,15 @@ export type NaverProduct = {
   lprice: number;
   maker: string;
   mallName: string;
-  productId: number;
+  id: number;
   title: string;
-  type: string;
+  type?: string; ////
 };
 
 export type WishlistItem = {
   id: number;
   product: NaverProduct;
+  type: ClothesType; //////
 };
 
 export type WishlistResponse = {
@@ -46,16 +48,25 @@ export const deleteRecommendWishlistItem = async (productId: number) => {
 
 ///////////////////////////////////////////////////////////////////////////
 
-export interface RequstsParams {
+export interface WishSearchKeysRequest {
   page: number;
   type: string | null;
 }
 
-export const getWishlistItems = async ({ page, type }: RequstsParams) => {
-  const response = await api.get("/api/wishlist", {
-    params: { page, type },
-  });
-  return response.data;
+export const getWishlistItems = async (searchKeys: WishSearchKeysRequest) => {
+  try {
+    console.log(searchKeys);
+    const response = await api.get("/api/wishlist", {
+      params: {
+        page: searchKeys.page - 1, //페이네이션 실제로 0부터 시작되기 때문
+        type: searchKeys.type,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 // 개별 데이터 조회

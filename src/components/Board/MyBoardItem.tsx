@@ -1,9 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import ClothesTag from "@components/ClothesTag";
 import { getCreatedTime } from "@utils/getTime";
-import EditDeleteButton from "@components/EditDeleteButton";
-import { ClothesColorType } from "@shared/colorTypeList";
-import { ClothesKoreanType, ClothesType } from "@shared/clothesTypeList";
 import { getSkyState } from "@utils/getWeather";
 
 interface MyBoardItemProps {

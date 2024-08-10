@@ -33,8 +33,6 @@ const StyledLikeButton = styled.button<{ $isActive: boolean }>`
   cursor: pointer;
   border: 0;
   font-size: 0;
-  margin: 50px 5px;
-  display: block;
 
   ${(props) =>
     props.$isActive &&
