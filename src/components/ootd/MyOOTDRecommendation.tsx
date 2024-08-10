@@ -16,17 +16,17 @@ const MyOOTDRecommendation = ({ data }: MyOOTDRecommendationProps) => {
 
   console.log(data);
 
-  // 배열에서 4개의 요소를 랜덤으로 선택하는 함수
-  const getRandomSelection = (arr: MyOotdData[], num: number): MyOotdData[] => {
-    const result = new Set<MyOotdData>();
-    while (result.size < num) {
-      const randomIndex = Math.floor(Math.random() * arr.length);
-      result.add(arr[randomIndex]);
-    }
-    return Array.from(result);
-  };
+  // // 배열에서 4개의 요소를 랜덤으로 선택하는 함수
+  // const getRandomSelection = (arr: MyOotdData[], num: number): MyOotdData[] => {
+  //   const result = new Set<MyOotdData>();
+  //   while (result.size < num) {
+  //     const randomIndex = Math.floor(Math.random() * arr.length);
+  //     result.add(arr[randomIndex]);
+  //   }
+  //   return Array.from(result);
+  // };
 
-  const randomOotdData = getRandomSelection(data, 4);
+  // const randomOotdData = getRandomSelection(data, 4);
 
   return (
     <Container>
@@ -54,7 +54,7 @@ const MyOOTDRecommendation = ({ data }: MyOOTDRecommendationProps) => {
         </HeaderContentContainer>
       </Header>
       <ContentsMain>
-        {randomOotdData.map((item) => (
+        {data.map((item) => (
           <ImageWrapper
             key={item.id}
             id={`${item.id}`}

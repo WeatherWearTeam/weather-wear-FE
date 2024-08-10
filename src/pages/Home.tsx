@@ -84,6 +84,7 @@ const Home: React.FC = () => {
 
           <Divider />
           {/* {isSuccess && <MyOOTDRecommendation data={homeRecommendsData[1]} />} */}
+          {/* ✅✅  문제 있어서 잠깐 주석 처리 */}
 
           <Divider />
           {isSuccess && (
