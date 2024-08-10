@@ -10,6 +10,8 @@ import { useHomeRecommendsItems } from "@queries/wishlistQueries";
 import { useWeatherData } from "@queries/weatherQueries";
 import MapSelector, { AddressInfo } from "@components/Weather/MapSelector";
 import useModal from "@hooks/useModal";
+import MyClosetRecommendation from "@components/MyClosetRecommendation";
+import { useMe } from "@queries/userQueries";
 
 const Home: React.FC = () => {
   const [liked, setLiked] = useState<boolean[]>([false, false, false]);
@@ -23,6 +25,7 @@ const Home: React.FC = () => {
   };
 
   const { isLoggedIn } = useAuth();
+  const { me: myUserData } = useMe(isLoggedIn);
 
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
@@ -64,7 +67,11 @@ const Home: React.FC = () => {
           />
         </MapSelectorWrapper>
       </WeatherInfoWrapper>
-      <WeatherSection weatherData={weatherData} addressInfo={addressInfo} />
+      <WeatherSection
+        weatherData={weatherData}
+        addressInfo={addressInfo!}
+        gender={myUserData?.gender}
+      />
 
       {!isLoggedIn ? (
         <>
@@ -73,17 +80,24 @@ const Home: React.FC = () => {
       ) : (
         <>
           <Divider />
-          <MyOOTDRecommendation />
+          {isSuccess && <MyClosetRecommendation data={homeRecommendsData[0]} />}
 
           <Divider />
-          <OOTDTrend />
+          {/* {isSuccess && <MyOOTDRecommendation data={homeRecommendsData[1]} />} */}
+
+          <Divider />
+          {isSuccess && (
+            <OOTDTrend
+            // data={homeRecommendsData[2]}
+            />
+          )}
 
           <Divider />
           {isSuccess && (
             <NaverShopRecommendation
               liked={liked}
               toggleLike={toggleLike}
-              data={homeRecommendsData[1]}
+              data={homeRecommendsData[3]}
             />
           )}
 
