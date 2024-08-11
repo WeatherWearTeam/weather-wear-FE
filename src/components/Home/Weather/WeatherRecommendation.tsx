@@ -1,35 +1,45 @@
 import styled, { css } from "styled-components";
-import WeatherIconDisplay from "@components/WeatherBackground/WeatherIconDisplay";
 import getWeatherRecommendation from "@shared/getWeatherAnnouncement";
 import { WeatherData } from "@api/weatherApi";
 import { AddressInfo } from "@components/Weather/MapSelector";
 import { getPtyState, getSkyState } from "@utils/getWeather";
 import getFeelsLikeTemperature from "@utils/getFeelsLikeTemperature";
-import WeatherDisplay from "@components/WeatherBackground/WeatherDisplay";
 import getRecommendOutfit from "@utils/getRecommendOutfit";
 import { Gender } from "@queries/userQueries";
+import WeatherDisplay from "@components/Home/Weather/WeatherBackground/WeatherDisplay";
+import WeatherIconDisplay from "@components/Home/Weather/WeatherIconDisplay";
 // vite-plugin-svgr (4.0.0 이상 버전)에서는 사용 방법이 살짝 다르다.
 // SVG 파일을 가져올 때, ?react라는 접미사를 붙여 앨리어싱을 건너뛰어 기본 내보내기를 사용할 수 있다.
 // 이렇게 사용할 경우 svg.d.ts 파일을 생성해야 한다.
 
-interface WeatherSectionProps {
+interface WeatherRecommendationProps {
   weatherData?: WeatherData;
   addressInfo?: AddressInfo;
   gender?: Gender;
+  isLoggedIn: boolean;
 }
-export default function WeatherSection({
+export default function WeatherRecommendation({
   weatherData,
   addressInfo,
   gender,
-}: WeatherSectionProps) {
-  console.log(gender);
+  isLoggedIn,
+}: WeatherRecommendationProps) {
+  // console.log(gender);
   /////////////////////////////////////
-  const recommendOutfit = getRecommendOutfit(
-    weatherData?.tmp as number,
-    gender as Gender
-  );
+  let recommendOutfit = [];
 
-  console.log(recommendOutfit);
+  if (isLoggedIn) {
+    recommendOutfit = getRecommendOutfit(
+      weatherData?.tmp as number,
+      gender as Gender
+    );
+    // console.log("로그인한 사용자 추천:", recommendOutfit);
+  } else {
+    // 로그인하지 않은 사용자
+    recommendOutfit = getRecommendOutfit(weatherData?.tmp as number);
+    // console.log("로그인하지 않은 사용자 추천:", recommendOutfit);
+  }
+  // console.log(recommendOutfit);
   /////////////////////////////////////////
   return (
     <Container>
@@ -90,9 +100,9 @@ export default function WeatherSection({
               오늘 같은 날씨에 입기 좋은 옷차림을 추천해 드릴게요!
             </ContentDescription>
             <RecommendedContainer>
-              {/* {recommendOutfit?.map((item: string, index: number) => (
-                <RecommendedItem>{item[index]}</RecommendedItem>
-              ))} */}
+              {recommendOutfit?.map((item: string, index: number) => (
+                <RecommendedItem key={index}>{item}</RecommendedItem>
+              ))}
             </RecommendedContainer>
           </ContentContainer>
         </Column>

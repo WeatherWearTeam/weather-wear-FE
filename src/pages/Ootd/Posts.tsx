@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import Search from "@components/Search";
-import PageMoveButton from "@components/PageMoveButton";
 import AddButton from "@components/AddButton";
 import { useLocation, useNavigate } from "react-router-dom";
-import WeatherBar from "@components/WeatherBar";
 import { useMyBoards, useDeleteBoard } from "@queries/boardQueries";
 import MyBoardList from "@components/Board/MyBoardList";
 import Pagination from "@components/pagination";
 import { useEffect, useState } from "react";
 import { UserBoardsSearchKeysRequest } from "@api/boardApi";
+import WeatherBar from "@components/Weather/WeatherBar";
+
+interface WeatherIconTypes {
+  sky: number | null;
+  pty: number | null;
+}
 
 function Posts() {
   const navigate = useNavigate();
@@ -22,16 +26,6 @@ function Posts() {
     keyword: null,
   });
 
-  // const [selectedColor, setSelectedColor] = useState<ClothesColorType | null>(
-  //   null
-  // );
-
-  // const [selectedClothesType, setSelectedClothesType] =
-  //   useState<SelectedClothesState>({
-  //     type: null,
-  //     typeKorean: "옷 종류", // 초기값을 null로 설정
-  //   });
-
   const handlePageChange = (newPage: number) => {
     setSearchKeys((prev) => ({
       ...prev,
@@ -39,70 +33,59 @@ function Posts() {
     }));
   };
 
-  // const handleColorChange = (newColor: ClothesColorType) => {
-  //   setSearchKeys((prev) => ({
-  //     ...prev,
-  //     color: newColor,
-  //     page: 1,
-  //   }));
-  // };
+  const handleKeywordSubmit = (keyword: string) => {
+    setSearchKeys((prev) => ({
+      ...prev,
+      keyword,
+    }));
+  };
 
-  // // 색상 클릭 핸들러
-  // const handleColorClick = (color: ClothesColorType) => {
-  //   console.log("🌈", color);
-  //   setSelectedColor(color); //url에 값 넣기
-  //   handleColorChange(color); //실제 값 변경
-  // };
+  const [selectedWeather, setSelectedWeather] = useState<WeatherIconTypes>({
+    sky: null,
+    pty: null,
+  });
 
-  // const handleTypeChange = (newType: ClothesType) => {
-  //   setSearchKeys((prev) => ({
-  //     ...prev,
-  //     type: newType,
-  //     page: 1,
-  //   }));
-  // };
-
-  // const handleSelectType = (
-  //   type: ClothesType,
-  //   typeKorean: ClothesKoreanType
-  // ) => {
-  //   console.log("✅", selectedClothesType);
-
-  //   setSelectedClothesType((prev) => ({
-  //     ...prev,
-  //     type,
-  //     typeKorean,
-  //   }));
-
-  //   handleTypeChange(type);
-  // };
-
+  const handleWeatherClick = (sky: number | null, pty: number | null) => {
+    setSelectedWeather({ sky, pty });
+    setSearchKeys((prev) => ({
+      ...prev,
+      sky, //: sky ?? prev.sky, //sky가 null인 경우 기존 sky 값 유지
+      pty, //: pty ?? prev.pty, //pty가 null인 경우 기존 pty 값 유지
+      page: 1,
+    }));
+  };
   //////////////////////////////////////////////////////////////
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    // if (selectedClothesType.type) {
-    //   queryParams.set("type", selectedClothesType.type);
-    // } else {
-    //   queryParams.delete("type");
-    // }
+    if (searchKeys.sky !== null) {
+      queryParams.set("sky", String(searchKeys.sky));
+    } else {
+      queryParams.delete("sky");
+    }
 
-    // if (selectedColor) {
-    //   queryParams.set("color", selectedColor);
-    // } else {
-    //   queryParams.delete("color");
-    // }
+    if (searchKeys.pty !== null) {
+      queryParams.set("pty", String(searchKeys.pty));
+    } else {
+      queryParams.delete("pty");
+    }
 
-    navigate(`?${queryParams.toString()}`);
-  }, [navigate, location.search]);
+    if (searchKeys.keyword) {
+      queryParams.set("keyword", searchKeys.keyword);
+    } else {
+      queryParams.delete("keyword");
+    }
+
+    navigate(`?${(queryParams.toString(), { replace: true })}`);
+  }, [searchKeys, navigate, location.search]);
 
   //////////////////////////////////////////////////////////////
   const handleItemClick = (id: number) => {
     navigate(`/ootd/${id}`);
   };
 
-  const { boards, isPending, isError, isSuccess } = useMyBoards();
+  const { boards, isPending, isError, isSuccess } = useMyBoards(searchKeys);
   const { mutateDeleteBoard, isErrorDelete, isPendingDelete } =
     useDeleteBoard();
 
@@ -112,27 +95,30 @@ function Posts() {
     <MyPageContentsContainer>
       <HeaderContainer>
         <WeatherBarWrapper>
-          <WeatherBar />
+          <WeatherBar
+            onClick={handleWeatherClick}
+            selectedWeather={selectedWeather}
+          />
         </WeatherBarWrapper>
         <SearchWrapper>
-          <Search />
+          <SearchWrapper>
+            <Search onSearchKeyword={handleKeywordSubmit} />
+          </SearchWrapper>
         </SearchWrapper>
       </HeaderContainer>
-      <MainContainer>
-        {isSuccess && boards?.content && (
-          <MyBoardList
-            items={boards.content}
-            onClick={handleItemClick}
-            onDeleteClick={mutateDeleteBoard}
-            isSuccess={isSuccess}
-          />
-        )}
-        {isSuccess && boards?.content.length < 1 && (
-          <div>아직 올린 게시글이 없어요!</div>
-        )}
-        {/* {isPending && <div>로딩중...</div>} */}
-        {isError && <div>에러 발생!</div>}
-      </MainContainer>
+      {isSuccess && boards?.content && (
+        <MyBoardList
+          items={boards.content}
+          onClick={handleItemClick}
+          onDeleteClick={mutateDeleteBoard}
+          isSuccess={isSuccess}
+        />
+      )}
+      {isSuccess && boards?.content.length < 1 && (
+        <div>아직 올린 게시글이 없어요!</div>
+      )}
+      {/* {isPending && <div>로딩중...</div>} */}
+      {isError && <div>에러 발생!</div>}
       <ContentsFooter>
         <Pagination
           totalPages={boards?.totalPages} //총 아이템 수 //많아지면 버튼 생김
@@ -163,7 +149,6 @@ const MyPageContentsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 2rem;
-  /* background-color: green; */
 `;
 
 const HeaderContainer = styled.div`
@@ -173,7 +158,7 @@ const HeaderContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 3rem;
+  padding: 2rem 0 2rem 2rem;
   box-sizing: border-box;
   gap: 1rem;
 
@@ -193,9 +178,6 @@ const SearchWrapper = styled.div`
   width: 300px;
 `;
 
-const MainContainer = styled.div`
-  max-width: 100rem;
-`;
 const ContentsFooter = styled.div`
   padding: 4rem;
   width: 100%;

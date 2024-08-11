@@ -130,7 +130,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
             등록
           </Button>
           {isEditing ? (
-            <Button type="button" onClick={onEditEnd} disabled={isPending}>
+            <Button
+              type="button"
+              buttonType="secondary"
+              onClick={onEditEnd}
+              disabled={isPending}
+            >
               취소
             </Button>
           ) : null}

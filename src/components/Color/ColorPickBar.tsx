@@ -1,5 +1,5 @@
-import { ClothesColorType } from "@store/clothesTagStore";
 import ColorBar from "@components/Color/ColorBar";
+import { ClothesColorType } from "@shared/colorTypeList";
 import styled from "styled-components";
 
 interface ColorPickBarProps {
@@ -7,7 +7,10 @@ interface ColorPickBarProps {
   selectedColor?: ClothesColorType;
 }
 
-export default function ColorPickBar({ onClick, selectedColor }: ColorPickBarProps) {
+export default function ColorPickBar({
+  onClick,
+  selectedColor,
+}: ColorPickBarProps) {
   return (
     <Container>
       색상

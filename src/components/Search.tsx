@@ -3,30 +3,40 @@ import styled from "styled-components";
 import Icon from "@components/Icon";
 import { searchIcon } from "@shared/icons";
 
-export default function SearchArea() {
-  const [searchTerm, setSearchTerm] = useState("");
+interface SearchProps {
+  onSearchKeyword: (keyword: string) => void;
+}
 
-  const handleSearch = () => {
-    // 검색 기능을 여기에 구현합니다.
-    console.log(`Searching for: ${searchTerm}`);
+export default function Search({ onSearchKeyword }: SearchProps) {
+  const [keyword, setKeyword] = useState("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!keyword.trim()) {
+      return alert("검색어를 입력해 주세요!");
+    }
+
+    console.log(`⚡️ 키워드: ${keyword}`);
+    onSearchKeyword(keyword);
   };
 
   return (
     <ContentsHeader>
-      <SearchContainer>
+      <SearchForm onSubmit={handleSubmit}>
         <SearchInput
           placeholder="검색어를 입력하세요"
-          value={searchTerm}
+          value={keyword}
           onChange={handleInputChange}
         />
-        <SearchButton onClick={handleSearch}>
+        <SearchButton type="button">
           <Icon icon={searchIcon} />
         </SearchButton>
-      </SearchContainer>
+      </SearchForm>
     </ContentsHeader>
   );
 }
@@ -40,7 +50,7 @@ const ContentsHeader = styled.div`
   box-sizing: border-box; /* 패딩을 포함한 박스 크기 조정 */
 `;
 
-const SearchContainer = styled.div`
+const SearchForm = styled.form`
   position: relative;
   width: 100%;
   /* max-width: 350px;  */

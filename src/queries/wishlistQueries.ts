@@ -4,25 +4,23 @@ import {
   getRecommendsItems,
   getWishlistItems,
   deleteWishlistItem,
-  WishlistItem,
   getWishlistItemById,
-  Product,
-  RequstsParams,
   deleteRecommendWishlistItem,
   WishSearchKeysRequest,
 } from "@api/wishlistApi";
-import { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 // 메인 페이전체 조회
-export const useHomeRecommendsItems = (id: number) => {
+export const useHomeRecommendsItems = (weatherId: number) => {
   const {
     data: homeRecommendsData,
     isPending,
     isError,
     isSuccess,
   } = useQuery({
-    queryKey: ["homeRecommendsItems", id],
-    queryFn: () => getRecommendsItems(id),
+    queryKey: ["homeRecommendsItems", weatherId],
+    queryFn: () => getRecommendsItems(weatherId),
+    enabled: !!weatherId,
   });
   return { homeRecommendsData, isPending, isError, isSuccess };
 };

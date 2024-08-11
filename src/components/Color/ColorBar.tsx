@@ -1,7 +1,6 @@
-import { ClothesColorType } from "@store/clothesTagStore";
 import ColorChip from "@components/Color/ColorChip";
 import styled from "styled-components";
-import colorTypeList from "@shared/colorTypeList";
+import colorTypeList, { ClothesColorType } from "@shared/colorTypeList";
 
 interface ColorBarProps {
   size?: "s" | "m";

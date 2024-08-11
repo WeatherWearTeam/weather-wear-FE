@@ -4,7 +4,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 export interface CommentUser {
-  userId: number;
+  id: number;
   nickname: string;
   image: string;
 }

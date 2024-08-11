@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import PageMoveButton from "@components/PageMoveButton";
 import AddButton from "@components/AddButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useClothesItems, useDeleteClothesItem } from "@queries/clothesQueries";
 import ColorPickBar from "@components/Color/ColorPickBar";
-import clothesTypeList from "@shared/clothesTypeList";
+import clothesTypeList, {
+  ClothesKoreanType,
+  ClothesType,
+} from "@shared/clothesTypeList";
 import ClosetList from "@components/Closet/ClosetList";
 import Select from "@components/Select/Select";
-import { ClothesKoreanType, ClothesType } from "@store/clothesTagStore";
 import { ClothesColorType } from "@shared/colorTypeList";
 import { SearchKeysRequest } from "@api/clothesApi";
 import Pagination from "@components/pagination";
@@ -56,7 +57,6 @@ function Closet() {
 
   // 색상 클릭 핸들러
   const handleColorClick = (color: ClothesColorType) => {
-    console.log("🌈", color);
     setSelectedColor(color); //url에 값 넣기
     handleColorChange(color); //실제 값 변경
   };
@@ -83,11 +83,11 @@ function Closet() {
 
     handleTypeChange(type);
   };
-  
 
   //////////////////////////////////////////////////////////////
   // 삭제 버튼 클릭 시 처리 로직
   const { mutateDeleteClothesItem } = useDeleteClothesItem();
+
   const handleDeleteClick = (id: number) => {
     const isConfirmed = confirm("아이템이 삭제되었습니다.");
     isConfirmed && mutateDeleteClothesItem(id);
@@ -98,20 +98,20 @@ function Closet() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    if (selectedClothesType.type) {
-      queryParams.set("type", selectedClothesType.type);
+    if (searchKeys.type) {
+      queryParams.set("type", searchKeys.type);
     } else {
       queryParams.delete("type");
     }
 
-    if (selectedColor) {
-      queryParams.set("color", selectedColor);
+    if (searchKeys.color) {
+      queryParams.set("color", searchKeys.color);
     } else {
       queryParams.delete("color");
     }
 
-    navigate(`?${queryParams.toString()}`);
-  }, [selectedClothesType.type, selectedColor, navigate, location.search]);
+    navigate(`?${(queryParams.toString(), { replace: true })}`);
+  }, [searchKeys, navigate, location.search]);
 
   const { clothesItems, isPending, isError, isSuccess } =
     useClothesItems(searchKeys);
@@ -119,7 +119,6 @@ function Closet() {
   return (
     <MyPageContentsContainer>
       <HeaderContainer>
-        {/* <ClothesTypes onTypeClick={handleTypeClick} /> */}
         <SelectWrapper>
           <Select
             list={clothesTypeList}
@@ -131,19 +130,17 @@ function Closet() {
           <ColorPickBar onClick={handleColorClick} />
         </SelectWrapper>
       </HeaderContainer>
-      <MainContainer>
-        {isSuccess && clothesItems?.content && (
-          <ClosetList
-            items={clothesItems.content}
-            onDeleteClick={handleDeleteClick}
-          />
-        )}
-        {isSuccess && clothesItems?.content.length < 1 && (
-          <div>옷장에 옷이 없습니다.</div>
-        )}
-        {/* {isPending && <div>로딩중...</div>} */}
-        {isError && <div>에러 발생!</div>}
-      </MainContainer>
+      {isSuccess && clothesItems?.content && (
+        <ClosetList
+          items={clothesItems.content}
+          onDeleteClick={handleDeleteClick}
+        />
+      )}
+      {isSuccess && clothesItems?.content.length < 1 && (
+        <div>옷장에 옷이 없습니다.</div>
+      )}
+      {/* {isPending && <div>로딩중...</div>} */}
+      {isError && <div>에러 발생!</div>}
       <ContentsFooter>
         <Pagination
           totalPages={clothesItems?.totalPages} //총 아이템 수 //많아지면 버튼 생김
@@ -197,12 +194,9 @@ const SelectWrapper = styled.div`
   flex: 1;
   width: 37rem;
   max-width: 37rem;
-  box-sizing: border-box; /* 박스 사이징 모델을 설정하여 패딩과 보더를 포함하도록 설정 */
+  box-sizing: border-box;
 `;
 
-const MainContainer = styled.div`
-  max-width: 100rem;
-`;
 const ContentsFooter = styled.div`
   padding: 4rem;
   width: 100%;

@@ -1,4 +1,4 @@
-import { ClothesColorType } from "@store/clothesTagStore";
+import { ClothesColorType } from "@shared/colorTypeList";
 import styled from "styled-components";
 
 interface ColorChipProps {

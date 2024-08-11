@@ -2,22 +2,23 @@
 // import useGetCommentList from "@hooks/useGetCommentList";
 import CommentItem from "@components/Comment/CommentItem";
 import Icon from "@components/Icon";
-import { Comment, useCommentsByBoardId } from "@queries/commentQueries";
+import { Comment } from "@queries/commentQueries";
 import { chatIcon } from "@shared/icons";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 interface CommentListProps {
   boardId: number;
   comments: Comment[];
   isSuccessComments: boolean;
+  myId: number;
 }
 
 export default function CommentList({
   boardId,
   comments,
   isSuccessComments,
+  myId,
 }: CommentListProps) {
   //투두에 달린 댓글 전체 리스트
   // const { id: boardId } = useParams();
@@ -49,14 +50,8 @@ export default function CommentList({
             return (
               <LiComments key={item.id}>
                 <CommentItem
+                  myId={myId}
                   comment={item}
-                  // commentId={item.id}
-                  // userId={item.user.userId}
-                  // boardOwenr={}
-                  // nickname={item.user.nickname}
-                  // image={item.user.image}
-                  // contents={item.contents}
-                  // boardId={item.boardId}
                   isEditing={editingCommentId === item.id} //아이디값 동일한 CommentItem 컴포넌트에 대해 에디팅 진행
                   onEditStart={() => handleEditStart(item.id)} //에디팅 시작하는 함수 밑으로 내려주기
                   onEditEnd={handleEditEnd} //에디팅 종료하는 함수 밑으로 내려주기

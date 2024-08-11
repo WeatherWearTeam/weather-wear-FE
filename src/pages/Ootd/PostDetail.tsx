@@ -15,8 +15,12 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import EditDeleteButton from "@components/EditDeleteButton";
 import ClothesTag from "@components/ClothesTag";
-import getWeatherIcon from "@utils/getWeatherIcon";
-import WeatherStateIcon from "@components/WeatherStateIcon";
+
+import { ClothesType } from "@shared/clothesTypeList";
+import { ClothesColorType } from "@shared/colorTypeList";
+import useAuth from "@queries/useAuth";
+import { useMe } from "@queries/userQueries";
+import WeatherStateIcon from "@components/Weather/WeatherStateIcon";
 
 export default function PostDetail() {
   //❌ 좋아요 기능 아직 구현 안함 ->  근우님꺼 가져다 쓰기 ㅇㅇ
@@ -24,6 +28,9 @@ export default function PostDetail() {
 
   //////////////////////////////////////////////////////////////////
   const { id: boardId } = useParams(); //현재 Board id url에서 가져오기
+
+  const { isLoggedIn } = useAuth();
+  const { me } = useMe(isLoggedIn);
 
   const { board, isPending, isError, isSuccess } = useBoardById(
     Number(boardId)
@@ -89,7 +96,7 @@ export default function PostDetail() {
                     {isSuccess && board && (
                       <WeatherInfo>
                         <Location>
-                          <Icon icon={atIcon} />
+                          {atIcon}
                           <span>{board.address}</span>
                         </Location>
                         <span>{board.weather.tmp}°C </span>
@@ -126,15 +133,21 @@ export default function PostDetail() {
               <ClothesTagWrapper>
                 {isSuccess &&
                   board &&
-                  board?.tags.map((tag) => (
-                    <ClothesTag
-                      key={tag.id}
-                      color={tag.color}
-                      type={tag.type}
-                    />
-                  ))}
+                  board?.tags.map(
+                    (tag: {
+                      id: number;
+                      color: ClothesColorType;
+                      type: ClothesType;
+                    }) => (
+                      <ClothesTag
+                        key={tag.id}
+                        color={tag.color}
+                        type={tag.type}
+                      />
+                    )
+                  )}
               </ClothesTagWrapper>
-              {isSuccess && board && (
+              {isSuccess && board && board.user.id === me?.id && (
                 <EditDeleteButton
                   id={board.id}
                   editPath={`/ootd/${board.id}/edit`}
@@ -151,13 +164,7 @@ export default function PostDetail() {
         <FullWidthColumn>
           {/*  */}
           <CommentWrapper>
-            <Comments
-              userId={board?.user.userId as number}
-              boardId={board?.id as number}
-              // image={board?.user.image as string}
-              // nickname={board?.user?.nickname as string}
-              // comments={board?.comments}
-            />
+            <Comments boardId={board?.id as number} />
           </CommentWrapper>
           {/*  */}
         </FullWidthColumn>
@@ -252,6 +259,10 @@ const WeatherInfo = styled.div`
 const Location = styled.div`
   display: flex;
   flex-direction: row;
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
 `;
 
 const IconWrapper = styled.div`

@@ -9,11 +9,14 @@ import Dropdown from "@components/Modal/Dropdown";
 import { useDeleteComment } from "@queries/commentQueries";
 // import useDeleteComment from "@hooks/useDeleteComment";
 
-interface EditIconProps {
+interface CommentEditIconProps {
   onEditStart: () => void;
   commentId: number;
 }
-export default function EditIcon({ onEditStart, commentId }: EditIconProps) {
+export default function CommentEditIcon({
+  onEditStart,
+  commentId,
+}: CommentEditIconProps) {
   const { openModal, closeModal, isVisible } = useModal();
   const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
 

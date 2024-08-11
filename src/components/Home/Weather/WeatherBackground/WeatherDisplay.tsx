@@ -1,10 +1,10 @@
-import Cloudy from "@components/WeatherBackground/Cloudy";
-import Hot from "@components/WeatherBackground/Hot";
-import Rainy from "@components/WeatherBackground/Rainy";
-import Snowy from "@components/WeatherBackground/Snowy";
-import Sunny from "@components/WeatherBackground/Sunny";
-import Thunderstorm from "@components/WeatherBackground/Thunderstorm";
-import Windy from "@components/WeatherBackground/Windy";
+import Cloudy from "@components/Home/Weather/WeatherBackground/Cloudy";
+import Hot from "@components/Home/Weather/WeatherBackground/Hot";
+import Rainy from "@components/Home/Weather/WeatherBackground/Rainy";
+import Snowy from "@components/Home/Weather/WeatherBackground/Snowy";
+import Sunny from "@components/Home/Weather/WeatherBackground/Sunny";
+import Thunderstorm from "@components/Home/Weather/WeatherBackground/Thunderstorm";
+import Windy from "@components/Home/Weather/WeatherBackground/Windy";
 
 interface WeatherDisplayProps {
   pty: number;
@@ -64,6 +64,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({
       break;
     case "thunderstorm":
       WeatherBackgroundComponent = Thunderstorm;
+
       break;
     case "windy":
       WeatherBackgroundComponent = Windy;

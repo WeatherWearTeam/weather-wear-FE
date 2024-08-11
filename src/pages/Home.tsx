@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import MyOOTDRecommendation from "@components/ootd/MyOOTDRecommendation";
-import OOTDTrend from "@components/trend/OOTDTrend";
-import NaverShopRecommendation from "@components/shop/NaverShopRecommendation";
-import WeatherSection from "@components/WeatherSection";
-import SignupRecommendation from "@components/SignupRecommendation";
+import MyOOTDRecommendation from "@components/Home/Ootd/MyOOTDRecommendation";
+import OOTDTrend from "@components/Trend/OOTDTrend";
+import NaverShopRecommendation from "@components/Home/NaverShop/NaverShopRecommendation";
+import SignupRecommendation from "@components/Home/SignupRecommendation";
 import useAuth from "@queries/useAuth";
 import { useHomeRecommendsItems } from "@queries/wishlistQueries";
 import { useWeatherData } from "@queries/weatherQueries";
 import MapSelector, { AddressInfo } from "@components/Weather/MapSelector";
 import useModal from "@hooks/useModal";
-import MyClosetRecommendation from "@components/MyClosetRecommendation";
 import { useMe } from "@queries/userQueries";
+import WeatherRecommendation from "@components/Home/Weather/WeatherRecommendation";
+import MyClosetRecommendation from "@components/Home/MyClosetRecommendation";
 
 const Home: React.FC = () => {
   const [liked, setLiked] = useState<boolean[]>([false, false, false]);
@@ -40,6 +40,7 @@ const Home: React.FC = () => {
   const { weatherData, isPendingWeather, isErrorWeather, isSuccessWeather } =
     useWeatherData(Number(addressInfo?.code));
 
+  console.log("===weatherId===", weatherId);
   const { homeRecommendsData, isPending, isError, isSuccess } =
     useHomeRecommendsItems(weatherId as number);
 
@@ -67,31 +68,35 @@ const Home: React.FC = () => {
           />
         </MapSelectorWrapper>
       </WeatherInfoWrapper>
-      <WeatherSection
+      <WeatherRecommendation
         weatherData={weatherData}
         addressInfo={addressInfo!}
         gender={myUserData?.gender}
+        isLoggedIn={isLoggedIn}
       />
 
-      {!isLoggedIn ? (
+      {!isLoggedIn && (
         <>
           <SignupRecommendation />
+          <Divider />
+          {isSuccess && <OOTDTrend data={homeRecommendsData[0]} />}
         </>
-      ) : (
+      )}
+
+      {isLoggedIn && (
         <>
           <Divider />
-          {isSuccess && <MyClosetRecommendation data={homeRecommendsData[0]} />}
-
-          <Divider />
-          {/* {isSuccess && <MyOOTDRecommendation data={homeRecommendsData[1]} />} */}
-          {/* ✅✅  문제 있어서 잠깐 주석 처리 */}
-
-          <Divider />
-          {isSuccess && (
-            <OOTDTrend
-            // data={homeRecommendsData[2]}
-            />
+          {isSuccess && homeRecommendsData[0] && (
+            <MyClosetRecommendation data={homeRecommendsData[0]} />
           )}
+
+          <Divider />
+          {isSuccess && homeRecommendsData[1] && (
+            <MyOOTDRecommendation data={homeRecommendsData[1]} />
+          )}
+
+          <Divider />
+          {isSuccess && <OOTDTrend data={homeRecommendsData[2]} />}
 
           <Divider />
           {isSuccess && (

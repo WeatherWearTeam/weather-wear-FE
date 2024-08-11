@@ -1,17 +1,14 @@
 import api from "@api/api";
+import { ClothesTagType } from "@api/boardApi";
 
-export type User = {
-  userId: number;
-  nickname: string;
+export interface User {
+  email: string;
+  id: number;
   image: string;
-};
+  nickname: string;
+}
 
-export type Tag = {
-  color: string;
-  type: string;
-};
-
-export type Weather = {
+export interface Weather {
   addressId: number;
   pcp: number | null;
   pop: number | null;
@@ -19,39 +16,40 @@ export type Weather = {
   sky: number | null;
   tmp: number | null;
   wsd: number | null;
-};
+}
 
-export type TrendItem = {
-  id: number;
-  user: User;
-  createAt: string;
-  updatedAt: string;
+export interface TrendItemResponse {
   address: string;
-  addressId: number;
-  title: string;
+  boardLikesCount: number;
+  checkLike: boolean;
+  commentsCount: number;
   contents: string;
+  createdAt: string;
+  id: number;
   image: string;
   isPrivate: boolean;
-  tags: Tag[];
-  weather: Weather;
-  boardLikesCount: number;
+  tags: ClothesTag[];
+  title: string;
+  updatedAt: string;
+  user: User;
   views: number;
-  commentCounts: number;
-};
+  weather: Weather;
+}
 
 export interface TrendQueryParams {
-  lastId?: number;
-  address?: string;
-  color?: string;
-  type?: string;
-  keyword?: string;
+  lastId: number | null;
+  color: string | null;
+  type: string | null;
+  keyword: string | null;
 }
 
 // 트렌드 게시물 전체 조회
-export const getBoardsTrendItems = async () => {
+export const getBoardsTrendItems = async (searchKeys: TrendQueryParams) => {
   try {
-    const response = await api.get("/api/boards");
-    console.log("API response:", response.data);
+    console.log("✅트렌드 검색", searchKeys);
+    const response = await api.get("/api/boards", {
+      params: searchKeys,
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching trend items:", error);

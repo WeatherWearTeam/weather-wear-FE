@@ -105,7 +105,6 @@ export const useUpdateUser = () => {
       queryClient.invalidateQueries({ queryKey: ["users"] }); //전체 보드
       queryClient.invalidateQueries({ queryKey: ["auth"] }); // 로그인한 사용자 정보 쿼리 무효화
       navigate(`/my/setting`, { replace: true }); //히스토리 스택 대체
-      window.history.go(-1); // 내 정보 수정 페이지 자체 히스토리에서 빼고 가기
     },
     onError: (error: AxiosError) => {
       let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
@@ -136,7 +135,6 @@ export const useUpdatePassword = () => {
       queryClient.invalidateQueries({ queryKey: ["users"] }); //전체 보드
       queryClient.invalidateQueries({ queryKey: ["auth"] }); // 로그인한 사용자 정보 쿼리 무효화
       navigate(`/my/setting`, { replace: true }); //히스토리 스택 대체
-      window.history.go(-2); // 비번 수정 & 내 정보 수정 페이지 자체 히스토리에서 빼고 가기
     },
     onError: (error: AxiosError) => {
       let errorMessage =

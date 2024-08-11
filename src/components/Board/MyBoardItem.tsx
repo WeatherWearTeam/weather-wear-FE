@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ClothesTag from "@components/ClothesTag";
 import { getCreatedTime } from "@utils/getTime";
 import { getSkyState } from "@utils/getWeather";
+import { useNavigate } from "react-router-dom";
 
 interface MyBoardItemProps {
   item?: any;
@@ -19,13 +20,14 @@ function MyBoardItem({
   showData = false,
   showTitle = false,
 }: MyBoardItemProps) {
+  const navigate = useNavigate();
   return (
     <ContentsItem>
-      <ImageWrapper>
+      <ImageWrapper onClick={() => navigate(`/ootd/${item.id}`)}>
         <ContentsItemImage src={image} alt={"ootd image"} />
         {showTag && (
           <TagWrapper>
-            {item.tags.map((tag, index) => (
+            {item.tags.map((tag, index: number) => (
               <ClothesTag key={index} color={tag.color} type={tag.type} />
             ))}
           </TagWrapper>
@@ -37,10 +39,10 @@ function MyBoardItem({
           <ItemCreatedAt>
             @{item.address} · {getSkyState(item.weather.sky)}
           </ItemCreatedAt>
+          {showTitle && <ItemTitle>{item.title}</ItemTitle>}
+          {showTitle && <ContentsItemTitle>{item.type}</ContentsItemTitle>}
         </ItemDataContainer>
       )}
-      {showTitle && <ItemTitle>{item.title}</ItemTitle>}
-      {showTitle && <ContentsItemTitle>{item.type}</ContentsItemTitle>}
     </ContentsItem>
   );
 }
@@ -51,17 +53,16 @@ const ContentsItem = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  border: ${({ theme }) => theme.borders.containerBorder};
 `;
 
 const ImageWrapper = styled.div`
+  cursor: pointer;
   width: 25rem;
   height: 30rem;
-  /* width: 100%;
-  height: 100%; */
   box-sizing: border-box;
   position: relative;
-  /* padding: 2rem; */
-  border: ${({ theme }) => theme.borders.containerBorder};
+
   @media (max-width: 600px) {
     width: 100%;
     height: 50rem;
@@ -85,10 +86,12 @@ const TagWrapper = styled.div`
 `;
 
 const ItemDataContainer = styled.div`
-  padding-top: 1rem;
+  padding: 1rem;
   font-size: small;
   display: flex;
-  align-items: center;
+  height: 9rem;
+  width: 24rem;
+  flex-direction: column;
 `;
 const ItemCreatedAt = styled.p`
   font-size: small;
@@ -97,6 +100,10 @@ const ItemCreatedAt = styled.p`
 const ItemTitle = styled.h2`
   font-size: medium;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 0.7rem;
 `;
 const ContentsItemTitle = styled.h2`
   font-size: medium;

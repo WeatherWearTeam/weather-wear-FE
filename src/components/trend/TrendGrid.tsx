@@ -1,47 +1,49 @@
-import React from "react";
-import { useTrendItems } from "@queries/trendQueries";
 import styled from "styled-components";
-import TrendItem from "@components/trend/TrendItem";
+import TrendItem from "@components/Trend/TrendItem";
+import { TrendItemResponse } from "@api/trendApi";
 
-const TrendGrid: React.FC = () => {
-  const { trendItemsData, isPending, isError } = useTrendItems({
-    address: "서울특별시",
-    color: "BLUE",
-    type: "DRESS",
-    keyword: "맑음",
-  });
-
-  console.log("Trend Items Data:", trendItemsData);
-  // console.log(post);
-
-  if (isPending) return <div>Loading...</div>;
-  if (isError) return <div>Error loading data...</div>;
-  if (!trendItemsData || trendItemsData.length === 0)
-    return <div>No items found</div>;
-
+interface TrendGridProps {
+  trendItemsData: TrendItemResponse[][]; //배열을 또 배열로 감싼 형태로 내려오는 중임
+}
+const TrendGrid = ({ trendItemsData }: TrendGridProps) => {
+  console.log("✅", trendItemsData);
   return (
-    <ContentsMain>
-      {trendItemsData?.map((post) => (
-        <TrendItem key={post.id} {...post} />
+    <MainContainer>
+      {trendItemsData?.map((page: TrendItemResponse[], index: number) => (
+        <PageContainer key={index}>
+          {page?.map((item: TrendItemResponse) => (
+            <TrendItem key={item.id} item={item} />
+          ))}
+        </PageContainer>
       ))}
-    </ContentsMain>
+    </MainContainer>
   );
 };
 
 export default TrendGrid;
 
-const ContentsMain = styled.div`
-  width: 85%;
-  max-width: 1090px;
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  //8개 한 페이지씩 한 세트
+`;
+
+const PageContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;
-  gap: 40px 30px;
-  padding: 20px 0 15px 0;
+  gap: 2rem;
+  padding: 0 2rem;
+
   @media (max-width: 1200px) {
-    grid-template-columns: repeat(2, 2fr);
+    grid-template-columns: 1fr 1fr 1fr;
   }
-  // @media (max-width: 900px) {grid-template-columns: repeat(2, 2fr);}
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
