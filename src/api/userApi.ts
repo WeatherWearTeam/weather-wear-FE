@@ -69,18 +69,12 @@ export interface UpdatePasswordRequest {
 
 export const updatePassword = async (passwords: UpdatePasswordRequest) => {
   try {
-    const response = await api.put(`/api/users`, passwords);
+    const response = await api.put(`/api/users/password`, passwords);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
-
-// export const testUser = async () => {
-//   console.log("🌈🌈🌈🌈🌈");
-//   const response = await api.get(`/api/profile`);
-//   return response.data;
-// };
 
 // 로그인한 유저 프로필 조회
 export const getMe = async () => {

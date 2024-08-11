@@ -53,7 +53,6 @@ export const useResetPassword = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] }); //전체 보드
       navigate(`/login`, { replace: true }); //히스토리 스택 대체
-      // window.history.go(-1); // 비번 수정 & 내 정보 수정 페이지 자체 히스토리에서 빼고 가기
     },
     onError: (error: AxiosError) => {
       let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
