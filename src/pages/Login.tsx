@@ -4,8 +4,9 @@ import Input from "@components/Input";
 import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useAuth from "@queries/useAuth";
+import useKakao from "@queries/useKakao";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -35,6 +36,21 @@ export default function Login() {
 
     setLoginUser({ username: "", password: "" });
   };
+
+  const [isKakaoLoginClicked, setIsKakaoLoginClicked] = useState(false);
+  //카카오 로그인
+  const {
+    kakaoLoginAuthData,
+    isPendingKakaoLogin,
+    isErrorKakaoLogin,
+    isSuccessKakaoLogin,
+  } = useKakao(isKakaoLoginClicked);
+
+  useEffect(() => {
+    if (isKakaoLoginClicked) {
+      console.log(kakaoLoginAuthData);
+    }
+  }, [isKakaoLoginClicked, kakaoLoginAuthData]);
 
   return (
     <Container>
@@ -120,9 +136,14 @@ export default function Login() {
                 <span>또는 SNS 계정으로 시작하기</span>
               </SeparateBorder>
               {/* SNS 계정으로 로그인 */}
-              <SocialLoginIconWrapper>
+              <SocialLoginButton
+                onClick={() => {
+                  console.log("클릭");
+                  setIsKakaoLoginClicked((prev) => !prev);
+                }}
+              >
                 <Icon icon={kakaoIcon} />
-              </SocialLoginIconWrapper>
+              </SocialLoginButton>
             </SocialLoginContainer>
           </FormContainer>
         </RightColumn>
@@ -307,7 +328,7 @@ const SeparateBorder = styled.div`
   }
 `;
 
-const SocialLoginIconWrapper = styled.button`
+const SocialLoginButton = styled.button`
   margin-top: 1rem;
   display: flex;
   justify-content: center;

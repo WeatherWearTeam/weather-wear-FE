@@ -1,38 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Board } from "@queries/boardQueries";
-import getKoreanType from "@utils/getKoreanType";
-import { ClothesKoreanType } from "@shared/clothesTypeList";
 import MyBoardItem from "@components/Board/MyBoardItem";
 import { BoardByIdResponse } from "@api/boardApi";
 import EditDeleteButton from "@components/EditDeleteButton";
-import { useNavigate } from "react-router-dom";
 
 interface MyBoardListProps {
   items: BoardByIdResponse[] | [];
-  onClick: (id: number) => void;
   onDeleteClick: (id: number) => void;
   isSuccess: boolean;
 }
 
 const MyBoardList: React.FC<MyBoardListProps> = ({
   items,
-  onClick,
   onDeleteClick,
   isSuccess,
 }) => {
-  const navigate = useNavigate();
-  console.log("🌈🌈", items);
-
   return (
     <ContentsMain>
       {isSuccess &&
         items &&
         items.map((item) => (
-          <ItemWrapper
-            key={item.id}
-            onClick={() => navigate(`/ootd/${item.id}`)}
-          >
+          <ItemWrapper key={item.id}>
             <MyBoardItem
               image={item.image}
               item={item}
@@ -77,16 +65,14 @@ const ContentsMain = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  cursor: pointer;
   position: relative;
   width: 100%;
   height: 100%;
-  /* background-color: red; */
 `;
 
 const ButtonWrapper = styled.div`
   position: absolute;
   z-index: 10;
-  bottom: 2.5rem;
-  right: 0.2rem;
+  bottom: 6.4rem;
+  right: 0.8rem;
 `;

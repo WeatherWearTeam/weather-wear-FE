@@ -42,8 +42,8 @@ export const getRecommendsItems = async (weatherId: number) => {
 };
 
 // 홈페이지에 렌더링되는 추천 리스트에 있는 추천 아이템 삭제
-export const deleteRecommendWishlistItem = async (productId: number) => {
-  await api.delete(`/api/recommends/wishlist/${productId}`);
+export const deleteRecommendWishlistItem = async (naverProductId: number) => {
+  await api.delete(`/api/recommends/wishlist/${naverProductId}`);
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -55,7 +55,6 @@ export interface WishSearchKeysRequest {
 
 export const getWishlistItems = async (searchKeys: WishSearchKeysRequest) => {
   try {
-    console.log(searchKeys);
     const response = await api.get("/api/wishlist", {
       params: {
         page: searchKeys.page - 1, //페이네이션 실제로 0부터 시작되기 때문

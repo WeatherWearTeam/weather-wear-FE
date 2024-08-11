@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 type buttonType = "primary" | "secondary";
 
 interface ButtonProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   icon?: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;

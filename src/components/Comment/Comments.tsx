@@ -2,29 +2,18 @@ import CommentForm from "@components/Comment/CommentForm";
 import CommentList from "@components/Comment/CommentList";
 import {
   Comment,
-  CommentUser,
   useCommentsByBoardId,
   useCreateComment,
 } from "@queries/commentQueries";
 import useAuth from "@queries/useAuth";
-import { useMe, useUser } from "@queries/userQueries";
+import { useMe } from "@queries/userQueries";
 import styled from "styled-components";
 
 interface CommentsProps {
-  userId: number;
   boardId: number;
-  // image: string;
-  // nickname: string;
-  // comments: Comment[];
 }
 
-export default function Comments({
-  userId,
-  boardId,
-}: // image,
-// nickname,
-// comments,
-CommentsProps) {
+export default function Comments({ boardId }: CommentsProps) {
   const { mutateCreateComment, isPending, isError, isSuccess } =
     useCreateComment();
 
@@ -38,7 +27,6 @@ CommentsProps) {
   const { comments, isErrorComments, isPendingComments, isSuccessComments } =
     useCommentsByBoardId(boardId);
 
-    
   const { isLoggedIn } = useAuth();
   const { me } = useMe(isLoggedIn);
 
@@ -47,8 +35,12 @@ CommentsProps) {
     <>
       <CommentsContainer>
         <CommentListWrapper>
-          <CommentList boardId={boardId} comments={comments!} isSuccessComments={isSuccessComments} />
-          {/* boardOwner={}  */}
+          <CommentList
+            myId={me?.id as number}
+            boardId={boardId}
+            comments={comments!}
+            isSuccessComments={isSuccessComments}
+          />
         </CommentListWrapper>
         <CommentForm
           myId={me?.id as number}

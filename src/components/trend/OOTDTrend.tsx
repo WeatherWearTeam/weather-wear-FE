@@ -1,157 +1,236 @@
-import React from "react";
+import Button from "@components/Button";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-type ButtonType = "primary" | "secondary";
-
-interface ButtonProps {
-  $buttonType?: ButtonType;
-  $selected?: boolean;
+interface OotdTrendData {
+  id: number;
+  image: string;
 }
 
-const OOTDTrend: React.FC = () => {
+interface OotdTrendProps {
+  data: OotdTrendData[];
+}
+
+const OOTDTrend = ({ data }: OotdTrendProps) => {
   const navigate = useNavigate();
+
+  // console.log("data", data);
+
   return (
-    <HomeContents4>
-      <TrendGrid>
-        <TrendImage1 />
-        <TrendText>
-          <HomeTitle>OOTD Trend 추천</HomeTitle>
-          <HomeContent>
-            오늘 다른 사람들은 어떻게 입었을 까요?
-            <br />
-            오늘의 인기있는 OOTD 트랜드를 확인해보세요!
-          </HomeContent>
-          <TrendMore onClick={() => navigate("/ootd")}>MORE</TrendMore>
-        </TrendText>
-        <TrendImage2 />
-        <TrendImage3 />
-        <TrendImage4 />
-      </TrendGrid>
-    </HomeContents4>
+    <Container>
+      {data.length > 0 && (
+        <GridContainer>
+          <Column>
+            <MainImageContainer
+              onClick={() => {
+                navigate(`/ootd/${data[0].id}`);
+              }}
+            >
+              <Image id={`${data[0].id}`} src={data[0].image} />
+            </MainImageContainer>
+          </Column>
+          <Column>
+            <Banner>
+              <BannerContainer>
+                <Title>다른 사람들은 어떻게 스타일링 했을까요?</Title>
+                <Content>
+                  <TextContainer>
+                    <Text>
+                      가장 인기있는 <HighLightText>OOTD</HighLightText>
+                      <SmallText>Outfit Of The Day</SmallText> 트렌드 게시물을
+                      확인해 보세요.
+                    </Text>
+                    <Text>
+                      유니크한 패션 아이디어와 트렌디한 룩을 한눈에 만날 수
+                      있어요!
+                    </Text>
+                  </TextContainer>
+                  <Button onClick={() => navigate("/ootd")}>
+                    OOTD 트렌드 보러가기
+                  </Button>
+                </Content>
+              </BannerContainer>
+            </Banner>
+            {data.length > 1 && (
+              <Row>
+                {data.slice(1).map((item: OotdTrendData) => (
+                  <ImageContainer
+                    onClick={() => {
+                      navigate(`/ootd/${item.id}`);
+                    }}
+                  >
+                    <Image id={`${item.id}`} src={item.image} />
+                  </ImageContainer>
+                ))}
+              </Row>
+            )}
+          </Column>
+        </GridContainer>
+      )}
+
+      {data.length === 0 && (
+        <Banner>
+          <BannerContainer>
+            <Title>다른 사람들은 어떻게 스타일링 했을까요?</Title>
+            <Content>
+              <TextContainer>
+                <Text>
+                  가장 인기있는 <HighLightText>OOTD</HighLightText>
+                  <SmallText>Outfit Of The Day</SmallText> 트렌드 게시물을
+                  확인해 보세요.
+                </Text>
+                <Text>
+                  유니크한 패션 아이디어와 트렌디한 룩을 한눈에 만날 수 있어요!
+                </Text>
+              </TextContainer>
+              <Button onClick={() => navigate("/ootd")}>
+                OOTD 트렌드 보러가기
+              </Button>
+            </Content>
+          </BannerContainer>
+        </Banner>
+      )}
+    </Container>
   );
 };
 
 export default OOTDTrend;
 
-const HomeTitle = styled.div`
-  font-size: x-large;
-  color: black;
-  font-weight: bold;
-`;
-
-const HomeContent = styled.div`
-  font-size: medium;
-`;
-
-const HomeContents4 = styled.div`
+//✅ 페이지 아웃라인
+const Container = styled.div`
+  height: 100%;
   width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 4rem 0;
+  overflow: auto;
 `;
 
-const TrendGrid = styled.div`
-  width: 100%;
-  justify-content: center;
+const GridContainer = styled.div`
+  height: 100%;
   display: grid;
-  padding: 10px;
-  grid-template-columns: repeat(5, 200px);
-  grid-gap: 20px;
-  grid-template-rows: 200px 250px;
-  grid-template-areas:
-    "a a b b b"
-    "a a c d e";
+  grid-template-columns: 2fr 3fr;
+  gap: 3rem;
 
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(4, 200px);
-    grid-template-areas:
-      "a a b b"
-      "a a c d";
-  }
-
-  @media (max-width: 980px) {
-    grid-template-columns: repeat(3, 200px);
-    grid-template-rows: 250px 200px;
-    grid-template-areas:
-      "a a b "
-      "a a c ";
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 300px;
-    grid-template-rows: 200px 250px 250px 250px;
-    grid-template-areas:
-      "b"
-      "a"
-      "c"
-      "d";
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const TrendImage = styled.div`
-  background-color: gray;
-  box-sizing: border-box;
-  border-radius: 10px;
+const Column = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  min-height: 20rem;
 `;
 
-const TrendImage1 = styled(TrendImage)`
-  grid-area: a;
+const Banner = styled.div`
+  /* border: 1px solid yellow; */
+  height: 60%;
+  min-height: 20rem;
 `;
 
-const TrendText = styled.div`
-  grid-area: b;
+const Row = styled.div`
+  /* border: 1px solid red; */
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* display: flex;
+flex-direction: row; */
+  gap: 3rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const MainImageContainer = styled.div`
+  width: 100%;
+  height: 50rem;
+  border: ${({ theme }) => theme.borders.containerBorder};
+  cursor: pointer;
+`;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  height: 27rem;
+  border: ${({ theme }) => theme.borders.containerBorder};
+  cursor: pointer;
+
+  @media (max-width: 600px) {
+    height: 50rem;
+  }
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+////////////////////////////////////////////////////////
+
+const BannerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  gap: 12px;
-`;
+  gap: 3rem;
 
-const TrendMore = styled.button<ButtonProps>`
-  background-color: ${({ theme, $buttonType = "primary" }) =>
-    theme.buttons[$buttonType].backgroundColor};
-  border: ${({ theme, $buttonType = "primary" }) =>
-    theme.buttons[$buttonType].border || "inherit"};
-  color: ${({ theme, $buttonType = "primary" }) =>
-    theme.buttons[$buttonType].color || "inherit"};
-  width: 100px;
-  height: 38px;
-  cursor: pointer;
-  border-radius: 30px;
-  transition: background-color 0.2s, border-color 0.2s;
-  outline: none;
-
-  &:hover {
-    background-color: ${({ theme, $buttonType = "primary" }) =>
-      $buttonType === "secondary" ? theme.colors.BLACK : theme.colors.WHITE};
-    border: 1px solid ${({ theme }) => theme.colors.BLACK};
-    color: ${({ theme }) => theme.colors.BLACK};
+  button {
+    width: 20rem;
   }
 
-  &:focus {
-    background-color: ${({ theme, $buttonType = "primary" }) =>
-      $buttonType === "secondary" ? theme.colors.BLACK : theme.colors.WHITE};
-    border: 1px solid ${({ theme }) => theme.colors.BLACK};
-    color: ${({ theme }) => theme.colors.BLACK};
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+  @media (max-width: 600px) {
+    padding: 0 2rem;
   }
 `;
 
-const TrendImage2 = styled(TrendImage)`
-  grid-area: c;
+const Title = styled.h3`
+  font-size: xx-large;
+  color: black;
+  font-weight: bold;
+  @media (max-width: 1200px) {
+    font-size: x-large;
+  }
 `;
-const TrendImage3 = styled(TrendImage)`
-  grid-area: d;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  font-size: medium;
 `;
-const TrendImage4 = styled(TrendImage)`
-  grid-area: e;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: medium;
+  gap: 0.5rem;
+  @media (max-width: 600px) {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+`;
+
+const Text = styled.p`
+  font-size: medium;
+`;
+
+const HighLightText = styled.span`
+  font-size: medium;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.BLACK};
+`;
+
+const SmallText = styled.small`
+  font-size: x-small;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.BLACK};
 `;

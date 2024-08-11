@@ -31,17 +31,19 @@ export default function MyAccountPassEdit() {
       !passwords.newPassword.trim() ||
       !passwords.newPasswordCheck.trim()
     ) {
-      alert("모든 값을 입력해주세요.");
+      return alert("모든 값을 입력해주세요.");
     }
 
     // ❌오잉,,,currentPassword 이거 검증 어떻게 하지? -> 일단 수정버튼 눌러서 내고, 서버에서 검증해서 결과 알려주기 ㅇㅇ
     if (passwords.currentPassword === passwords.newPassword) {
-      alert("현재 비밀번호와 같은 비밀번호로 바꿀 수 없습니다.");
+      return alert("현재 비밀번호와 같은 비밀번호로 바꿀 수 없습니다.");
     }
 
     if (passwords.newPassword !== passwords.newPasswordCheck) {
-      alert("바꾸려고 하는 비밀번호가 일치하지 않습니다.");
+      return alert("바꾸려고 하는 비밀번호가 일치하지 않습니다.");
     }
+
+    // return console.log(passwords);
 
     //비동기 통신
     mutateUpdatePassword(passwords);

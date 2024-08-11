@@ -2,25 +2,24 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "@pages/Home";
 import Layout from "@shared/Layout";
 import MyPage from "@pages/MyPage";
-import Trend from "@pages/Trend";
-import Closet from "@pages/Closet";
-import Posts from "@pages/Posts";
-import Wish from "@pages/Wish";
-import PostDetail from "@pages/PostDetail";
-import PostAdd from "@pages/PostAdd";
-import ClosetAdd from "@pages/ClosetAdd";
+import Closet from "@pages/Closet/Closet";
+import Wish from "@pages/Wish/Wish";
+import PostAdd from "@pages/Ootd/PostAdd";
+import ClosetAdd from "@pages/Closet/ClosetAdd";
 import Login from "@pages/Login";
 import Signup from "@pages/Signup";
-import MyAccount from "@pages/MyAccount";
-import MyAccountEdit from "@pages/MyAccountEdit";
-import PostEdit from "@pages/PostEdit";
+import MyAccount from "@pages/MyAccount/MyAccount";
+import MyAccountEdit from "@pages/MyAccount/MyAccountEdit";
 import useAuth from "@queries/useAuth";
 
-import MyAccountPassEdit from "@pages/MyAccountPassEdit";
-import PasswordFind from "@pages/PasswordFind";
+import MyAccountPassEdit from "@pages/MyAccount/MyAccountPassEdit";
 
-import ClosetEdit from "@pages/ClosetEdit";
-
+import ClosetEdit from "@pages/Closet/ClosetEdit";
+import PasswordFind from "@pages/MyAccount/PasswordFind";
+import Posts from "@pages/Ootd/Posts";
+import Trend from "@pages/Trend";
+import PostEdit from "@pages/Ootd/PostEdit";
+import PostDetail from "@pages/Ootd/PostDetail";
 
 // PrivateRoute : 로그인이 필요한 페이지에 접근할 수 있도록 하는 컴포넌트
 // 로그인이 되어있지 않은 사용자는 login 페이지로 리다이렉트
@@ -49,14 +48,14 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-
+          {/* 퍼블릭 */}
           <Route path="/signup" element={<PublicRoute element={Signup} />} />
           <Route path="/login" element={<PublicRoute element={Login} />} />
           <Route
             path="/login/find"
             element={<PublicRoute element={PasswordFind} />}
           />
-
+          {/* 프라이빗 */}
           <Route path="/my" element={<PrivateRoute element={MyAccount} />} />
           <Route
             path="/my/setting"
@@ -73,23 +72,26 @@ const Router = () => {
             <Route path="wish" element={<Wish />} />
           </Route>
 
-
-         <Route path="/mypage/closet/:id/edit" element={<PrivateRoute element={ClosetEdit} />} />
           <Route
             path="/mypage/closet/add"
             element={<PrivateRoute element={ClosetAdd} />}
           />
+          <Route
+            path="/mypage/closet/:id/edit"
+            element={<PrivateRoute element={ClosetEdit} />}
+          />
 
           <Route path="/ootd" element={<Trend />} />
+
+          <Route
+            path="/ootd/add"
+            element={<PrivateRoute element={PostAdd} />}
+          />
           <Route
             path="/ootd/:id/edit"
             element={<PrivateRoute element={PostEdit} />}
           />
           <Route path="/ootd/:id" element={<PostDetail />} />
-          <Route
-            path="/ootd/add"
-            element={<PrivateRoute element={PostAdd} />}
-          />
         </Routes>
       </Layout>
     </BrowserRouter>

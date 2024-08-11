@@ -30,12 +30,17 @@ export const getClothesItems = async (searchKeys: SearchKeysRequest) => {
         type: searchKeys.type,
       },
     });
+
+
+
+    
     return response.data;
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
+
 
 // 개별 데이터 조회 //하나씩 수정할 때 필요함
 export const getClothesItemById = async (

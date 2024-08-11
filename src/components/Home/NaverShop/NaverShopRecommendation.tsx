@@ -74,6 +74,15 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
 
   return (
     <HomeContents5>
+      <NaverShopText>
+        <HomeTitle>네이버 쇼핑에서 추천해요</HomeTitle>
+        <HomeContent>
+          요즘 날씨에 딱 맞는 옷을 네이버 쇼핑에서 추천해드려요!
+          <br />
+          마음에 드는 아이템은 하트를 눌러 위시리스트에 저장해 보세요. 편리하게
+          쇼핑하고, 멋진 옷으로 스타일을 완성해보세요!
+        </HomeContent>
+      </NaverShopText>
       <NaverShopGrid>
         <SwiperContainer>
           <StyledSwiper
@@ -115,15 +124,6 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
           </StyledSwiper>
         </SwiperContainer>
       </NaverShopGrid>
-      <NaverShopText>
-        <HomeTitle>네이버 쇼핑에서 추천해요</HomeTitle>
-        <HomeContent>
-          요즘 날씨에 딱 맞는 옷을 네이버 쇼핑에서 추천해드려요!
-          <br />
-          마음에 드는 아이템은 하트를 눌러 위시리스트에 저장해 보세요. 편리하게
-          쇼핑하고, 멋진 옷으로 스타일을 완성해보세요!
-        </HomeContent>
-      </NaverShopText>
     </HomeContents5>
   );
 };
@@ -132,25 +132,42 @@ export default NaverShopRecommendation;
 
 const HomeContents5 = styled.div`
   width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
+  padding: 3rem 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 3rem;
 `;
+///////////////////////////////////////////////////
+
+const NaverShopText = styled.div`
+  width: 100%;
+  grid-area: a;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const HomeTitle = styled.div`
+  font-size: xx-large;
+  color: black;
+  font-weight: bold;
+`;
+
+const HomeContent = styled.div`
+  font-size: medium;
+`;
+///////////////////////////////////////////////////
 
 const NaverShopGrid = styled.div`
   justify-content: center;
   display: grid;
-  padding: 10px;
   grid-template-columns: 1090px;
   grid-template-rows: 300px auto;
   grid-template-areas:
     "slider"
     "a";
-  gap: 20px;
-
+  gap: 3rem;
   @media (max-width: 1200px) {
     grid-template-columns: 840px;
   }
@@ -250,22 +267,4 @@ const NaverShopDataTitle = styled.div`
 const LikeButtonWrapper = styled.div`
   border-left: ${({ theme }) => theme.borders.containerBorder};
   padding: 1rem 0 1rem 1rem;
-`;
-///////////////////////////////////////////////////
-
-const NaverShopText = styled.div`
-  grid-area: a;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const HomeTitle = styled.div`
-  font-size: xx-large;
-  color: black;
-  font-weight: bold;
-`;
-
-const HomeContent = styled.div`
-  font-size: medium;
 `;

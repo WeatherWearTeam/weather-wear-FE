@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import WishsGrid from "@components/wish/WishsGrid";
+import WishsGrid from "@components/Wish/WishsGrid";
 import useModal from "@hooks/useModal";
 import ModalPortal from "@components/Modal/ModalPortal";
 import ModalLayout from "@components/Modal/ModalLayout";
-import WishDetail from "@pages/WishDetail";
+import WishDetail from "@pages/Wish/WishDetail";
 import {
   useWishlistItems,
   useDeleteWishlistItem,
@@ -90,7 +90,7 @@ function Wish() {
       queryParams.delete("type");
     }
 
-    navigate(`?${queryParams.toString()}`);
+    navigate(`?${(queryParams.toString(), { replace: true })}`);
   }, [selectedClothesType.type, navigate, location.search]);
 
   //////////////////////////////////////////////////////////////
@@ -123,29 +123,27 @@ function Wish() {
           />
         </SelectWrapper>
       </HeaderContainer>
-      <MainContainer>
-        {isSuccess && wishlistItems && (
-          <WishsGrid
-            onClick={handleItemClick}
-            data={wishlistItems.content}
-            onDelete={handleDelete}
-          />
-        )}
-        {isSuccess && wishlistItems?.content.length < 1 && (
-          <div>
-            아직 좋아요한 위시 리스트가가 없어요! 위시리스트를 추가해주세요.
-          </div>
-        )}
-        {isPending && <div>로딩중...</div>}
-        {isError && <div>위시리스트를 불러오지 못했습니다.</div>}
-        {isVisible && (
-          <ModalPortal>
-            <ModalLayout onClose={closeModal}>
-              <WishDetail item={selectedItem!} />
-            </ModalLayout>
-          </ModalPortal>
-        )}
-      </MainContainer>
+      {isSuccess && wishlistItems && (
+        <WishsGrid
+          onClick={handleItemClick}
+          data={wishlistItems.content}
+          onDelete={handleDelete}
+        />
+      )}
+      {isSuccess && wishlistItems?.content.length < 1 && (
+        <div>
+          아직 좋아요한 위시 리스트가가 없어요! 위시리스트를 추가해주세요.
+        </div>
+      )}
+      {isPending && <div>로딩중...</div>}
+      {isError && <div>위시리스트를 불러오지 못했습니다.</div>}
+      {isVisible && (
+        <ModalPortal>
+          <ModalLayout onClose={closeModal}>
+            <WishDetail item={selectedItem!} />
+          </ModalLayout>
+        </ModalPortal>
+      )}
       <ContentsFooter>
         <Pagination
           totalPages={wishlistItems?.totalPages} //총 아이템 수 //많아지면 버튼 생김
@@ -191,7 +189,7 @@ const HeaderContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 3rem;
+  padding: 2rem;
   box-sizing: border-box;
   gap: 1rem;
 
@@ -199,9 +197,6 @@ const HeaderContainer = styled.div`
     flex-direction: column;
     justify-content: center;
   }
-`;
-const MainContainer = styled.div`
-  max-width: 100rem;
 `;
 
 const ContentsFooter = styled.div`

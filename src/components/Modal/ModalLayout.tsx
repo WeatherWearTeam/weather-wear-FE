@@ -14,9 +14,7 @@ export default function ModalLayout({ children, onClose }: ModalLayoutProps) {
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
         <DialogButtonWrapper>
-          {/* <Button icon={closeIcon} onClick={onClose}>
-            버튼
-          </Button> */}
+          <Button type="button" icon={closeIcon} onClick={onClose} />
         </DialogButtonWrapper>
         <DialogContentWrapper>{children}</DialogContentWrapper>
       </Dialog>
@@ -53,6 +51,14 @@ export const Dialog = styled.div`
 export const DialogButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const DialogContentWrapper = styled.div`
@@ -62,4 +68,5 @@ export const DialogContentWrapper = styled.div`
   flex-direction: column;
   align-content: center;
   justify-content: center;
+  overflow: auto;
 `;

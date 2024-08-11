@@ -1,3 +1,4 @@
+import { ClothesTag } from "@components/ClothesTag";
 import { UserBoardByIdResponse } from "./boardApi";
 import api from "@api/api";
 import { ClothesType } from "@shared/clothesTypeList";
@@ -21,7 +22,7 @@ export interface WeatherResponse {
   wsd: number | null;
 }
 
-export interface ClothesTag {
+export interface ClothesTagType {
   color: ClothesColorType;
   type: ClothesType;
 }
@@ -40,6 +41,12 @@ export interface BoardResponse {
 
 // Trend 리소스 조회 => 🌟 trend 페이지
 // ✅ 무한스크롤
+
+export type TrendSearchKeysRequest = {
+  color: string | null; //초기값
+  type: string | null; //초기값
+  keyword: string | null; //초기값
+};
 export const getTrendBoards = async () => {
   try {
     const response = await api.get(`/api/boards`, {
@@ -107,20 +114,20 @@ export type UserBoardsSearchKeysRequest = {
   page: number;
   pty: number | null; //초기값
   sky: number | null; //초기값
-  keyword: number | null; //초기값
+  keyword: string | null; //초기값
 };
 
 export const getUserBoards = async (
   searchKeys: UserBoardsSearchKeysRequest
 ) => {
+  console.log("🌈🌈🌈🌈🌈", searchKeys);
   try {
     const response = await api.get(`/api/users/boards`, {
       params: {
-        page: 0,
-        // page: searchKeys.page - 1,
-        // pty: searchKeys.pty,
-        // sky: searchKeys.sky,
-        // keyword: searchKeys.keyword,
+        page: searchKeys.page - 1,
+        pty: searchKeys.pty,
+        sky: searchKeys.sky,
+        keyword: searchKeys.keyword,
       },
     });
 

@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import MyOOTDItem from "@components/ootd/MyOOTDItem";
+import MyOOTDItem from "@components/Home/Ootd/MyOOTDItem";
 
 export default function MyOOTDGrid() {
   return (
     <ContentsMain>
-        <MyOOTDItem />
-        <MyOOTDItem />
-        <MyOOTDItem />
-        <MyOOTDItem />
+      <MyOOTDItem />
+      <MyOOTDItem />
+      <MyOOTDItem />
+      <MyOOTDItem />
     </ContentsMain>
   );
 }
@@ -22,15 +22,15 @@ const ContentsMain = styled.div`
   padding: 20px 0 15px 0;
   justify-content: center;
   align-items: center;
-  
+
   @media (max-width: 980px) {
-  grid-template-columns: repeat(2, 1fr);
-  justify-content: center;
-  } 
-  // @media (max-width: 900px) {grid-template-columns: repeat(2, 2fr);} 
-  
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+  }
+  // @media (max-width: 900px) {grid-template-columns: repeat(2, 2fr);}
+
   @media (max-width: 600px) {
-  grid-template-columns: 1fr;
-  justify-content: center;
-  } 
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
 `;

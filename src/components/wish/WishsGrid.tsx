@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import WishItem from "@components/wish/WishItem";
+import WishItem from "@components/Wish/WishItem";
 import { WishlistItem } from "@api/wishlistApi";
 import Icon from "@components/Icon";
 import { closeIcon } from "@shared/icons";

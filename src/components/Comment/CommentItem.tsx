@@ -2,32 +2,21 @@
 // import useUser from "@hooks/useUser";
 import { getTimesAgo } from "@utils/getTime";
 import CommentForm from "@components/Comment/CommentForm";
-import EditIcon from "@components/EditIcon";
 import { Comment, useUpdateComment } from "@queries/commentQueries";
 
 interface CommentItemProps {
-  // commentId: number;
-  // boardId: number;
-  // userId: number;
-  // nickname: string;
-  // image: string;
-  // contents: string;
   comment: Comment;
   isEditing: boolean;
   onEditStart: () => void;
   onEditEnd: () => void;
+  myId: number;
 }
 export default function CommentItem({
-  // commentId,
-  // boardId,
-  // userId,
-  // nickname,
-  // image,
-  // contents,
   comment,
   isEditing,
   onEditStart,
   onEditEnd,
+  myId,
 }: CommentItemProps) {
   // const { id: myId } = useUser();
   const { mutateUpdateComment, isPending, isError, isSuccess } =
@@ -53,16 +42,16 @@ export default function CommentItem({
               <TextContent>{comment.contents}</TextContent>
             </TextareaWrapper>
           </TextContainer>
-          {/* {userId === myId && ( */}
-          <EditIcon onEditStart={onEditStart} commentId={comment.id} />
-          {/* )} */}
+          {comment.user.id === myId && (
+            <CommentEditIcon onEditStart={onEditStart} commentId={comment.id} />
+          )}
           {/* 모달 메뉴 열고 수정 선택해야 에디팅 시작하기 때문에 더 내려주기 */}
         </CommentContainer>
       )}
       {isEditing && (
         <CommentContainer>
           <CommentForm
-            myId={comment.user.userId}
+            myId={comment.user.id}
             myImage={comment.user.image as string}
             myNickname={comment.user.nickname as string}
             boardId={comment.boardId}
@@ -87,6 +76,7 @@ export default function CommentItem({
 import styled from "styled-components";
 import Avatar from "@components/Avatar";
 import { UpdatedCommentRequest } from "@api/commentApi";
+import CommentEditIcon from "@components/Comment/CommentEditIcon";
 
 export const CommentContainer = styled.div`
   font-size: small;

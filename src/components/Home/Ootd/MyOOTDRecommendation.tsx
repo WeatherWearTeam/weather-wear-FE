@@ -14,9 +14,9 @@ interface MyOOTDRecommendationProps {
 const MyOOTDRecommendation = ({ data }: MyOOTDRecommendationProps) => {
   const navigate = useNavigate();
 
-  console.log(data);
+  // console.log(data);
 
-  // // 배열에서 4개의 요소를 랜덤으로 선택하는 함수
+  // 배열에서 4개의 요소를 랜덤으로 선택하는 함수
   // const getRandomSelection = (arr: MyOotdData[], num: number): MyOotdData[] => {
   //   const result = new Set<MyOotdData>();
   //   while (result.size < num) {
@@ -28,41 +28,64 @@ const MyOOTDRecommendation = ({ data }: MyOOTDRecommendationProps) => {
 
   // const randomOotdData = getRandomSelection(data, 4);
 
+  const getFirstNElements = (arr: MyOotdData[], num: number): MyOotdData[] => {
+    return arr.slice(0, num); // 배열의 앞부분에서 num만큼 슬라이스하여 반환
+  };
+
+  let firstFourOotdData: MyOotdData[] = [];
+  if (data.length > 0) {
+    firstFourOotdData = getFirstNElements(data, 4);
+  }
+
+  console.log(firstFourOotdData);
   return (
     <Container>
       <Header>
-        <ContentTitle>My OOTD 추천</ContentTitle>
+        <ContentTitle>어떤 스타일을 입을지 고민 중이신가요?</ContentTitle>
         <HeaderContentContainer>
           <TextContainer>
-            <ContentDescription>
-              어떤 스타일을 입을지 고민 중이신가요?
-            </ContentDescription>
-            <ContentDescription>
-              오늘 같은 날씨에 입었던 나의 OOTD를 참고해보세요.
-            </ContentDescription>
-            <ContentDescription>
-              이전 아웃핏을 참고하여 오늘도 멋지게 스타일링 해보세요!
-            </ContentDescription>
+            {firstFourOotdData.length > 0 && (
+              <>
+                <ContentDescription>
+                  오늘 같은 날씨에 입었던 나의 OOTD를 참고해보세요.
+                </ContentDescription>
+                <ContentDescription>
+                  이전 아웃핏을 참고하여 오늘도 멋지게 스타일링 해보세요!
+                </ContentDescription>
+              </>
+            )}
+            {firstFourOotdData.length === 0 && (
+              <>
+                <ContentDescription>
+                  현재 이 날씨에 어울리는 OOTD는 아직 등록되지 않았어요.
+                </ContentDescription>
+                <ContentDescription>
+                  멋진 스타일을 더 많이 공유해 주시면, 더 나은 추천을 받을 수
+                  있어요!
+                </ContentDescription>
+              </>
+            )}
           </TextContainer>
           <Button
             type="button"
             buttonType="primary"
-            onClick={() => navigate("/mypage/closet")}
+            onClick={() => navigate("/mypage/myootd")}
           >
             나의 OOTD 바로가기
           </Button>
         </HeaderContentContainer>
       </Header>
       <ContentsMain>
-        {data.map((item) => (
-          <ImageWrapper
-            key={item.id}
-            id={`${item.id}`}
-            onClick={() => navigate(`/ootd/${item.id}`)}
-          >
-            <Image src={item.image} alt="MyOOTD" />
-          </ImageWrapper>
-        ))}
+        {firstFourOotdData &&
+          firstFourOotdData.map((item) => (
+            <ImageWrapper
+              key={item.id}
+              id={`${item.id}`}
+              onClick={() => navigate(`/ootd/${item.id}`)}
+            >
+              <Image src={item.image} alt="MyOOTD" />
+            </ImageWrapper>
+          ))}
       </ContentsMain>
     </Container>
   );
@@ -89,6 +112,10 @@ const Header = styled.div`
   @media (max-width: 768px) {
     align-items: center;
     gap: 2rem;
+    padding: 0 2rem;
+    h2 {
+      font-size: x-large;
+    }
   }
 `;
 
@@ -165,7 +192,7 @@ const ContentsMain = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 3rem;
   object-fit: cover;
 

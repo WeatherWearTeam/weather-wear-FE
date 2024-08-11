@@ -10,18 +10,21 @@ import styled, { css } from "styled-components";
 
 export default function MyAccountEdit() {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, mutateLogout } = useAuth();
   const { me } = useMe(isLoggedIn);
 
   /////////////////////////////////////////////////////
   //회원 탈퇴
   const { mutateDeleteUser } = useDeleteUser();
-
   const handleDeleteUser = () => {
     const isConfirmed = confirm(
       "정말 탈퇴하시겠습니까? 모든 회원 정보는 복구할 수 없습니다."
     );
-    isConfirmed && mutateDeleteUser();
+
+    if (isConfirmed) {
+      mutateLogout(); //로그아웃해서 로컬스토리지 파기
+      mutateDeleteUser(); //유저 정보 디비에서 삭제
+    }
   };
 
   /////////////////////////////////////////////////////

@@ -36,6 +36,7 @@
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
       "@store/*": ["src/store/*"],
+      "@types/*": ["src/types/*"],
 
       "@/*": ["src/*"]
     },

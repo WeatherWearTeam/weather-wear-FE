@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "@components/Button";
 import styled from "styled-components";
-import { WishlistItem } from "@api/wishlistApi";
 import removeBoldTags from "@utils/removeBoldTags";
 
 interface WishItemProps {
@@ -13,9 +12,9 @@ const WishDetail: React.FC<WishItemProps> = ({ item }) => {
 
   return (
     <Container>
-      <TitleContainer>
-        <SubTitle>위시 리스트</SubTitle>
-      </TitleContainer>
+      <TitleWrapper>
+        <Title>위시 리스트</Title>
+      </TitleWrapper>
       <GridContainer>
         <Column>
           <ImageWrapper>
@@ -28,8 +27,6 @@ const WishDetail: React.FC<WishItemProps> = ({ item }) => {
               <CategoryWrapper>
                 {product.category1} / {product.category2} / {product.category3}{" "}
                 {product.category4 && ` / ${product.category4}`}
-                {/* 카테고리 정보가 없는 경우 처리 필요 */}
-                {/* {product.type} */}
               </CategoryWrapper>
               <ProductNameWrapper>
                 <ProductName>{removeBoldTags(product.title)}</ProductName>
@@ -50,9 +47,9 @@ const WishDetail: React.FC<WishItemProps> = ({ item }) => {
             <DownContainer>
               <FlexRow>
                 <LowHighlight>최저</LowHighlight>
-                <LowPrice>{product.lprice}원</LowPrice>
+                <LowPrice>{product.lprice.toLocaleString()}원</LowPrice>
                 <HighHighlight>최고</HighHighlight>
-                <HightPrice>{product.hprice}원</HightPrice>
+                <HightPrice>{product.hprice.toLocaleString()}원</HightPrice>
               </FlexRow>
               <Button
                 onClick={() => {
@@ -77,12 +74,10 @@ const ImageWrapper = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.WHITE};
   border: ${({ theme }) => theme.borders.containerBorder};
-
   img {
     width: 100%;
     height: 100%;
-    max-height: 600px; //✅ 어떻게 해야하나
-
+    max-height: 600px; //
     object-fit: cover;
   }
 `;
@@ -107,7 +102,7 @@ export const RightWrapper = styled.div`
   height: 100%;
   border: ${({ theme }) => theme.borders.containerBorder};
   border-left: none;
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     border: ${({ theme }) => theme.borders.containerBorder};
     border-top: none;
   }
@@ -214,13 +209,13 @@ const FlexRow = styled.div`
 
 //✅ 페이지 아웃라인
 const Container = styled.div`
-  height: calc(100vh - 7rem);
+  height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 2rem 4rem 4rem 4rem;
+  padding: 0 5rem 5rem 5rem;
 `;
 
-const TitleContainer = styled.div`
+const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   font-weight: 600;
@@ -230,10 +225,6 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: x-large;
-`;
-
-const SubTitle = styled.div`
   font-size: large;
 `;
 
@@ -243,7 +234,7 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   /* gap: 3rem; */
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
 `;

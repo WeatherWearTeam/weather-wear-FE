@@ -1,10 +1,10 @@
 import Button from "@components/Button";
 import Icon from "@components/Icon";
 import Input from "@components/Input";
-import { AddressInfo } from "@components/WeatherSection";
 import useGeolocation from "@hooks/useGeolocation";
 import { focusIcon } from "@shared/icons";
 import axios from "axios";
+import { AddressInfo } from "net";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
