@@ -194,7 +194,6 @@ export const useUpdateBoard = () => {
     //첫 번째 인자: mutationFn이 반환하는 response.data
     //두 번째 인자: mutationFn의 인자로 보낸 업데이트된 보드 > 쓰면 안전빵..?
     onSuccess: ({ id: boardId }) => {
-      console.log(boardId);
       queryClient.invalidateQueries({ queryKey: ["boards"] }); //전체 보드
       queryClient.invalidateQueries({ queryKey: ["board", boardId] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
       queryClient.invalidateQueries({ queryKey: ["userBoards"] }); // 마이 페이지 보드
@@ -275,7 +274,7 @@ export const useToggleLikeBoard = () => {
     mutate: mutateToggleLikeBoard,
     isPending,
     isError,
-    isSuccess,
+    // isSuccess,
   } = useMutation({
     mutationFn: toggleHeartBoard,
     onSuccess: (_, boardId) => {

@@ -19,12 +19,15 @@ export default function CommentItem({
   myId,
 }: CommentItemProps) {
   // const { id: myId } = useUser();
-  const { mutateUpdateComment, isPending, isError, isSuccess } =
-    useUpdateComment();
+  const {
+    mutateUpdateComment,
+    isPending,
+    isError,
+    //  isSuccess
+  } = useUpdateComment();
 
   const handleEditComment = (updatedComment: UpdatedCommentRequest) => {
     mutateUpdateComment(updatedComment);
-    console.log("댓글 수정 비동기 요청 보내기");
   };
 
   return (

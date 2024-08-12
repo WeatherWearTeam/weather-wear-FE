@@ -85,11 +85,17 @@ function Posts() {
   //   navigate(`/ootd/${id}`);
   // };
 
-  const { boards, isPending, isError, isSuccess } = useMyBoards(searchKeys);
-  const { mutateDeleteBoard, isErrorDelete, isPendingDelete } =
-    useDeleteBoard();
-
-  // console.log("✅✅✅마이 보드!", boards);
+  const {
+    boards,
+    //  isPending,
+    isError,
+    isSuccess,
+  } = useMyBoards(searchKeys);
+  const {
+    mutateDeleteBoard,
+    //  isErrorDelete,
+    //   isPendingDelete
+  } = useDeleteBoard();
 
   return (
     <MyPageContentsContainer>

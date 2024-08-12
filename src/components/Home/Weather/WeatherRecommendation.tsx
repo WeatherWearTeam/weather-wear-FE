@@ -39,7 +39,7 @@ export default function WeatherRecommendation({
     recommendOutfit = getRecommendOutfit(weatherData?.tmp as number);
     // console.log("로그인하지 않은 사용자 추천:", recommendOutfit);
   }
-  // console.log(recommendOutfit);
+
   /////////////////////////////////////////
   return (
     <Container>

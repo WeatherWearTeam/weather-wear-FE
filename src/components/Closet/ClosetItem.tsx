@@ -30,8 +30,6 @@ function ClosetItem({
   showData = false,
   showTitle = false,
 }: ClosetItemProps) {
-  // console.log("🌈", type);
-  // console.log("🌈", item);
   return (
     <ContentsItem>
       <ImageWrapper>

@@ -21,7 +21,6 @@ export default function Search({ onSearchKeyword }: SearchProps) {
       return alert("검색어를 입력해 주세요!");
     }
 
-    console.log(`⚡️ 키워드: ${keyword}`);
     onSearchKeyword(keyword);
   };
 

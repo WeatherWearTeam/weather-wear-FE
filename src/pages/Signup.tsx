@@ -9,7 +9,6 @@ export default function Signup() {
   //   queryKey: ["users"],
   //   queryFn: testUser,
   // });
-  // console.log(data);
 
   return (
     <Container>

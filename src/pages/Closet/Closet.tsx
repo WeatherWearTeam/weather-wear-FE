@@ -73,8 +73,6 @@ function Closet() {
     type: ClothesType,
     typeKorean: ClothesKoreanType
   ) => {
-    console.log("✅", selectedClothesType);
-
     setSelectedClothesType((prev) => ({
       ...prev,
       type,
@@ -113,8 +111,12 @@ function Closet() {
     navigate(`?${queryParams.toString()}`, { replace: true });
   }, [searchKeys, navigate, location.search]);
 
-  const { clothesItems, isPending, isError, isSuccess } =
-    useClothesItems(searchKeys);
+  const {
+    clothesItems,
+    // isPending,
+    isError,
+    isSuccess,
+  } = useClothesItems(searchKeys);
 
   return (
     <MyPageContentsContainer>

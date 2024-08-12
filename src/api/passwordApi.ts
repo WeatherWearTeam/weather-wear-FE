@@ -28,7 +28,6 @@ export interface ResetPasswordRequest {
 
 export const resetPassword = async (passwords: ResetPasswordRequest) => {
   try {
-    console.log(passwords);
     const response = await api.post(`/api/password/reset`, passwords, {
       withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
     });

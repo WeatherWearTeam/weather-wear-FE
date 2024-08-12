@@ -37,7 +37,6 @@ const useAuth = () => {
   } = useMutation({
     mutationFn: login,
     onSuccess: ({ message }) => {
-      console.log(message);
       if (message) {
         localStorage.setItem("ISLOGGEDIN", "true");
       }

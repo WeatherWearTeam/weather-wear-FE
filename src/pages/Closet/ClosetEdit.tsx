@@ -9,9 +9,12 @@ export default function ClosetEdit() {
   const { id } = useParams<{ id: string }>();
 
   //현재 수정할 Board 조회
-  const { clothesItem, isError, isPending, isSuccess } = useClothesItemById(
-    Number(id)
-  );
+  const {
+    clothesItem,
+    isError,
+    isPending,
+    //  isSuccess
+  } = useClothesItemById(Number(id));
 
   //수정하는 mutate 함수
   const {

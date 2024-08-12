@@ -25,14 +25,12 @@ export default function CommentEditIcon({
   // //모달 열고 난 뒤 수정/삭제 클릭 했을 때 실행 되는 함수
   const handleEditComment = () => {
     onEditStart(); //모달 메뉴 중 수정 클럭 시 에디팅 시작
-    console.log("수정 시작");
     closeModal(); //그리고 메뉴 모달은 꺼짐
   };
 
   const handleDeleteComment = (id: number) => {
     mutateDeleteComment(id);
     alert("정말 삭제하시겠습니까?");
-    console.log("commentId 리소스 삭제:", id);
     closeModal();
   };
 
