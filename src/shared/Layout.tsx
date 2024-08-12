@@ -26,7 +26,7 @@ function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     if (isLoggedIn && me) {
-      console.log("👋🏻", me);
+      //console.log("👋🏻", me);
     }
   }, [isLoggedIn, me]);
   return (

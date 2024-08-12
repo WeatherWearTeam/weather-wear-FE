@@ -3,8 +3,6 @@
 import { CreateCommentRequest, UpdatedCommentRequest } from "@api/commentApi";
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
-import { Comment } from "@queries/commentQueries";
-// import { clearAlert, setAlert } from "@redux/slices/alertSlice";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -29,7 +27,7 @@ interface CommentFormProps {
 
 const CommentForm: React.FC<CommentFormProps> = ({
   // { myId }: boardId,
-  myId,
+  // myId,
   myImage,
   myNickname,
   boardId,
@@ -39,9 +37,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
   isEditing,
   onEditEnd,
   onEditComment,
-  formId,
+  // formId,
   isPending,
-  isError,
+  // isError,
 }) => {
   // console.log(image);
   // const dispatch = useAppDispatch();
@@ -60,8 +58,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("댓글 작성");
-
     if (!comment.trim()) {
       //   dispatch(
       //     setAlert({
@@ -79,17 +75,13 @@ const CommentForm: React.FC<CommentFormProps> = ({
     };
 
     if (!isEditing) {
-      console.log("새로운 댓글 생성 비동기 처리");
-      console.log(newComment);
       onCreateComment?.(newComment);
     } else {
-      console.log("기존 댓글 수정 비동기 처리");
       //업데이트
       const updatedComment = {
         commentId: commentId!,
         contents: comment,
       };
-      console.log(updatedComment);
       onEditComment?.(updatedComment);
       onEditEnd!(); // 그러고 나서 에디팅 종료 함수 실행
     }

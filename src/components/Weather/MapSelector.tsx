@@ -61,7 +61,6 @@ const MapSelector = ({
             code: result.code,
           };
 
-          console.log("✅ axios 주소/코드 값 얻음");
           setCurrentAddressAndCode(newAddressAndCode);
         } catch (error) {
           console.error("❌ 주소와 코드를 가져오지 못했어요!", error);
@@ -78,13 +77,8 @@ const MapSelector = ({
   useEffect(() => {
     //밖으로 가져가기
     if (!currLocation && currentAddressAndCode) {
-      console.log(
-        "📍사용자 🌏위경도 값으로 자동으로 받기",
-        currentAddressAndCode
-      );
       onGetAddressCode(currentAddressAndCode!);
     } else if (currLocation) {
-      console.log("📍사용자가 🗺️지도에서 선택한 값 받기", currLocation);
       onGetAddressCode(currLocation!);
     }
   }, [currentAddressAndCode, currLocation, onGetAddressCode]);

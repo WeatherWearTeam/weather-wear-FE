@@ -14,8 +14,6 @@ interface OotdTrendProps {
 const OOTDTrend = ({ data }: OotdTrendProps) => {
   const navigate = useNavigate();
 
-  // console.log("data", data);
-
   return (
     <Container>
       {data?.length > 0 && (

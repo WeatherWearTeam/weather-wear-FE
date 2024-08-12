@@ -14,8 +14,12 @@ interface CommentsProps {
 }
 
 export default function Comments({ boardId }: CommentsProps) {
-  const { mutateCreateComment, isPending, isError, isSuccess } =
-    useCreateComment();
+  const {
+    mutateCreateComment,
+    isPending,
+    isError,
+    //  isSuccess
+  } = useCreateComment();
 
   //comment 생성
   const handleCreateComment = (newComment: Omit<Comment, "id">) => {
@@ -24,13 +28,16 @@ export default function Comments({ boardId }: CommentsProps) {
 
   //////////🌈🌈🌈이거 셋 병렬처리 ////////////////////////////////////////////////////////////////
   //boardId 별 comments 조회
-  const { comments, isErrorComments, isPendingComments, isSuccessComments } =
-    useCommentsByBoardId(boardId);
+  const {
+    comments,
+    //  isErrorComments,
+    //   isPendingComments,
+    isSuccessComments,
+  } = useCommentsByBoardId(boardId);
 
   const { isLoggedIn } = useAuth();
   const { me } = useMe(isLoggedIn);
 
-  console.log("🌈", comments);
   return (
     <>
       <CommentsContainer>

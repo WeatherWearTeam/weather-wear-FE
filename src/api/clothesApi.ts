@@ -22,7 +22,6 @@ export type SearchKeysRequest = {
 //전체 데이터 조회
 export const getClothesItems = async (searchKeys: SearchKeysRequest) => {
   try {
-    console.log("SearchKeysRequest", searchKeys);
     const response = await api.get(`/api/clothes`, {
       params: {
         page: searchKeys.page - 1, //페이네이션 실제로 0부터 시작되기 때문
@@ -44,6 +43,7 @@ export interface ClothesItemByIdResponse {
   color: ClothesColorType;
   type: ClothesType;
 }
+
 // 개별 데이터 조회 //하나씩 수정할 때 필요함
 export const getClothesItemById = async (id: number) => {
   const response = await api.get(`/api/clothes/${id}`);
@@ -69,7 +69,6 @@ export const updateClothesItem = async (
       "Content-Type": "multipart/form-data",
     },
   });
-  console.log(response.data);
   return response.data;
 };
 

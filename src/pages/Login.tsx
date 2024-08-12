@@ -30,8 +30,6 @@ export default function Login() {
       return alert("비밀번호를 입력해 주세요!");
     }
 
-    console.log(loginUser);
-
     mutateLogin(loginUser);
 
     setLoginUser({ username: "", password: "" });
@@ -51,6 +49,7 @@ export default function Login() {
   //     console.log(kakaoLoginAuthData);
   //   }
   // }, [isKakaoLoginClicked, kakaoLoginAuthData]);
+
 
   return (
     <Container>
@@ -138,7 +137,6 @@ export default function Login() {
               {/* SNS 계정으로 로그인 */}
               <SocialLoginButton
                 onClick={() => {
-                  console.log("클릭");
                   setIsKakaoLoginClicked((prev) => !prev);
                 }}
               >

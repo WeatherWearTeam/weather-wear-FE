@@ -22,7 +22,6 @@ export interface WeatherData {
 export const getWeatherByLocation = async (
   id: number
 ): Promise<WeatherData> => {
-  // console.log("법정동코드", id);
   try {
     const response = await api.get(`/api/weathers?id=${id}`, {
       withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음

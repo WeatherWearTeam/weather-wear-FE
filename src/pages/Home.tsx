@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import MyOOTDRecommendation from "@components/Home/Ootd/MyOOTDRecommendation";
-import OOTDTrend from "@components/Trend/OOTDTrend";
 import NaverShopRecommendation from "@components/Home/NaverShop/NaverShopRecommendation";
 import SignupRecommendation from "@components/Home/SignupRecommendation";
 import useAuth from "@queries/useAuth";
@@ -12,6 +11,7 @@ import useModal from "@hooks/useModal";
 import { useMe } from "@queries/userQueries";
 import WeatherRecommendation from "@components/Home/Weather/WeatherRecommendation";
 import MyClosetRecommendation from "@components/Home/MyClosetRecommendation";
+import OOTDTrend from "@components/trend/OOTDTrend";
 
 const Home: React.FC = () => {
   const [liked, setLiked] = useState<boolean[]>([false, false, false]);
@@ -39,18 +39,18 @@ const Home: React.FC = () => {
   ////////////////////////////////////////////////////////
   const {
     weatherData,
-    // , isPendingWeather, isErrorWeather
+    // isPendingWeather,
+    // isErrorWeather,
     isSuccessWeather,
   } = useWeatherData(Number(addressInfo?.code));
 
-  console.log("===weatherId===", weatherId);
   const {
     homeRecommendsData,
-    // , isPending, isError
+    // isPending,
+    // isError,
     isSuccess,
   } = useHomeRecommendsItems(weatherId as number);
 
-  console.log(homeRecommendsData);
   //웨더 api 받아온 후 받아야 하므로 ✅직렬처리로 순서대로 api 요청 필요!
   useEffect(() => {
     if (isSuccessWeather && weatherData?.id) {

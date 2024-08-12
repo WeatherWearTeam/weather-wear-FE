@@ -11,8 +11,8 @@ import {
   atIcon,
   eyeIcon,
   eyeOffIcon,
-  heartFillIcon,
-  heartIcon,
+  // heartFillIcon,
+  // heartIcon,
   weatherSunIcon,
 } from "@shared/icons";
 import { useParams } from "react-router-dom";
@@ -37,9 +37,12 @@ export default function PostDetail() {
   const { id: boardId } = useParams(); //현재 Board id url에서 가져오기
   const { isLoggedIn } = useAuth();
   const { me } = useMe(isLoggedIn);
-  const { board, isPending, isError, isSuccess } = useBoardById(
-    Number(boardId)
-  );
+  const {
+    board,
+    //  isPending,
+    //   isError,
+    isSuccess,
+  } = useBoardById(Number(boardId));
 
   useEffect(() => {
     if (board) {
@@ -53,14 +56,11 @@ export default function PostDetail() {
   }, [board]);
 
   const handleLikeClick = () => {
-    console.log("하트가 클릭");
     // 서버에 좋아요 상태 전송
     mutateToggleLikeBoard(Number(boardId));
   };
 
   //🌈 isPending, isError, isSuccess 값 사용해서 UX 개선하기
-
-  console.log("🍧디테일 페이지 데이터", board);
 
   const { mutateDeleteBoard } = useDeleteBoard();
   return (
@@ -77,7 +77,6 @@ export default function PostDetail() {
                 <img src={board.image} alt="ootd 사진" />
                 {/* 이미지 로드 실패 시 예외 처리 필요 */}
               </ImageWrapper>
-
             )}
             <FlexRowIconContainer>
               {isSuccess && board && (
@@ -88,7 +87,10 @@ export default function PostDetail() {
                     <Icon icon={eyeOffIcon} />
                   )}
                   <span>조회수 {board.views}</span>
-                   <LikeButton active={isClickedLike} onClick={handleLikeClick} />
+                  <LikeButton
+                    active={isClickedLike}
+                    onClick={handleLikeClick}
+                  />
                   <span>좋아요 {likesCount}</span>{" "}
                 </>
               )}

@@ -134,10 +134,8 @@ export default function ClosetForm({
     if (data) {
       if (imageFile) {
         formData.append("file", imageFile as File);
-        console.log("새로운 사진 선택함");
       } else {
         //파일 선택 안하면 빈값
-        console.log("새로운 사진 선택 안함");
       }
     } else {
       // data가 없을 때
@@ -157,7 +155,6 @@ export default function ClosetForm({
   //////////////////////////////////////////////////////////////
   useEffect(() => {
     if (data) {
-      console.log(data);
       setClothesBoardData((prev) => ({
         ...prev,
         color: data.color,

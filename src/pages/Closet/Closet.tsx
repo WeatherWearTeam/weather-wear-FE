@@ -73,8 +73,6 @@ function Closet() {
     type: ClothesType,
     typeKorean: ClothesKoreanType
   ) => {
-    console.log("✅", selectedClothesType);
-
     setSelectedClothesType((prev) => ({
       ...prev,
       type,

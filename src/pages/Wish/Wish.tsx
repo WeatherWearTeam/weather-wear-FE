@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import WishsGrid from "@components/Wish/WishsGrid";
 import useModal from "@hooks/useModal";
 import ModalPortal from "@components/Modal/ModalPortal";
 import ModalLayout from "@components/Modal/ModalLayout";
@@ -17,6 +16,7 @@ import clothesTypeList, {
 import Select from "@components/Select/Select";
 import Pagination from "@components/pagination";
 import { WishlistItem, WishSearchKeysRequest } from "@api/wishlistApi";
+import WishsGrid from "@components/wish/WishsGrid";
 
 interface SelectedClothesState {
   type: ClothesType | null;
@@ -57,8 +57,6 @@ function Wish() {
     type: ClothesType,
     typeKorean: ClothesKoreanType
   ) => {
-    console.log("✅", selectedClothesType);
-
     setSelectedClothesType((prev) => ({
       ...prev,
       type,
@@ -105,7 +103,6 @@ function Wish() {
   //////////////////////////////////////////////////////////////
   //위시리스트 아이템 삭제하기
   const { mutateDeleteWishlistItem } = useDeleteWishlistItem();
-  console.log(wishlistItems);
 
   const handleDelete = (productId: number) => {
     mutateDeleteWishlistItem(productId);

@@ -102,14 +102,12 @@ export default function MapContainer({
       setCurrentLocation({ lat: `${lat}`, lon: `${lon}` });
 
       setAddressList([]);
-      console.log("handleGetMyLocation", "geolocation 값 setCurrentLocation");
     } catch {
       console.log("위치 정보를 가져오지 못했습니다.");
     }
   };
 
   const handleMyLocationCheck = () => {
-    console.log("서버로 현재 위치/코드 정보 보내기: ", currentAddressAndCode);
     onGetCurrLocation(currentAddressAndCode!);
     //모달 창 닫기
     onClose();
@@ -260,7 +258,6 @@ export default function MapContainer({
       code: address.b_code,
     };
     setCurrentAddressAndCode(newMyLocation);
-    console.log("👉 ✅ 검색 결과");
 
     //리스트 다~ 마커 표시하기
     //지도가 있으면 원래 있던 지도에 표시하기
@@ -308,7 +305,6 @@ export default function MapContainer({
         code: result.code,
       };
 
-      console.log("✅ axios 주소/코드 값 얻음");
       return setCurrentAddressAndCode(newAddressAndCode);
     } catch (error) {
       console.error("주소와 코드를 가져오지 못했어요!", error);

@@ -199,10 +199,6 @@ export default function BoardForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // 새로고침 방지
 
-    console.log("💕💕💕", boardData);
-    console.log("💕파일💕", imageFile);
-    console.log("💕프리뷰src💕", imageSrc);
-
     //🌟🌟🌟🌟🌟 예외처리 하는 로직 작성 🌟🌟🌟🌟🌟
 
     //예외처리: 이미지파일이 안들어 왔다면 return

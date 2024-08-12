@@ -7,7 +7,12 @@ export default function PostEdit() {
   const { id } = useParams<{ id: string }>();
 
   //현재 수정할 Board 조회
-  const { board, isError, isPending, isSuccess } = useBoardById(Number(id));
+  const {
+    board,
+    isError,
+    isPending,
+    //  isSuccess
+  } = useBoardById(Number(id));
 
   //수정하는 mutate 함수
   const {
@@ -15,8 +20,6 @@ export default function PostEdit() {
     isError: updateIsError,
     isPending: updateIsPending,
   } = useUpdateBoard();
-
-  console.log("수정할 녀석", board);
 
   const onupdateBoard = (updatedBoard: BoardDataType) => {
     mutateUpdateBoard(updatedBoard);

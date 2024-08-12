@@ -20,6 +20,7 @@ export default function SignupForm() {
     mutateCreateUser,
     isError,
     // , isPending, isSuccess
+
   } = useCreateUser();
   const { alerts, clearAlert } = useAlertStore();
 
@@ -41,7 +42,6 @@ export default function SignupForm() {
       gender: signUpUser.GENDER,
     };
 
-    // console.log(newUser);
     mutateCreateUser(newUser);
   };
 
