@@ -23,6 +23,13 @@ export const GlobalStyle = createGlobalStyle`
         list-style: none;
     }
     
+    hr {
+        border: none;
+        height: 1px;
+        background-color: ${({ theme }) => theme.colors.main};
+
+    }
+
     button {
         border: 0;
         background: transparent;

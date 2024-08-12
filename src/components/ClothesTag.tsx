@@ -1,15 +1,19 @@
-import ColorChip from "@components/ColorChip";
-import styled from "styled-components";
+import ColorChip from "@components/Color/ColorChip";
+import styled, { css } from "styled-components";
+import getKoreanType from "@utils/getKoreanType";
+import { ClothesType } from "@shared/clothesTypeList";
+import { ClothesColorType } from "@shared/colorTypeList";
+
 interface ClothesTagProps {
-  color: string;
-  type: string;
+  color: ClothesColorType;
+  type: ClothesType;
 }
 
 function ClothesTag({ color, type }: ClothesTagProps) {
   return (
     <Container>
       <ColorChip color={color} />
-      <ClothesType>{type}</ClothesType>
+      <ClothesTypeText>{getKoreanType(type)}</ClothesTypeText>
     </Container>
   );
 }
@@ -19,15 +23,18 @@ export default ClothesTag;
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 1rem;
   border-radius: 10rem;
-  width: 9rem;
-  padding: 0.3rem 0.5rem;
+  /* width: 9rem; */
+  padding: 0.3rem 1rem;
   border: ${({ theme }) => theme.borders.buttonBorder};
+  background-color: ${({ theme }) => css`
+    ${theme.colors.WHITE}d9; //투명도 85%
+  `};
 `;
 
-const ClothesType = styled.p`
+const ClothesTypeText = styled.p`
   font-size: small;
 `;
