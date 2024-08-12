@@ -1,6 +1,5 @@
 import Icon from "@components/Icon";
 import {
-  weatherCloudyIcon,
   weatherRainyIcon,
   weatherSnowIcon,
   weatherSunCloudyIcon,
@@ -22,50 +21,42 @@ export default function WeatherBar({
     {
       sky: null,
       pty: null,
-      label: "All",
+      // label: "All",
       color: "GREEN",
       icon: <All>All</All>,
     },
     {
       sky: 1,
       pty: null,
-      label: "맑음",
+      // label: "맑음",
       color: "YELLOW",
       icon: <Icon icon={weatherSunIcon} />,
     },
     {
-      sky: 2,
+      sky: 3,
       pty: null,
-      label: "구름조금",
+      // label: "구름많음",
       color: "GRAY",
       icon: <Icon icon={weatherSunCloudyIcon} />,
     },
     {
-      sky: 3,
-      pty: null,
-      label: "구름많음",
-      color: "main",
-      icon: <Icon icon={weatherCloudyIcon} />,
-    },
-    {
       sky: 4,
       pty: null,
-      label: "흐림",
+      // label: "흐림",
       color: "BLACK",
       icon: <Icon icon={weatherVeryCloudyIcon} />,
     },
     {
       sky: null,
-      pty: 0,
-      label: "비",
+      pty: 1,
+      // label: "비",
       color: "BLUE",
       icon: <Icon icon={weatherRainyIcon} />,
-      ptyValues: [1, 2, 4], // All pty values for rainy conditions
     },
     {
       sky: null,
       pty: 3,
-      label: "눈",
+      // label: "눈",
       color: "CYAN",
       icon: <Icon icon={weatherSnowIcon} />,
     },
@@ -77,23 +68,14 @@ export default function WeatherBar({
 
   return (
     <Container>
-      {weatherTypes.map(({ sky, pty, label, color, icon, ptyValues }) => (
+      {weatherTypes.map(({ sky, pty, color, icon }) => (
         <ButtonWrapper
           key={`${sky}-${pty}`}
           $hovercolor={color}
           $isSelected={
-            sky === selectedWeather?.sky &&
-            ptyValues?.includes(selectedWeather?.pty ?? -1)
+            sky === selectedWeather?.sky && pty === selectedWeather?.pty
           }
-          onClick={() => {
-            // Handle clicking the icon
-            if (ptyValues) {
-              // If ptyValues is defined, set pty to one of the ptyValues (e.g., 1)
-              onClick?.(sky, ptyValues[0]); // Use the first value or a specific logic
-            } else {
-              onClick?.(sky, pty);
-            }
-          }}
+          onClick={() => handleClick(sky, pty)}
         >
           {icon}
         </ButtonWrapper>
