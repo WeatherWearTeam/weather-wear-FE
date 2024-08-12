@@ -13,7 +13,7 @@ export default function ClosetEdit() {
     clothesItem,
     isError,
     isPending,
-    //  isSuccess
+    //  isSuccess,
   } = useClothesItemById(Number(id));
 
   //수정하는 mutate 함수

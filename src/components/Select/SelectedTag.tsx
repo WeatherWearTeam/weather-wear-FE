@@ -1,11 +1,13 @@
 import ColorChip from "@components/Color/ColorChip";
 import Icon from "@components/Icon";
+import { ClothesKoreanType } from "@shared/clothesTypeList";
+import { ClothesColorType } from "@shared/colorTypeList";
 import { closeIcon } from "@shared/icons";
 import styled from "styled-components";
 
 interface SelectedTagProps {
-  color: string;
-  selectedTypeOption: string;
+  color: ClothesColorType;
+  selectedTypeOption: ClothesKoreanType | "옷 종류" | null;
   id: number;
   onRemoveTag: (id: number) => void;
 }

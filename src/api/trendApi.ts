@@ -1,5 +1,4 @@
 import api from "@api/api";
-import { ClothesTagType } from "@api/boardApi";
 
 export interface User {
   email: string;
@@ -28,7 +27,7 @@ export interface TrendItemResponse {
   id: number;
   image: string;
   isPrivate: boolean;
-  tags: ClothesTag[];
+  tags: { color: string | null; type: string | null }[];
   title: string;
   updatedAt: string;
   user: User;

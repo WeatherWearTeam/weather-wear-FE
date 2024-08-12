@@ -19,16 +19,14 @@ function Layout({ children }: LayoutProps) {
 
   const {
     me,
-    //  isError,
-    //   isPending,
-    //    isSuccess
+    // , isError, isPending, isSuccess
   } = useMe(isLoggedIn); //isLoggedIn이 true일 때만 useMe 호출되도록
   const { openModal, closeModal, isVisible } = useModal();
   const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
 
   useEffect(() => {
     if (isLoggedIn && me) {
-      console.log("👋🏻", me);
+      //console.log("👋🏻", me);
     }
   }, [isLoggedIn, me]);
   return (

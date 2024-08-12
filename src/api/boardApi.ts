@@ -1,5 +1,3 @@
-import { ClothesTag } from "@components/ClothesTag";
-import { UserBoardByIdResponse } from "./boardApi";
 import api from "@api/api";
 import { ClothesType } from "@shared/clothesTypeList";
 import { ClothesColorType } from "@shared/colorTypeList";
@@ -33,7 +31,7 @@ export interface BoardResponse {
   // commentCount: number;
   image: string;
   likeCount: number;
-  tags: ClothesTag[];
+  tags: ClothesTagType[];
   title: string;
   views: number;
   weather: WeatherResponse;
@@ -109,6 +107,19 @@ export const getBoardById = async (boardId: number) => {
 
 //////////////////////////////////////////////////////////////////
 // 전체 Boards 리소스 조회 => 🌟 trend 페이지
+
+export interface UserBoardsResponse {
+  id: number;
+  image: string;
+  address: string;
+  weather: WeatherBoardByIdResponse;
+  user: UserBoardByIdResponse;
+  title: string;
+  tags: TagBoardByIdResponse[];
+  createdAt: string;
+  updatedAt: string;
+  isPrivate: boolean;
+}
 // ✅ 페이지네이션
 export type UserBoardsSearchKeysRequest = {
   page: number;

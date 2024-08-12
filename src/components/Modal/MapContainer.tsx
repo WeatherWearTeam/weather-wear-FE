@@ -1,10 +1,10 @@
 import Button from "@components/Button";
 import Icon from "@components/Icon";
 import Input from "@components/Input";
+import { AddressInfo } from "@components/Weather/MapSelector";
 import useGeolocation from "@hooks/useGeolocation";
 import { focusIcon } from "@shared/icons";
 import axios from "axios";
-import { AddressInfo } from "net";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
@@ -12,6 +12,42 @@ declare global {
   interface Window {
     kakao: any;
   }
+}
+
+interface Address {
+  address_name: string;
+  b_code: string;
+  h_code: string;
+  main_address_no: string;
+  mountain_yn: string;
+  road_address: string | null;
+  x: string;
+  y: string;
+  address_type: string;
+}
+
+interface AddressListAddress {
+  address_name: string;
+  b_code: string;
+  h_code: string;
+  main_address_no: string;
+  mountain_yn: string;
+  region_1depth_name: string;
+  region_2depth_name: string;
+  region_3depth_h_name: string;
+  region_3depth_name: string;
+  sub_address_no: string;
+  x: string;
+  y: string;
+}
+
+interface AddressListItem {
+  address: AddressListAddress;
+  address_name: string;
+  address_type: string;
+  road_address: string | null;
+  x: string;
+  y: string;
 }
 
 interface MapContainerProps {
@@ -29,7 +65,7 @@ export default function MapContainer({
 
   const { geolocation } = useGeolocation(); //geolocation으로 내 위치의 위도경도 구하기
 
-  const mapRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement | null>(null);
 
   //마커와 인포윈도우 새로운 마커 찍히면 없애기 위해 useRef로 가져옴
   const currentMarkerRef = useRef<any>(null);
@@ -37,7 +73,7 @@ export default function MapContainer({
 
   const [keyword, setKeyword] = useState("");
 
-  const [addressList, setAddressList] = useState([]);
+  const [addressList, setAddressList] = useState<AddressListItem[]>([]);
   const [currentLocation, setCurrentLocation] = useState<{
     lat: string;
     lon: string;
@@ -79,42 +115,45 @@ export default function MapContainer({
   //----------------------------------------------------------------------------
 
   // 🌈  지도에 마커와 인포윈도우를 표시하는 함수
-  const displayMarker = useCallback((map, locPosition, message) => {
-    //현재 마커가 찍혀 있으면 그 값 삭제하기
-    if (currentMarkerRef.current) {
-      currentMarkerRef.current.setMap(null);
-    }
-    //현재 인포 윈도우 열려 있으면 그 윈도우 닫기
-    if (currentInfoWindowRef.current) {
-      currentInfoWindowRef.current.close();
-    }
+  const displayMarker = useCallback(
+    (map: any, locPosition: any, message: any) => {
+      //현재 마커가 찍혀 있으면 그 값 삭제하기
+      if (currentMarkerRef.current) {
+        currentMarkerRef.current.setMap(null);
+      }
+      //현재 인포 윈도우 열려 있으면 그 윈도우 닫기
+      if (currentInfoWindowRef.current) {
+        currentInfoWindowRef.current.close();
+      }
 
-    // 마커 생성
-    const marker = new kakao.maps.Marker({
-      map: map,
-      position: locPosition,
-    });
+      // 마커 생성
+      const marker = new kakao.maps.Marker({
+        map: map,
+        position: locPosition,
+      });
 
-    // 인포윈도우 생성
-    const infowindow = new kakao.maps.InfoWindow({
-      content: message,
-    });
+      // 인포윈도우 생성
+      const infowindow = new kakao.maps.InfoWindow({
+        content: message,
+      });
 
-    // 인포윈도우를 마커위에 표시
-    infowindow.open(map, marker);
-    // 지도 중심좌표를 접속위치로 변경
-    map.setCenter(locPosition);
+      // 인포윈도우를 마커위에 표시
+      infowindow.open(map, marker);
+      // 지도 중심좌표를 접속위치로 변경
+      map.setCenter(locPosition);
 
-    // 마커 위치 상태 업데이트
-    currentMarkerRef.current = marker;
-    // 인포 윈도우도 업데이트
-    currentInfoWindowRef.current = infowindow;
-  }, []);
+      // 마커 위치 상태 업데이트
+      currentMarkerRef.current = marker;
+      // 인포 윈도우도 업데이트
+      currentInfoWindowRef.current = infowindow;
+    },
+    []
+  );
 
   //----------------------------------------------------------------------------
 
   // 🌈🌈 2. 지도 클릭 시 마커/인포 띄우고 주소, 코드 정보 얻기
-  const getRegionCodeMapClick = useCallback((map) => {
+  const getRegionCodeMapClick = useCallback((map: any) => {
     kakao.maps.event.addListener(
       map,
       "click",
@@ -175,7 +214,7 @@ export default function MapContainer({
 
         //🌱 지도 경계를 생성합니다.
         const bounds = new kakao.maps.LatLngBounds();
-        addressList.forEach((address) => {
+        addressList.forEach((address: Address) => {
           const locPosition = new kakao.maps.LatLng(address.y, address.x);
 
           const marker = new kakao.maps.Marker({

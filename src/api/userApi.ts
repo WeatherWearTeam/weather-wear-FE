@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 
 import api from "@api/api";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 // withCredentials false인 엔드포인트 리스트(퍼블릭 엔드포인트)
 // const noCredentialsEndpoints = [

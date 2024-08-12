@@ -35,20 +35,21 @@ export default function Login() {
     setLoginUser({ username: "", password: "" });
   };
 
-  const [isKakaoLoginClicked, setIsKakaoLoginClicked] = useState(false);
-  //카카오 로그인
-  const {
-    kakaoLoginAuthData,
-    // isPendingKakaoLogin,
-    // isErrorKakaoLogin,
-    // isSuccessKakaoLogin,
-  } = useKakao(isKakaoLoginClicked);
+  // const [isKakaoLoginClicked, setIsKakaoLoginClicked] = useState(false);
+  // //카카오 로그인
+  // const {
+  //   kakaoLoginAuthData,
+  //   // isPendingKakaoLogin,
+  //   // isErrorKakaoLogin,
+  //   // isSuccessKakaoLogin,
+  // } = useKakao(isKakaoLoginClicked);
 
-  useEffect(() => {
-    if (isKakaoLoginClicked) {
-      console.log(kakaoLoginAuthData);
-    }
-  }, [isKakaoLoginClicked, kakaoLoginAuthData]);
+  // useEffect(() => {
+  //   if (isKakaoLoginClicked) {
+  //     console.log(kakaoLoginAuthData);
+  //   }
+  // }, [isKakaoLoginClicked, kakaoLoginAuthData]);
+
 
   return (
     <Container>

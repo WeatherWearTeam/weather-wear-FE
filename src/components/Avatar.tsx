@@ -24,11 +24,11 @@ export default function Avatar({ size = "m", image, onClick }: AvatarProps) {
   );
 }
 
-interface AvatarProps {
+interface StyledAvatarProps {
   $size?: "s" | "m" | "lg" | "xl";
 }
 
-const AvatarWrapper = styled.div<AvatarProps>`
+const AvatarWrapper = styled.div<StyledAvatarProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,14 +38,14 @@ const AvatarWrapper = styled.div<AvatarProps>`
   border-radius: 50%;
 `;
 
-const AvatarImg = styled.img<AvatarProps>`
+const AvatarImg = styled.img<StyledAvatarProps>`
   width: ${({ theme, $size = "m" }) => theme.size[$size].width};
   height: ${({ theme, $size = "m" }) => theme.size[$size].height};
   border-radius: 50%;
   object-fit: cover;
 `;
 
-const DefaultUserIconWrapper = styled.div<AvatarProps>`
+const DefaultUserIconWrapper = styled.div<StyledAvatarProps>`
   width: ${({ theme, $size = "m" }) => theme.size[$size].width};
   height: ${({ theme, $size = "m" }) => theme.size[$size].height};
   border-radius: 50%;

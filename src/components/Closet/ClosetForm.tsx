@@ -1,3 +1,4 @@
+import { ClothesItemByIdResponse } from "@api/clothesApi";
 import Button from "@components/Button";
 import ColorPickBar from "@components/Color/ColorPickBar";
 import Select from "@components/Select/Select";
@@ -21,7 +22,7 @@ interface ClothesBoardData {
 }
 
 interface ClosetFormProps {
-  data?: DataType;
+  data?: ClothesItemByIdResponse;
   isPending: boolean;
   isError: boolean;
   onUpdateClothes?: (updatedBoard: FormData) => void;
@@ -141,20 +142,11 @@ export default function ClosetForm({
       formData.append("file", imageFile as File);
     }
 
-    // return console.log(
-    //   "imageFile",
-    //   imageFile,
-    //   "imageSrc",
-    //   imageSrc,
-    //   clothesBoardData.color,
-    //   clothesBoardData.type
-    // );
-
     if (!data) {
       logFormData(formData); //로그찍기
       onCreateClothes?.(formData);
     } else {
-      formData.append("id", data.id);
+      formData.append("id", data.id.toString());
       logFormData(formData); //로그찍기
       onUpdateClothes?.(formData);
     }
