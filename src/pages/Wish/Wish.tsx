@@ -16,7 +16,7 @@ import clothesTypeList, {
 import Select from "@components/Select/Select";
 import Pagination from "@components/pagination";
 import { WishlistItem, WishSearchKeysRequest } from "@api/wishlistApi";
-import WishsGrid from "@components/wish/WishsGrid";
+import WishsGrid from "@components/Wish/WishsGrid";
 
 interface SelectedClothesState {
   type: ClothesType | null;

@@ -60,13 +60,18 @@ const TrendItem = ({ item }: TrendItemProps) => {
         </TitleWrapper>
         {/* 태그 */}
         <ContentsItemTagData>
-          {item.tags?.map((tag: ClothesTag, index: number) => (
-            <HashtagWrapper key={index}>
-              <Icon icon={hashtagIcon} />
-              {getKoreanColor(tag.color as ClothesColorType)}{" "}
-              {getKoreanType(tag.type as ClothesType)}
-            </HashtagWrapper>
-          ))}
+          {item.tags?.map(
+            (
+              tag: { color: string | null; type: string | null },
+              index: number
+            ) => (
+              <HashtagWrapper key={index}>
+                <Icon icon={hashtagIcon} />
+                {getKoreanColor(tag.color as ClothesColorType)}{" "}
+                {getKoreanType(tag.type as ClothesType)}
+              </HashtagWrapper>
+            )
+          )}
         </ContentsItemTagData>
 
         {/* 아이콘 */}

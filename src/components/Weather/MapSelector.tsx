@@ -68,9 +68,10 @@ const MapSelector = ({
       };
 
       getAddressAndCode(geolocation.lon, geolocation.lat);
-    } else {
-      return console.log("위치 정보를 가져올 수 없어요.");
     }
+    // else {
+    //   return console.log("위치 정보를 가져올 수 없어요.");
+    // }
   }, [geolocation]);
 
   //////////////////////////////////////////////////////////////////////////////

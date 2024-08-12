@@ -2,7 +2,7 @@ import { ClothesColorType } from "@shared/colorTypeList";
 import styled from "styled-components";
 
 interface ColorChipProps {
-  color: ClothesColorType;
+  color: ClothesColorType | null;
   size?: "s" | "m";
   isSelected?: boolean; // 선택 여부를 나타내는 prop 추가
   onClick?: () => void;
@@ -22,7 +22,7 @@ function ColorChip({ color, size = "s", isSelected, onClick }: ColorChipProps) {
 export default ColorChip;
 
 interface ColorProps {
-  $color: ClothesColorType;
+  $color: ClothesColorType | null;
   $size: "s" | "m";
   $isSelected?: boolean; // 선택 여부를 나타내는 prop 추가
 }
@@ -30,7 +30,8 @@ interface ColorProps {
 const Color = styled.div<ColorProps>`
   width: ${({ $size }) => ($size === "s" ? "1rem" : "1.5rem")};
   height: ${({ $size }) => ($size === "s" ? "1rem" : "1.5rem")};
-  background-color: ${({ $color, theme }) => theme.colors[$color]};
+  background-color: ${({ $color, theme }) =>
+    theme.colors[$color as ClothesColorType]};
   border: 1px solid ${({ theme }) => theme.colors.borderGray};
   transition: border 0.1s ease-out;
   cursor: pointer;

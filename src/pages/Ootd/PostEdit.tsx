@@ -1,4 +1,4 @@
-import BoardForm, { BoardDataType } from "@components/Board/BoardForm";
+import BoardForm from "@components/Board/BoardForm";
 import { useParams } from "react-router-dom";
 import { BoardByIdResponse } from "@api/boardApi";
 import { useBoardById, useUpdateBoard } from "@queries/boardQueries";
@@ -21,7 +21,7 @@ export default function PostEdit() {
     isPending: updateIsPending,
   } = useUpdateBoard();
 
-  const onupdateBoard = (updatedBoard: BoardDataType) => {
+  const onupdateBoard = (updatedBoard: FormData) => {
     mutateUpdateBoard(updatedBoard);
   };
 

@@ -10,15 +10,16 @@ import styled from "styled-components";
 interface SelectProps {
   list: { key: ClothesType; value: ClothesKoreanType }[];
   onClick: (key: ClothesType, value: ClothesKoreanType) => void;
-  value: ClothesKoreanType;
+  value: ClothesKoreanType | "옷 종류";
 }
 
 export default function Select({ list, onClick, value }: SelectProps) {
   const { openModal, closeModal, isVisible } = useModal();
   const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
 
-  const [selectedOption, setSelectedOption] =
-    useState<ClothesKoreanType>(value);
+  const [selectedOption, setSelectedOption] = useState<
+    ClothesKoreanType | "옷 종류"
+  >(value);
 
   const onSelectClick = (key: ClothesType) => {
     const selected = list.find((option) => option.key === key);

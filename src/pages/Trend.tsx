@@ -15,7 +15,7 @@ import clothesTypeList, {
 } from "@shared/clothesTypeList";
 import Select from "@components/Select/Select";
 import ColorPickBar from "@components/Color/ColorPickBar";
-import TrendGrid from "@components/trend/TrendGrid";
+import TrendGrid from "@components/Trend/TrendGrid";
 
 interface SelectedClothesState {
   type: ClothesType | null;

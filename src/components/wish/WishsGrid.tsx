@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { WishlistItem } from "@api/wishlistApi";
 import Icon from "@components/Icon";
 import { closeIcon } from "@shared/icons";
-import WishItem from "@/components/wish/WishItem";
+import WishItem from "@/components/Wish/WishItem";
 
 interface WishsGridProps {
   onClick: (id: number) => void;

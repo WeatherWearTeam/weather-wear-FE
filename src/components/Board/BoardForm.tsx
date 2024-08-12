@@ -21,9 +21,9 @@ import styled, { css } from "styled-components";
 
 interface ClothesTypeData {
   id: number;
-  color: ClothesColorType;
+  color: ClothesColorType | null;
   type: ClothesType | null;
-  typeKorean: ClothesKoreanType | "옷 종류" | null;
+  typeKorean: ClothesKoreanType | "옷 종류";
 }
 
 interface ClothesTypeWithoutIdAndTypeKorean {

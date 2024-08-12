@@ -18,7 +18,7 @@ import styled, { css } from "styled-components";
 interface ClothesBoardData {
   color: ClothesColorType | null;
   type: ClothesType | null;
-  typeKorean: ClothesKoreanType | "옷 종류" | null;
+  typeKorean: ClothesKoreanType | "옷 종류";
 }
 
 interface ClosetFormProps {

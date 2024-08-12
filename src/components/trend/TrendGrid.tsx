@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TrendItemResponse } from "@api/trendApi";
-import TrendItem from "@/components/trend/TrendItem";
+import TrendItem from "@/components/Trend/TrendItem";
 
 interface TrendGridProps {
   trendItemsData: TrendItemResponse[][]; //배열을 또 배열로 감싼 형태로 내려오는 중임

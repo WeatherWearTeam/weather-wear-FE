@@ -6,7 +6,7 @@ import { closeIcon } from "@shared/icons";
 import styled from "styled-components";
 
 interface SelectedTagProps {
-  color: ClothesColorType;
+  color: ClothesColorType | null;
   selectedTypeOption: ClothesKoreanType | "옷 종류" | null;
   id: number;
   onRemoveTag: (id: number) => void;
