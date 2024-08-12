@@ -81,15 +81,15 @@ function Posts() {
   }, [searchKeys, navigate, location.search]);
 
   //////////////////////////////////////////////////////////////
-  const handleItemClick = (id: number) => {
-    navigate(`/ootd/${id}`);
-  };
+  // const handleItemClick = (id: number) => {
+  //   navigate(`/ootd/${id}`);
+  // };
 
   const { boards, isPending, isError, isSuccess } = useMyBoards(searchKeys);
   const { mutateDeleteBoard, isErrorDelete, isPendingDelete } =
     useDeleteBoard();
 
-  console.log("✅✅✅마이 보드!", boards);
+  // console.log("✅✅✅마이 보드!", boards);
 
   return (
     <MyPageContentsContainer>
@@ -109,7 +109,6 @@ function Posts() {
       {isSuccess && boards?.content && (
         <MyBoardList
           items={boards.content}
-          onClick={handleItemClick}
           onDeleteClick={mutateDeleteBoard}
           isSuccess={isSuccess}
         />
