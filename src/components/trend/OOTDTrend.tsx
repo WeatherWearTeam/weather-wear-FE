@@ -18,7 +18,7 @@ const OOTDTrend = ({ data }: OotdTrendProps) => {
 
   return (
     <Container>
-      {data.length > 0 && (
+      {data?.length > 0 && (
         <GridContainer>
           <Column>
             <MainImageContainer
@@ -51,7 +51,7 @@ const OOTDTrend = ({ data }: OotdTrendProps) => {
                 </Content>
               </BannerContainer>
             </Banner>
-            {data.length > 1 && (
+            {data?.length > 1 && (
               <Row>
                 {data.slice(1).map((item: OotdTrendData) => (
                   <ImageContainer
@@ -69,7 +69,7 @@ const OOTDTrend = ({ data }: OotdTrendProps) => {
         </GridContainer>
       )}
 
-      {data.length === 0 && (
+      {data?.length === 0 && (
         <Banner>
           <BannerContainer>
             <Title>다른 사람들은 어떻게 스타일링 했을까요?</Title>
