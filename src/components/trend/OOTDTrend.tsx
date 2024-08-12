@@ -55,6 +55,7 @@ const OOTDTrend = ({ data }: OotdTrendProps) => {
               <Row>
                 {data.slice(1).map((item: OotdTrendData) => (
                   <ImageContainer
+                    key={item.id}
                     onClick={() => {
                       navigate(`/ootd/${item.id}`);
                     }}

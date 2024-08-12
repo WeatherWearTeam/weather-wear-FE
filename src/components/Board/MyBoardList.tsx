@@ -31,7 +31,7 @@ const MyBoardList: React.FC<MyBoardListProps> = ({
             <ButtonWrapper>
               <EditDeleteButton
                 id={item.id}
-                editPath={`/mypage/myootd/${item.id}/edit`}
+                editPath={`/ootd/${item.id}/edit`}
                 onMutateDelete={onDeleteClick}
               />
             </ButtonWrapper>

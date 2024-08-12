@@ -86,28 +86,37 @@ const Home: React.FC = () => {
       {isLoggedIn && (
         <>
           <Divider />
+
           {isSuccess && homeRecommendsData[0] && (
-            <MyClosetRecommendation data={homeRecommendsData[0]} />
+            <>
+              <MyClosetRecommendation data={homeRecommendsData[0]} />
+              <Divider />
+            </>
           )}
-
-          <Divider />
           {isSuccess && homeRecommendsData[1] && (
-            <MyOOTDRecommendation data={homeRecommendsData[1]} />
+            <>
+              <MyOOTDRecommendation data={homeRecommendsData[1]} />
+              <Divider />
+            </>
           )}
 
-          <Divider />
-          {isSuccess && <OOTDTrend data={homeRecommendsData[2]} />}
-
-          <Divider />
           {isSuccess && (
-            <NaverShopRecommendation
-              liked={liked}
-              toggleLike={toggleLike}
-              data={homeRecommendsData[3]}
-            />
+            <>
+              <OOTDTrend data={homeRecommendsData[2]} />
+              <Divider />
+            </>
           )}
 
-          <Divider />
+          {isSuccess && (
+            <>
+              <NaverShopRecommendation
+                liked={liked}
+                toggleLike={toggleLike}
+                data={homeRecommendsData[3]}
+              />
+              <Divider />
+            </>
+          )}
         </>
       )}
     </HomeContainer>
