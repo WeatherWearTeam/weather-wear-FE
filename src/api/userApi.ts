@@ -27,7 +27,6 @@ export interface SignUpUserRequest {
 }
 
 export const signUpUser = async (newUser: SignUpUserRequest) => {
-  console.log("😇 회원가입", newUser);
   const response = await api.post(`/api/users`, newUser, {
     withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
   });
@@ -98,14 +97,12 @@ export const getMe = async () => {
 //특정 사용자 프로필 조회
 export const getUserById = async (userId: number) => {
   const response = await api.get(`/api/users/${userId}`);
-  console.log(response);
   return response.data;
 };
 
 //특정 사용자의 프로필 페이지 > ootd 보드 보여주기
 export const getBoardsByUserId = async (userId: number) => {
   const response = await api.get(`/api/users/${userId}/boards`);
-  console.log(response);
   return response.data;
 };
 ///////////////////////////////////////////////////////////////

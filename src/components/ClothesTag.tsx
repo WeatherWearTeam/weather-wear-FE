@@ -1,5 +1,4 @@
 import ColorChip from "@components/Color/ColorChip";
-
 import styled, { css } from "styled-components";
 import getKoreanType from "@utils/getKoreanType";
 import { ClothesType } from "@shared/clothesTypeList";

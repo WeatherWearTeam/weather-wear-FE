@@ -46,7 +46,6 @@ export interface TrendQueryParams {
 // 트렌드 게시물 전체 조회
 export const getBoardsTrendItems = async (searchKeys: TrendQueryParams) => {
   try {
-    console.log("✅트렌드 검색", searchKeys);
     const response = await api.get("/api/boards", {
       params: searchKeys,
     });

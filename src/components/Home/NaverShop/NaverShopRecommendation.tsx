@@ -44,8 +44,6 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
       //하트 눌렀을 때: 위시리스트에 생성
       mutateCreateWishlistItem(item, {
         onSuccess: (response) => {
-          // console.log("index", index);
-          // console.log("Item added to wishlist:", response);
           updatedWishlistIds[index] = response.id; // 여기서 추가된 위시리스트 항목의 ID를 저장
           setWishlistIds(updatedWishlistIds);
         },

@@ -4,7 +4,7 @@ import Input from "@components/Input";
 import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "@queries/useAuth";
 import useKakao from "@queries/useKakao";
 
@@ -19,7 +19,7 @@ export default function Login() {
     setLoginUser({ ...loginUser, [name]: value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!loginUser.username) {
@@ -30,8 +30,6 @@ export default function Login() {
       return alert("비밀번호를 입력해 주세요!");
     }
 
-    console.log(loginUser);
-
     mutateLogin(loginUser);
 
     setLoginUser({ username: "", password: "" });
@@ -41,9 +39,9 @@ export default function Login() {
   //카카오 로그인
   const {
     kakaoLoginAuthData,
-    isPendingKakaoLogin,
-    isErrorKakaoLogin,
-    isSuccessKakaoLogin,
+    // isPendingKakaoLogin,
+    // isErrorKakaoLogin,
+    // isSuccessKakaoLogin,
   } = useKakao(isKakaoLoginClicked);
 
   useEffect(() => {
@@ -138,7 +136,6 @@ export default function Login() {
               {/* SNS 계정으로 로그인 */}
               <SocialLoginButton
                 onClick={() => {
-                  console.log("클릭");
                   setIsKakaoLoginClicked((prev) => !prev);
                 }}
               >

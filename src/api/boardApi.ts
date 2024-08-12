@@ -120,7 +120,6 @@ export type UserBoardsSearchKeysRequest = {
 export const getUserBoards = async (
   searchKeys: UserBoardsSearchKeysRequest
 ) => {
-  console.log("🌈🌈🌈🌈🌈", searchKeys);
   try {
     const response = await api.get(`/api/users/boards`, {
       params: {
@@ -173,11 +172,9 @@ export const updateBoard = async (updatedBoard: FormData) => {
 //   return response.data;
 // };
 export const toggleHeartBoard = async (boardId: number) => {
-  console.log("-----------boardId---------", boardId);
   // const currentBoard = await getBoardById(boardId);
   // const updatedBoard = { ...currentBoard, isLike: !currentBoard.isLike };
   const response = await api.post(`/api/boards/likes/${boardId}`);
-  console.log("response", response);
   return response.data;
 };
 

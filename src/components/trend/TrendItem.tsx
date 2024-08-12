@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Icon from "@components/Icon";
 import {
@@ -15,7 +14,6 @@ import getKoreanType from "@utils/getKoreanType";
 import { ClothesColorType } from "@shared/colorTypeList";
 import { ClothesType } from "@shared/clothesTypeList";
 import { TrendItemResponse } from "@api/trendApi";
-import { ClothesTagType } from "@api/boardApi";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@components/Avatar";
 import { getTimesAgo } from "@utils/getTime";

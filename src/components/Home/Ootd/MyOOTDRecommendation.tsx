@@ -14,8 +14,6 @@ interface MyOOTDRecommendationProps {
 const MyOOTDRecommendation = ({ data }: MyOOTDRecommendationProps) => {
   const navigate = useNavigate();
 
-  // console.log(data);
-
   // 배열에서 4개의 요소를 랜덤으로 선택하는 함수
   // const getRandomSelection = (arr: MyOotdData[], num: number): MyOotdData[] => {
   //   const result = new Set<MyOotdData>();
@@ -37,7 +35,6 @@ const MyOOTDRecommendation = ({ data }: MyOOTDRecommendationProps) => {
     firstFourOotdData = getFirstNElements(data, 4);
   }
 
-  console.log(firstFourOotdData);
   return (
     <Container>
       <Header>

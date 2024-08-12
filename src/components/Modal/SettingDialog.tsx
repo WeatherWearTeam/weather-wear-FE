@@ -24,7 +24,6 @@ export default function SettingDialog({
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    console.log("로그아웃, 유저 정보 날리기");
     onLogout(); //로그아웃
     if (!isPendingLogout) {
       onClose();

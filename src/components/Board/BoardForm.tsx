@@ -53,7 +53,7 @@ interface BoardFormProps {
 export default function BoardForm({
   data,
   isPending,
-  isError,
+  // isError,
   onUpdateBoard,
   onCreateBoard,
 }: BoardFormProps) {
@@ -198,10 +198,6 @@ export default function BoardForm({
   //등록하기 버튼 클릭했을 때 실행하는 handleSubmit 함수
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // 새로고침 방지
-
-    console.log("💕💕💕", boardData);
-    console.log("💕파일💕", imageFile);
-    console.log("💕프리뷰src💕", imageSrc);
 
     //🌟🌟🌟🌟🌟 예외처리 하는 로직 작성 🌟🌟🌟🌟🌟
 

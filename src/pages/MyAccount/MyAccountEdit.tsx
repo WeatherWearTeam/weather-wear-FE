@@ -123,7 +123,6 @@ export default function MyAccountEdit() {
           //새 파일 있는 경우
           formData.append("deleteImage", "false");
           formData.append("file", imageFile);
-          console.log("기존 이미지 X, 이미지 삭제 X, 파일 올리기 O");
         } else {
           //새 파일 없는 경우
           formData.append("deleteImage", "false");
@@ -131,7 +130,6 @@ export default function MyAccountEdit() {
             "file",
             new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
           );
-          console.log("기존 이미지 X, 이미지 삭제 X, 파일 올리기 X");
         }
       } else {
         //기존 이미지 있는 경우
@@ -140,14 +138,12 @@ export default function MyAccountEdit() {
           //새 파일 올림
           formData.append("deleteImage", "true");
           formData.append("file", imageFile);
-          console.log("기존 이미지 O, 이미지 삭제 O, 파일 올리기 O");
         } else if (Boolean(!imageFile) && Boolean(!imageSrc)) {
           formData.append("deleteImage", "true");
           formData.append(
             "file",
             new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
           );
-          console.log("기존 이미지 O, 이미지 삭제 O, 파일 올리기 X");
         } else {
           //새 파일 안올림 && 기존 이미지도 X인 경우
           formData.append("deleteImage", "false");
@@ -155,7 +151,6 @@ export default function MyAccountEdit() {
             "file",
             new Blob([], { type: "application/octet-stream" }) //빈 블롭 객체 보내서 File 타입 유지
           );
-          console.log("기존 이미지 O, 이미지 삭제 X, 파일 올리기 X");
         }
       }
 

@@ -43,7 +43,6 @@ export const getRecommendsItems = async (weatherId: number) => {
 
 // 홈페이지에 렌더링되는 추천 리스트에 있는 추천 아이템 삭제
 export const deleteRecommendWishlistItem = async (naverProductId: number) => {
-  console.log("삭제할 네이버 프로덕트 아이디:", naverProductId);
   await api.delete(`/api/recommends/wishlist/${naverProductId}`);
 };
 
@@ -77,9 +76,7 @@ export const getWishlistItemById = async (id: number) => {
 
 // 생성
 export const createWishlistItem = async (item: NaverProduct) => {
-  console.log("아이템생성", item);
   const response = await api.post("/api/wishlist", item);
-  console.log("response생성", response);
   return response.data;
 };
 

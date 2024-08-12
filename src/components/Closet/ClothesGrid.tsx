@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ClothesItem from "@components/clothes/ClothesItem";
+import ClosetItem from "@components/Closet/ClosetItem";
 import { ClothesItem as ClothesItemType } from "@api/clothesApi";
 
 // interface OOTDItem {
@@ -16,12 +16,17 @@ interface ClothesGridProps {
   onDeleteClick: (id: number) => void;
 }
 
-const ClothesGrid: React.FC<ClothesGridProps> = ({ items, onItemClick, onEditClick, onDeleteClick }) => {
+const ClothesGrid: React.FC<ClothesGridProps> = ({
+  items,
+  onItemClick,
+  onEditClick,
+  onDeleteClick,
+}) => {
   return (
     <ContentsMain>
       {items.map((item) => (
         <ClothesItemWrapper key={item.id} onClick={() => onItemClick(item.id)}>
-          <ClothesItem
+          <ClosetItem
             color={item.color}
             type={item.type}
             image={item.image}
@@ -31,7 +36,9 @@ const ClothesGrid: React.FC<ClothesGridProps> = ({ items, onItemClick, onEditCli
           />
           <ButtonContainer>
             <EditButton onClick={() => onEditClick(item.id)}>수정</EditButton>
-            <DeleteButton onClick={() => onDeleteClick(item.id)}>삭제</DeleteButton>
+            <DeleteButton onClick={() => onDeleteClick(item.id)}>
+              삭제
+            </DeleteButton>
           </ButtonContainer>
         </ClothesItemWrapper>
       ))}

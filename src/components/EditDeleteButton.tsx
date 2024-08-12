@@ -24,7 +24,6 @@ export default function EditDeleteButton({
 
   // 수정 클릭 했을 때 실행 되는 함수
   const handleEdit = () => {
-    console.log("수정");
     navigate(editPath);
     closeModal();
   };
@@ -32,7 +31,6 @@ export default function EditDeleteButton({
   //삭제 클릭 했을 때 실행되는 함수
   const handleDelete = () => {
     alert("정말 삭제하시겠습니까?");
-    console.log("삭제할 boardId", id);
     onMutateDelete(id);
     closeModal();
   };

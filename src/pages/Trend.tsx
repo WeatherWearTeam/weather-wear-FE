@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import AddButton from "@components/AddButton";
 import { trendingIcon } from "@shared/icons";
-import TrendGrid from "@components/Trend/TrendGrid";
 import { useLocation, useNavigate } from "react-router-dom";
 import Search from "@components/Search";
 import { useTrendItems } from "@queries/trendQueries";
@@ -16,6 +15,7 @@ import clothesTypeList, {
 } from "@shared/clothesTypeList";
 import Select from "@components/Select/Select";
 import ColorPickBar from "@components/Color/ColorPickBar";
+import TrendGrid from "@components/trend/TrendGrid";
 
 interface SelectedClothesState {
   type: ClothesType | null;
@@ -78,8 +78,6 @@ function Trend() {
     type: ClothesType,
     typeKorean: ClothesKoreanType
   ) => {
-    console.log("✅", selectedClothesType);
-
     setSelectedClothesType((prev) => ({
       ...prev,
       type,
@@ -119,7 +117,6 @@ function Trend() {
   const { trendItemsData, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useTrendItems(searchKeys);
 
-  console.log("🍧Trend Items Data🍧", trendItemsData);
   //trendItemsData.pageParams: [null]
   //trendItemsData.pages는 배열, 각 인덱스 마다 데이터 8개씩 들어 오게 됨 -> 배열 안에 배열
 

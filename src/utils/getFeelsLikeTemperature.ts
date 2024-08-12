@@ -1,5 +1,3 @@
-import { WeatherData } from "@api/weatherApi";
-
 // 여름 체감온도 (Heat Index) 계산 함수
 function calculateHeatIndex(temperature, humidity) {
   if (temperature === null || humidity === null) return null;

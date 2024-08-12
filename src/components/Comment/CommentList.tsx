@@ -1,5 +1,3 @@
-// import Button from "@components/Button";
-// import useGetCommentList from "@hooks/useGetCommentList";
 import CommentItem from "@components/Comment/CommentItem";
 import Icon from "@components/Icon";
 import { Comment } from "@queries/commentQueries";
@@ -15,15 +13,13 @@ interface CommentListProps {
 }
 
 export default function CommentList({
-  boardId,
+  // boardId,
   comments,
   isSuccessComments,
   myId,
 }: CommentListProps) {
   //투두에 달린 댓글 전체 리스트
   // const { id: boardId } = useParams();
-
-  console.log(comments);
 
   // 현재 수정 중인 댓글 id 확인용 상태
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);

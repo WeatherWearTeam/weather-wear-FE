@@ -16,7 +16,12 @@ import styled from "styled-components";
 export default function MyAccount() {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
-  const { me, isError, isPending, isSuccess } = useMe(isLoggedIn); //처음 Layout nav 바에서 가져올 때, 캐싱한 것 ㅇㅇㅇ...을쓰면 되지 않을런지?
+  const {
+    me,
+    //  isError,
+    //   isPending,
+    //    isSuccess
+  } = useMe(isLoggedIn); //처음 Layout nav 바에서 가져올 때, 캐싱한 것 ㅇㅇㅇ...을쓰면 되지 않을런지?
 
   const getGender = (gender: string) => {
     switch (gender) {

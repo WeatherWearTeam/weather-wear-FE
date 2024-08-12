@@ -16,7 +16,12 @@ export default function SignupForm() {
     GENDER: "",
   });
 
-  const { mutateCreateUser, isError, isPending, isSuccess } = useCreateUser();
+  const {
+    mutateCreateUser,
+    isError,
+    //  isPending,
+    //   isSuccess
+  } = useCreateUser();
   const { alerts, clearAlert } = useAlertStore();
 
   const changeNewUser = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +42,6 @@ export default function SignupForm() {
       gender: signUpUser.GENDER,
     };
 
-    // console.log(newUser);
     mutateCreateUser(newUser);
   };
 
