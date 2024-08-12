@@ -5,7 +5,7 @@ import colorTypeList, { ClothesColorType } from "@shared/colorTypeList";
 interface ColorBarProps {
   size?: "s" | "m";
   onClick?: (color: ClothesColorType) => void;
-  selectedColor?: ClothesColorType;
+  selectedColor: ClothesColorType | null;
 }
 
 function ColorBar({ size = "s", onClick, selectedColor }: ColorBarProps) {

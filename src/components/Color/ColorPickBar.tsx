@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 interface ColorPickBarProps {
   onClick?: (color: ClothesColorType) => void;
-  selectedColor?: ClothesColorType;
+  selectedColor: ClothesColorType | null;
 }
 
 export default function ColorPickBar({
