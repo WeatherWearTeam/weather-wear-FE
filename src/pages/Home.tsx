@@ -11,7 +11,7 @@ import useModal from "@hooks/useModal";
 import { useMe } from "@queries/userQueries";
 import WeatherRecommendation from "@components/Home/Weather/WeatherRecommendation";
 import MyClosetRecommendation from "@components/Home/MyClosetRecommendation";
-import OOTDTrend from "@components/trend/OOTDTrend";
+import OOTDTrend from "@components/Trend/OOTDTrend";
 
 const Home: React.FC = () => {
   const [liked, setLiked] = useState<boolean[]>([false, false, false]);

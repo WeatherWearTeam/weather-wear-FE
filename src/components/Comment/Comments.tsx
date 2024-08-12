@@ -1,7 +1,6 @@
 import CommentForm from "@components/Comment/CommentForm";
 import CommentList from "@components/Comment/CommentList";
 import {
-  Comment,
   useCommentsByBoardId,
   useCreateComment,
 } from "@queries/commentQueries";
@@ -22,7 +21,10 @@ export default function Comments({ boardId }: CommentsProps) {
   } = useCreateComment();
 
   //comment 생성
-  const handleCreateComment = (newComment: Omit<Comment, "id">) => {
+  const handleCreateComment = (newComment: {
+    boardId: number;
+    contents: string;
+  }) => {
     mutateCreateComment(newComment);
   };
 

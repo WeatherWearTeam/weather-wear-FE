@@ -4,9 +4,9 @@ import Input from "@components/Input";
 import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useAuth from "@queries/useAuth";
-import useKakao from "@queries/useKakao";
+// import useKakao from "@queries/useKakao";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -49,7 +49,6 @@ export default function Login() {
   //     console.log(kakaoLoginAuthData);
   //   }
   // }, [isKakaoLoginClicked, kakaoLoginAuthData]);
-
 
   return (
     <Container>
@@ -136,9 +135,9 @@ export default function Login() {
               </SeparateBorder>
               {/* SNS 계정으로 로그인 */}
               <SocialLoginButton
-                onClick={() => {
-                  setIsKakaoLoginClicked((prev) => !prev);
-                }}
+                // onClick={() => {
+                //   setIsKakaoLoginClicked((prev) => !prev);
+                // }}
               >
                 <Icon icon={kakaoIcon} />
               </SocialLoginButton>
