@@ -140,7 +140,10 @@ function Trend() {
               />
             </SelectWrapper>
             <SelectWrapper>
-              <ColorPickBar onClick={handleColorClick} />
+              <ColorPickBar
+                onClick={handleColorClick}
+                selectedColor={selectedColor}
+              />
             </SelectWrapper>
             <SearchWrapper>
               <Search onSearchKeyword={handleKeywordSubmit} />
@@ -207,11 +210,10 @@ const MainTitleContainer = styled.div`
 `;
 
 const MainTitleTop = styled.div`
-  color: black;
-  text-align: left;
   margin: 0;
-  padding: 0 20px;
   font-size: x-large;
+  font-weight: bold;
+  color: black;
   box-sizing: border-box;
   display: flex;
   align-items: center;

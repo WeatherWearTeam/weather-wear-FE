@@ -157,43 +157,14 @@ const ContentDescription = styled.p`
   margin-bottom: 1rem;
 `;
 
-///////////////////
-
-// const GridContainer = styled.div`
-//   padding-top: 3rem;
-//   height: 50rem;
-//   display: grid;
-//   grid-template-columns: repeat(4, 1fr);
-//   gap: 3rem;
-//   /* @media (max-width: 900px) {
-//     grid-template-columns: repeat(2, 1fr);
-//   } */
-
-//   @media (max-width: 900px) {
-//     grid-template-rows: 2fr;
-//   }
-
-//   @media (max-width: 900px) {
-//   }
-
-//   @media (max-width: 600px) {
-//     height: 100%;
-//   }
-// `;
-
 const ContentsMain = styled.div`
-  /* max-width: 1090px; */
-  /* display: grid; */
-  /* grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: auto;
-  gap: 2rem;
-  padding: 0 2rem;
- */
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 3rem;
+
+  gap: 4rem;
   object-fit: cover;
 
   @media (max-width: 900px) {
@@ -203,7 +174,7 @@ const ContentsMain = styled.div`
 
 const ImageWrapper = styled.div`
   cursor: pointer;
-  width: 25rem;
+  width: 26rem;
   height: 35rem;
   border: ${({ theme }) => theme.borders.containerBorder};
   /* @media (max-width: 600px) {
@@ -218,15 +189,15 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-const Column = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  border: ${({ theme }) => theme.borders.containerBorder};
-  @media (max-width: 600px) {
-    /* grid-template-columns: 1fr; */
-    flex-wrap: wrap;
-  }
-`;
+// const Column = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 3rem;
+//   border: ${({ theme }) => theme.borders.containerBorder};
+//   @media (max-width: 600px) {
+//     /* grid-template-columns: 1fr; */
+//     flex-wrap: wrap;
+//   }
+// `;

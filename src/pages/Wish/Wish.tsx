@@ -90,7 +90,7 @@ function Wish() {
       queryParams.delete("type");
     }
 
-    navigate(`?${(queryParams.toString(), { replace: true })}`);
+    navigate(`?${queryParams.toString()}`, { replace: true });
   }, [selectedClothesType.type, navigate, location.search]);
 
   //////////////////////////////////////////////////////////////

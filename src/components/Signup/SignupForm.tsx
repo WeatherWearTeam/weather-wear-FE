@@ -1,6 +1,8 @@
+import AlertText from "@components/AlertText";
 import Button from "@components/Button";
 import Input from "@components/Input";
 import { useCreateUser } from "@queries/userQueries";
+import useAlertStore from "@store/store";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -15,9 +17,11 @@ export default function SignupForm() {
   });
 
   const { mutateCreateUser, isError, isPending, isSuccess } = useCreateUser();
+  const { alerts, clearAlert } = useAlertStore();
 
   const changeNewUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    clearAlert("signupError"); // 입력 시 알림 클리어
     setSignUpUser({ ...signUpUser, [name]: value });
   };
 
@@ -60,7 +64,6 @@ export default function SignupForm() {
             onChange={changeNewUser}
           />
         </FlexColum>
-        {/* <SelectButton selectedOption="위치" /> */}
       </FlexRow>
 
       <FlexRow>
@@ -117,6 +120,9 @@ export default function SignupForm() {
           </InputContainer>
         </Fieldset>
       </FlexRow>
+      {isError && alerts["signupError"] && (
+        <AlertText>{alerts["signupError"]}</AlertText>
+      )}
       <Button type="submit">가입하기</Button>
     </Form>
   );

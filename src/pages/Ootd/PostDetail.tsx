@@ -46,129 +46,131 @@ export default function PostDetail() {
         {/* <Title>나의 OOTD</Title> */}
         <SubTitle>OOTD</SubTitle>
       </TitleContainer>
-      <GridContainer>
-        <Column>
-          {isSuccess && board && (
-            <ImageWrapper>
-              <img src={board.image} alt="ootd 사진" />
-              {/* 이미지 로드 실패 시 예외 처리 필요 */}
-            </ImageWrapper>
-          )}
-          <FlexRowIconContainer>
+      <GridWrapper>
+        <GridContainer>
+          <Column>
             {isSuccess && board && (
-              <>
-                {!board.isPrivate ? (
-                  <Icon icon={eyeIcon} />
-                ) : (
-                  <Icon icon={eyeOffIcon} />
-                )}
-                <span>조회수 {board.views}</span>
-                {isClickedLike ? (
-                  <Icon icon={heartFillIcon} />
-                ) : (
-                  <Icon icon={heartIcon} />
-                )}
-                <span>좋아요 {board.boardLikesCount}</span>{" "}
-              </>
+              <ImageWrapper>
+                <img src={board.image} alt="ootd 사진" />
+                {/* 이미지 로드 실패 시 예외 처리 필요 */}
+              </ImageWrapper>
             )}
-          </FlexRowIconContainer>
-          {/*  */}
-        </Column>
-
-        <Column>
-          {/*  */}
-          <ContentContainer>
-            {/*  */}
-            <FlexColumn>
-              {/*  */}
-              <FlexRow>
-                <FlexRowUser>
-                  <UserImage>
-                    <AvatarImg src={board?.user.image} />
-                  </UserImage>
-                  <FlexColumnUser>
-                    <FlexRowUser>
-                      <UserInfoText>
-                        {board?.user.nickname} ·{" "}
-                        {getTimesAgo(board?.createdAt as string)}
-                      </UserInfoText>
-                    </FlexRowUser>
-                    {isSuccess && board && (
-                      <WeatherInfo>
-                        <Location>
-                          {atIcon}
-                          <span>{board.address}</span>
-                        </Location>
-                        <span>{board.weather.tmp}°C </span>
-                        <span>{getSkyState(board.weather.sky)}</span>
-                      </WeatherInfo>
-                    )}
-                  </FlexColumnUser>
-                </FlexRowUser>
-                <IconWrapper>
-                  {isSuccess && board.weather ? (
-                    <WeatherStateIcon
-                      pty={board.weather.pty}
-                      sky={board.weather.sky}
-                    />
+            <FlexRowIconContainer>
+              {isSuccess && board && (
+                <>
+                  {!board.isPrivate ? (
+                    <Icon icon={eyeIcon} />
                   ) : (
-                    <Icon icon={weatherSunIcon} />
+                    <Icon icon={eyeOffIcon} />
                   )}
-                </IconWrapper>
-              </FlexRow>
-              {/*  */}
+                  <span>조회수 {board.views}</span>
+                  {isClickedLike ? (
+                    <Icon icon={heartFillIcon} />
+                  ) : (
+                    <Icon icon={heartIcon} />
+                  )}
+                  <span>좋아요 {board.boardLikesCount}</span>{" "}
+                </>
+              )}
+            </FlexRowIconContainer>
+            {/*  */}
+          </Column>
+
+          <Column>
+            {/*  */}
+            <ContentContainer>
               {/*  */}
               <FlexColumn>
-                {isSuccess && board && (
-                  <>
-                    <ContentTitle>{board?.title}</ContentTitle>
-                    <ContentText>{board?.contents}</ContentText>
-                  </>
-                )}
+                {/*  */}
+                <FlexRow>
+                  <FlexRowUser>
+                    <UserImage>
+                      <AvatarImg src={board?.user.image} />
+                    </UserImage>
+                    <FlexColumnUser>
+                      <FlexRowUser>
+                        <UserInfoText>
+                          {board?.user.nickname} ·{" "}
+                          {getTimesAgo(board?.createdAt as string)}
+                        </UserInfoText>
+                      </FlexRowUser>
+                      {isSuccess && board && (
+                        <WeatherInfo>
+                          <Location>
+                            {atIcon}
+                            <span>{board.address}</span>
+                          </Location>
+                          <span>{board.weather.tmp}°C </span>
+                          <span>{getSkyState(board.weather.sky)}</span>
+                        </WeatherInfo>
+                      )}
+                    </FlexColumnUser>
+                  </FlexRowUser>
+                  <IconWrapper>
+                    {isSuccess && board.weather ? (
+                      <WeatherStateIcon
+                        pty={board.weather.pty}
+                        sky={board.weather.sky}
+                      />
+                    ) : (
+                      <Icon icon={weatherSunIcon} />
+                    )}
+                  </IconWrapper>
+                </FlexRow>
+                {/*  */}
+                {/*  */}
+                <FlexColumn>
+                  {isSuccess && board && (
+                    <>
+                      <ContentTitle>{board?.title}</ContentTitle>
+                      <ContentText>{board?.contents}</ContentText>
+                    </>
+                  )}
+                </FlexColumn>
+                {/*  */}
               </FlexColumn>
               {/*  */}
-            </FlexColumn>
+              <FlexRow>
+                <ClothesTagWrapper>
+                  {isSuccess &&
+                    board &&
+                    board?.tags.map(
+                      (tag: {
+                        id: number;
+                        color: ClothesColorType;
+                        type: ClothesType;
+                      }) => (
+                        <ClothesTag
+                          key={tag.id}
+                          color={tag.color}
+                          type={tag.type}
+                        />
+                      )
+                    )}
+                </ClothesTagWrapper>
+                {isSuccess && board && board.user.id === me?.id && (
+                  <EditDeleteButton
+                    id={board.id}
+                    editPath={`/ootd/${board.id}/edit`}
+                    onMutateDelete={mutateDeleteBoard}
+                  />
+                )}
+                {/* 여기는 navigate 하는 함수 보내기 */}
+              </FlexRow>
+              {/*  */}
+            </ContentContainer>
             {/*  */}
-            <FlexRow>
-              <ClothesTagWrapper>
-                {isSuccess &&
-                  board &&
-                  board?.tags.map(
-                    (tag: {
-                      id: number;
-                      color: ClothesColorType;
-                      type: ClothesType;
-                    }) => (
-                      <ClothesTag
-                        key={tag.id}
-                        color={tag.color}
-                        type={tag.type}
-                      />
-                    )
-                  )}
-              </ClothesTagWrapper>
-              {isSuccess && board && board.user.id === me?.id && (
-                <EditDeleteButton
-                  id={board.id}
-                  editPath={`/ootd/${board.id}/edit`}
-                  onMutateDelete={mutateDeleteBoard}
-                />
-              )}
-              {/* 여기는 navigate 하는 함수 보내기 */}
-            </FlexRow>
-            {/*  */}
-          </ContentContainer>
-          {/*  */}
-        </Column>
+          </Column>
 
-        <FullWidthColumn>
-          {/*  */}
-          <CommentWrapper>
-            <Comments boardId={board?.id as number} />
-          </CommentWrapper>
-          {/*  */}
-        </FullWidthColumn>
-      </GridContainer>
+          <FullWidthColumn>
+            {/*  */}
+            <CommentWrapper>
+              <Comments boardId={board?.id as number} />
+            </CommentWrapper>
+            {/*  */}
+          </FullWidthColumn>
+        </GridContainer>
+      </GridWrapper>
     </Container>
   );
 }
@@ -336,8 +338,19 @@ const SubTitle = styled.div`
   font-size: large;
 `;
 
+const GridWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const GridContainer = styled.div`
   height: 100%;
+  max-width: 100rem;
+
   display: grid;
   grid-template-columns: 2fr 3fr; /* 2:3 비율의 컬럼 */
   grid-template-rows: auto auto; /* 행의 높이는 콘텐츠에 맞게 자동 조정 */

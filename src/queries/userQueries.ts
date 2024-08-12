@@ -7,6 +7,7 @@ import {
   updatePassword,
   updateUser,
 } from "@api/userApi";
+import useAlertStore from "@store/store";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 export const useCreateUser = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { setAlert } = useAlertStore();
 
   const {
     mutate: mutateCreateUser,
@@ -32,15 +34,8 @@ export const useCreateUser = () => {
       let errorMessage = "오류가 발생했습니다.\n회원가입을 다시 시도해 주세요.";
       if (error.response) {
         errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
       }
-
-      //   //   dispatch(
-      //   //     setAlert({
-      //   //       formId: "signForm",
-      //   //       message: errorMessage,
-      //   //     })
-      //   //   );
+      setAlert("signupError", errorMessage);
     },
   });
 
@@ -52,6 +47,7 @@ export const useCreateUser = () => {
 export const useDeleteUser = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { setAlert } = useAlertStore();
 
   const {
     mutate: mutateDeleteUser,
@@ -73,15 +69,8 @@ export const useDeleteUser = () => {
         "오류가 발생했습니다.\n회원 탈퇴를 다시 시도해 주세요.";
       if (error.response) {
         errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
       }
-
-      //   //   dispatch(
-      //   //     setAlert({
-      //   //       formId: "signForm",
-      //   //       message: errorMessage,
-      //   //     })
-      //   //   );
+      setAlert("userDelete", errorMessage);
     },
   });
 
