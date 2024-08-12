@@ -166,10 +166,18 @@ export const updateBoard = async (updatedBoard: FormData) => {
 ////////////////////////////////////////////////////////////////////////////////////
 
 // PUT ❤️ 좋아요 toggle 업데이트하기
+// export const toggleHeartBoard = async (boardId: number) => {
+//   const currentBoard = await getBoardById(boardId);
+//   const updatedBoard = { ...currentBoard, isLike: !currentBoard.isLike };
+//   const response = await api.put(`/api/boards/${boardId}`, updatedBoard);
+//   return response.data;
+// };
 export const toggleHeartBoard = async (boardId: number) => {
-  const currentBoard = await getBoardById(boardId);
-  const updatedBoard = { ...currentBoard, isLike: !currentBoard.isLike };
-  const response = await api.put(`/api/boards/${boardId}`, updatedBoard);
+  console.log("-----------boardId---------", boardId);
+  // const currentBoard = await getBoardById(boardId);
+  // const updatedBoard = { ...currentBoard, isLike: !currentBoard.isLike };
+  const response = await api.post(`/api/boards/likes/${boardId}`);
+  console.log("response", response);
   return response.data;
 };
 

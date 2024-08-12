@@ -2,7 +2,11 @@ import { getTimesAgo } from "@utils/getTime";
 import { getSkyState } from "@utils/getWeather";
 import Comments from "@components/Comment/Comments";
 import Icon from "@components/Icon";
-import { useBoardById, useDeleteBoard } from "@queries/boardQueries";
+import {
+  useBoardById,
+  useDeleteBoard,
+  useToggleLikeBoard,
+} from "@queries/boardQueries";
 import {
   atIcon,
   eyeIcon,
@@ -15,26 +19,45 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import EditDeleteButton from "@components/EditDeleteButton";
 import ClothesTag from "@components/ClothesTag";
-
 import { ClothesType } from "@shared/clothesTypeList";
 import { ClothesColorType } from "@shared/colorTypeList";
 import useAuth from "@queries/useAuth";
 import { useMe } from "@queries/userQueries";
 import WeatherStateIcon from "@components/Weather/WeatherStateIcon";
+import LikeButton from "@components/LikeButton";
+import { useEffect, useState } from "react";
 
 export default function PostDetail() {
   //❌ 좋아요 기능 아직 구현 안함 ->  근우님꺼 가져다 쓰기 ㅇㅇ
-  const isClickedLike = false;
+  const { mutateToggleLikeBoard } = useToggleLikeBoard();
+  const [isClickedLike, setIsClickedLike] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
 
   //////////////////////////////////////////////////////////////////
   const { id: boardId } = useParams(); //현재 Board id url에서 가져오기
-
   const { isLoggedIn } = useAuth();
   const { me } = useMe(isLoggedIn);
-
   const { board, isPending, isError, isSuccess } = useBoardById(
     Number(boardId)
   );
+
+  useEffect(() => {
+    if (board) {
+      setLikesCount(board.boardLikesCount);
+    }
+    if (board?.checkLike) {
+      setIsClickedLike(true);
+    } else if (!board?.checkLike) {
+      setIsClickedLike(false);
+    }
+  }, [board]);
+
+  const handleLikeClick = () => {
+    console.log("하트가 클릭");
+    // 서버에 좋아요 상태 전송
+    mutateToggleLikeBoard(Number(boardId));
+  };
+
   //🌈 isPending, isError, isSuccess 값 사용해서 UX 개선하기
 
   console.log("🍧디테일 페이지 데이터", board);
@@ -63,12 +86,8 @@ export default function PostDetail() {
                   <Icon icon={eyeOffIcon} />
                 )}
                 <span>조회수 {board.views}</span>
-                {isClickedLike ? (
-                  <Icon icon={heartFillIcon} />
-                ) : (
-                  <Icon icon={heartIcon} />
-                )}
-                <span>좋아요 {board.boardLikesCount}</span>{" "}
+                <LikeButton active={isClickedLike} onClick={handleLikeClick} />
+                <span>좋아요 {likesCount}</span>
               </>
             )}
           </FlexRowIconContainer>
@@ -298,6 +317,7 @@ const FlexRowIconContainer = styled.div`
   flex-direction: row;
   gap: 1rem;
   padding: 1rem 0;
+  align-items: center;
   span {
     font-size: small;
   }
