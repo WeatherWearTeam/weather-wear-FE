@@ -8,9 +8,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface SelectProps {
-  list: { key: string; value: string }[];
+  list: { key: ClothesType; value: ClothesKoreanType }[];
   onClick: (key: ClothesType, value: ClothesKoreanType) => void;
-  value: string | null;
+  value: ClothesKoreanType;
 }
 
 export default function Select({ list, onClick, value }: SelectProps) {

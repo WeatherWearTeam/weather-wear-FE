@@ -1,11 +1,10 @@
 import api from "@api/api";
 
-//비밀번호 리셋 메일 발송
-
 export interface FindCodeRequest {
   email: string;
 }
 
+//비밀번호 리셋 메일 발송
 export const createFindCode = async (email: FindCodeRequest) => {
   try {
     const response = await api.post(`/api/password/forgot`, email, {

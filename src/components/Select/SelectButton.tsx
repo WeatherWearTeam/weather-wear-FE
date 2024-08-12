@@ -1,4 +1,3 @@
-import Icon from "@components/Icon";
 import { arrowDownIcon } from "@shared/icons";
 import styled from "styled-components";
 

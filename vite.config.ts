@@ -38,12 +38,12 @@ export default ({ mode }: configProps) => {
           secure: false, // SSL 인증서 검증 무시
         },
       },
-      "/kauth": {
-        target: "https://kauth.kakao.com", // 카카오 인증 서버 주소
-        changeOrigin: true, // 요청 헤더 host 필드 값을 대상 서버의 호스트 이름으로 변경
-        secure: true, // SSL 인증서 검증 활성화 (SSL인증서 사용을 위해 true로 설정)
-        rewrite: (path: string) => path.replace(/^\/kauth/, "/oauth/authorize"), // "/kauth"를 "/oauth/authorize"로 변경
-      },
+      // "/kauth": {
+      //   target: "https://kauth.kakao.com", // 카카오 인증 서버 주소
+      //   changeOrigin: true, // 요청 헤더 host 필드 값을 대상 서버의 호스트 이름으로 변경
+      //   secure: true, // SSL 인증서 검증 활성화 (SSL인증서 사용을 위해 true로 설정)
+      //   rewrite: (path: string) => path.replace(/^\/kauth/, "/oauth/authorize"), // "/kauth"를 "/oauth/authorize"로 변경
+      // },
     },
 
     //절대경로 설정

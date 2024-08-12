@@ -1,7 +1,5 @@
-import { WeatherData } from "@api/weatherApi";
-
 // 여름 체감온도 (Heat Index) 계산 함수
-function calculateHeatIndex(temperature, humidity) {
+function calculateHeatIndex(temperature: number, humidity: number) {
   if (temperature === null || humidity === null) return null;
 
   const T = temperature; // 기온 (섭씨)
@@ -22,7 +20,7 @@ function calculateHeatIndex(temperature, humidity) {
 }
 
 // 겨울 체감온도 (Wind Chill) 계산 함수
-function calculateWindChill(temperature, windSpeed) {
+function calculateWindChill(temperature: number, windSpeed: number) {
   if (temperature === null || windSpeed === null) return null;
 
   const T = temperature; // 기온 (섭씨)

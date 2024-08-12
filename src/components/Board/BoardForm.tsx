@@ -21,7 +21,7 @@ import styled, { css } from "styled-components";
 
 interface ClothesTypeData {
   id: number;
-  color: ClothesColorType | null;
+  color: ClothesColorType;
   type: ClothesType | null;
   typeKorean: ClothesKoreanType | "옷 종류" | null;
 }
@@ -53,7 +53,7 @@ interface BoardFormProps {
 export default function BoardForm({
   data,
   isPending,
-  isError,
+  // isError,
   onUpdateBoard,
   onCreateBoard,
 }: BoardFormProps) {

@@ -37,12 +37,18 @@ const Home: React.FC = () => {
   }, []); //컴포넌트가 마운트될 때만 함수를 생성
 
   ////////////////////////////////////////////////////////
-  const { weatherData, isPendingWeather, isErrorWeather, isSuccessWeather } =
-    useWeatherData(Number(addressInfo?.code));
+  const {
+    weatherData,
+    // , isPendingWeather, isErrorWeather
+    isSuccessWeather,
+  } = useWeatherData(Number(addressInfo?.code));
 
   console.log("===weatherId===", weatherId);
-  const { homeRecommendsData, isPending, isError, isSuccess } =
-    useHomeRecommendsItems(weatherId as number);
+  const {
+    homeRecommendsData,
+    // , isPending, isError
+    isSuccess,
+  } = useHomeRecommendsItems(weatherId as number);
 
   console.log(homeRecommendsData);
   //웨더 api 받아온 후 받아야 하므로 ✅직렬처리로 순서대로 api 요청 필요!

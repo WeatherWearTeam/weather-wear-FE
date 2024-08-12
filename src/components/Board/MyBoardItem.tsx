@@ -3,11 +3,11 @@ import ClothesTag from "@components/ClothesTag";
 import { getCreatedTime } from "@utils/getTime";
 import { getSkyState } from "@utils/getWeather";
 import { useNavigate } from "react-router-dom";
+import { UserBoardsResponse } from "@api/boardApi";
 
 interface MyBoardItemProps {
-  item?: any;
+  item: UserBoardsResponse;
   image: string;
-
   showTag?: boolean; // ClothesTag 표시 여부
   showData?: boolean; // ItemDataContainer 표시 여부
   showTitle?: boolean; // ItemTitle 표시 여부
@@ -21,6 +21,7 @@ function MyBoardItem({
   showTitle = false,
 }: MyBoardItemProps) {
   const navigate = useNavigate();
+
   return (
     <ContentsItem>
       <ImageWrapper onClick={() => navigate(`/ootd/${item.id}`)}>
@@ -40,7 +41,6 @@ function MyBoardItem({
             @{item.address} · {getSkyState(item.weather.sky)}
           </ItemCreatedAt>
           {showTitle && <ItemTitle>{item.title}</ItemTitle>}
-          {showTitle && <ContentsItemTitle>{item.type}</ContentsItemTitle>}
         </ItemDataContainer>
       )}
     </ContentsItem>
@@ -105,21 +105,3 @@ const ItemTitle = styled.h2`
   text-overflow: ellipsis;
   padding-top: 0.7rem;
 `;
-const ContentsItemTitle = styled.h2`
-  font-size: medium;
-  font-weight: bold;
-`;
-
-// const Color = styled.div<{ color: string }>`
-//   width: 1rem;
-//   height: 1rem;
-//   background-color: ${({ color, theme }) => theme.colors[color]};
-//   border: ${({ theme }) => theme.borders.buttonBorder};
-// `;
-
-// const Color = styled.div<{ color: string }>`
-//   width: 1rem;
-//   height: 1rem;
-//   background-color: ${({ color }) => color};
-//   border: ${({ theme }) => theme.borders.buttonBorder};
-// `;

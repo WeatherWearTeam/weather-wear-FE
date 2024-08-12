@@ -4,7 +4,7 @@ import Input from "@components/Input";
 import { kakaoIcon, weatherSunCloudyIcon } from "@shared/icons";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "@queries/useAuth";
 import useKakao from "@queries/useKakao";
 
@@ -19,7 +19,7 @@ export default function Login() {
     setLoginUser({ ...loginUser, [name]: value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!loginUser.username) {
@@ -37,20 +37,20 @@ export default function Login() {
     setLoginUser({ username: "", password: "" });
   };
 
-  const [isKakaoLoginClicked, setIsKakaoLoginClicked] = useState(false);
-  //카카오 로그인
-  const {
-    kakaoLoginAuthData,
-    isPendingKakaoLogin,
-    isErrorKakaoLogin,
-    isSuccessKakaoLogin,
-  } = useKakao(isKakaoLoginClicked);
+  // const [isKakaoLoginClicked, setIsKakaoLoginClicked] = useState(false);
+  // //카카오 로그인
+  // const {
+  //   kakaoLoginAuthData,
+  //   // isPendingKakaoLogin,
+  //   // isErrorKakaoLogin,
+  //   // isSuccessKakaoLogin,
+  // } = useKakao(isKakaoLoginClicked);
 
-  useEffect(() => {
-    if (isKakaoLoginClicked) {
-      console.log(kakaoLoginAuthData);
-    }
-  }, [isKakaoLoginClicked, kakaoLoginAuthData]);
+  // useEffect(() => {
+  //   if (isKakaoLoginClicked) {
+  //     console.log(kakaoLoginAuthData);
+  //   }
+  // }, [isKakaoLoginClicked, kakaoLoginAuthData]);
 
   return (
     <Container>

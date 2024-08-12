@@ -32,7 +32,7 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
   const { mutateDeleteRecommendWishlistItem } =
     useDeleteRecommendWishlistItem();
 
-  const handleLikeClick = (index: number, productId: number) => {
+  const handleLikeClick = (index: number) => {
     const updatedLiked = [...liked];
     const updatedWishlistIds = [...wishlistIds];
     updatedLiked[index] = !updatedLiked[index];
@@ -53,28 +53,27 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
           console.error("Error adding item:", error);
         },
       });
-
       //네이버 추천에서 삭제
-      //😎😎😎😎😎현재 undifined 뜨기 때문에 수정필요
-      mutateDeleteRecommendWishlistItem(data[index].productId);
-    } else {
-      // console.log("---😎인덱스ㅡㅡindex", index);
-      // const wishlistId = updatedWishlistIds[index];
-      // if (wishlistId !== null) {
-      //   mutateDeleteRecommendWishlistItem(productId, {
-      //     onSuccess: () => {
-      //       console.log("Item deleted successfully:", wishlistId);
-      //       // updatedWishlistIds[index] = null;
-      //       setWishlistIds(updatedWishlistIds);
-      //     },
-      //     onError: (error) => {
-      //       console.error("Error deleting item:", error);
-      //     },
-      //   });
-      // } else {
-      //   console.error("No valid wishlist ID to delete.");
-      // }
+      mutateDeleteRecommendWishlistItem(data[index].id);
     }
+    // else {
+    // console.log("---😎인덱스ㅡㅡindex", index);
+    // const wishlistId = updatedWishlistIds[index];
+    // if (wishlistId !== null) {
+    //   mutateDeleteRecommendWishlistItem(productId, {
+    //     onSuccess: () => {
+    //       console.log("Item deleted successfully:", wishlistId);
+    //       // updatedWishlistIds[index] = null;
+    //       setWishlistIds(updatedWishlistIds);
+    //     },
+    //     onError: (error) => {
+    //       console.error("Error deleting item:", error);
+    //     },
+    //   });
+    // } else {
+    //   console.error("No valid wishlist ID to delete.");
+    // }
+    // }
   };
 
   return (
@@ -119,7 +118,7 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
                     <LikeButtonWrapper>
                       <LikeButton
                         active={liked[index]}
-                        onClick={() => handleLikeClick(index, index)}
+                        onClick={() => handleLikeClick(index)}
                       />
                     </LikeButtonWrapper>
                   </NaverShopDataInfo>

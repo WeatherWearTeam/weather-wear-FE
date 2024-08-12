@@ -17,7 +17,10 @@ interface LayoutProps {
 function Layout({ children }: LayoutProps) {
   const { isLoggedIn, mutateLogout, isPendingLogout } = useAuth();
 
-  const { me, isError, isPending, isSuccess } = useMe(isLoggedIn); //isLoggedIn이 true일 때만 useMe 호출되도록
+  const {
+    me,
+    // , isError, isPending, isSuccess
+  } = useMe(isLoggedIn); //isLoggedIn이 true일 때만 useMe 호출되도록
   const { openModal, closeModal, isVisible } = useModal();
   const { dropdownPosition, divRef } = useDropdownPosition(isVisible);
 

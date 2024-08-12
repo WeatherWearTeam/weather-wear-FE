@@ -1,11 +1,4 @@
 import api from "@api/api";
-import { Comment } from "@queries/commentQueries";
-
-//유저 아이디별 코멘트 조회
-// export const fetchUserComments = async (userId: number) => {
-//   const response = await api.get(`/api/comments?userId=${userId}`);
-//   return response.data;
-// };
 
 // POST Comment 생성
 export interface CreateCommentRequest {

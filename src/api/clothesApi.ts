@@ -31,9 +31,6 @@ export const getClothesItems = async (searchKeys: SearchKeysRequest) => {
       },
     });
 
-
-
-    
     return response.data;
   } catch (error) {
     console.log(error);
@@ -41,19 +38,20 @@ export const getClothesItems = async (searchKeys: SearchKeysRequest) => {
   }
 };
 
-
+export interface ClothesItemByIdResponse {
+  id: number;
+  image: string;
+  color: ClothesColorType;
+  type: ClothesType;
+}
 // 개별 데이터 조회 //하나씩 수정할 때 필요함
-export const getClothesItemById = async (
-  id: number
-): Promise<ClothesItemsResponse> => {
+export const getClothesItemById = async (id: number) => {
   const response = await api.get(`/api/clothes/${id}`);
   return response.data;
 };
 
 // 생성
-export const createClothesItem = async (
-  formData: FormData
-): Promise<ClothesItemsResponse> => {
+export const createClothesItem = async (formData: FormData) => {
   const response = await api.post("/api/clothes", formData, {
     headers: {
       "Content-Type": "multipart/form-data",

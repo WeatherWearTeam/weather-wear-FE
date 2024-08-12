@@ -275,7 +275,7 @@ export const useToggleLikeBoard = () => {
     mutate: mutateToggleLikeBoard,
     isPending,
     isError,
-    isSuccess,
+    // isSuccess,
   } = useMutation({
     mutationFn: toggleHeartBoard,
     onSuccess: (_, boardId) => {
