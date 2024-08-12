@@ -110,7 +110,7 @@ function Closet() {
       queryParams.delete("color");
     }
 
-    navigate(`?${(queryParams.toString(), { replace: true })}`);
+    navigate(`?${queryParams.toString()}`, { replace: true });
   }, [searchKeys, navigate, location.search]);
 
   const { clothesItems, isPending, isError, isSuccess } =
@@ -127,7 +127,10 @@ function Closet() {
           />
         </SelectWrapper>
         <SelectWrapper>
-          <ColorPickBar onClick={handleColorClick} />
+          <ColorPickBar
+            onClick={handleColorClick}
+            selectedColor={selectedColor}
+          />
         </SelectWrapper>
       </HeaderContainer>
       {isSuccess && clothesItems?.content && (

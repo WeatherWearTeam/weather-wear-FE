@@ -77,7 +77,7 @@ function Posts() {
       queryParams.delete("keyword");
     }
 
-    navigate(`?${(queryParams.toString(), { replace: true })}`);
+    navigate(`?${queryParams.toString()}`, { replace: true });
   }, [searchKeys, navigate, location.search]);
 
   //////////////////////////////////////////////////////////////
