@@ -218,6 +218,56 @@ export const useUpdateBoard = () => {
 
 ///////////////////////////////////////////////////////////////
 
+// export const useToggleLikeBoard = () => {
+//   const queryClient = useQueryClient();
+
+//   const {
+//     mutate: mutateToggleLikeBoard,
+//     isPending,
+//     isError,
+//   } = useMutation({
+//     mutationFn: toggleHeartBoard,
+//     onSuccess: (_, boardId) => {
+//       queryClient.invalidateQueries({ queryKey: ["boards"] });
+//       queryClient.invalidateQueries({ queryKey: ["board", boardId] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
+//     },
+//     onError: (error: AxiosError) => {
+//       let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
+//       if (error.response) {
+//         errorMessage = `${error.response.data}`;
+//         console.log(errorMessage);
+//       }
+//     },
+//   });
+
+//   return { mutateToggleLikeBoard, isPending, isError };
+// };
+
+///////////////////////////////////////////////////////////////
+// export const useToggleLikeBoard = () => {
+//   const queryClient = useQueryClient();
+
+//   const {
+//     mutate: mutateToggleLikeBoard,
+//     isPending,
+//     isError,
+//   } = useMutation({
+//     mutationFn: toggleHeartBoard,
+//     onSuccess: (_, boardId) => {
+//       queryClient.invalidateQueries({ queryKey: ["boards"] });
+//       queryClient.invalidateQueries({ queryKey: ["board", boardId] });
+//     },
+//     onError: (error: AxiosError) => {
+//       let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
+//       if (error.response) {
+//         errorMessage = `${error.response.data}`;
+//         console.log(errorMessage);
+//       }
+//     },
+//   });
+
+//   return { mutateToggleLikeBoard, isPending, isError };
+// };
 export const useToggleLikeBoard = () => {
   const queryClient = useQueryClient();
 
@@ -225,11 +275,12 @@ export const useToggleLikeBoard = () => {
     mutate: mutateToggleLikeBoard,
     isPending,
     isError,
+    isSuccess,
   } = useMutation({
     mutationFn: toggleHeartBoard,
     onSuccess: (_, boardId) => {
       queryClient.invalidateQueries({ queryKey: ["boards"] });
-      queryClient.invalidateQueries({ queryKey: ["board", boardId] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
+      queryClient.invalidateQueries({ queryKey: ["board", boardId] });
     },
     onError: (error: AxiosError) => {
       let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
@@ -242,4 +293,3 @@ export const useToggleLikeBoard = () => {
 
   return { mutateToggleLikeBoard, isPending, isError };
 };
-///////////////////////////////////////////////////////////////

@@ -27,8 +27,8 @@ const beating = keyframes`
 `;
 
 const StyledLikeButton = styled.button<{ $isActive: boolean }>`
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   background: none;
   cursor: pointer;
   border: 0;
