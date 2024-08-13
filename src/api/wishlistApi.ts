@@ -33,7 +33,7 @@ export type WishlistResponse = {
 //네이버 추천 아이템 가져오기
 export const getRecommendsItems = async (weatherId: number) => {
   try {
-    const response = await api.get(`/api/recommends?id=${weatherId}`);
+    const response = await api.get(`recommends?id=${weatherId}`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -43,7 +43,7 @@ export const getRecommendsItems = async (weatherId: number) => {
 
 // 홈페이지에 렌더링되는 추천 리스트에 있는 추천 아이템 삭제
 export const deleteRecommendWishlistItem = async (naverProductId: number) => {
-  await api.delete(`/api/recommends/wishlist/${naverProductId}`);
+  await api.delete(`recommends/wishlist/${naverProductId}`);
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ export interface WishSearchKeysRequest {
 
 export const getWishlistItems = async (searchKeys: WishSearchKeysRequest) => {
   try {
-    const response = await api.get("/api/wishlist", {
+    const response = await api.get("wishlist", {
       params: {
         page: searchKeys.page - 1, //페이네이션 실제로 0부터 시작되기 때문
         type: searchKeys.type,
@@ -70,17 +70,17 @@ export const getWishlistItems = async (searchKeys: WishSearchKeysRequest) => {
 
 // 개별 데이터 조회
 export const getWishlistItemById = async (id: number) => {
-  const response = await api.get(`/api/wishlist/${id}`);
+  const response = await api.get(`wishlist/${id}`);
   return response.data;
 };
 
 // 생성
 export const createWishlistItem = async (item: NaverProduct) => {
-  const response = await api.post("/api/wishlist", item);
+  const response = await api.post("wishlist", item);
   return response.data;
 };
 
 // 삭제
 export const deleteWishlistItem = async (wishlistId: number) => {
-  await api.delete(`/api/wishlist/${wishlistId}`);
+  await api.delete(`wishlist/${wishlistId}`);
 };
