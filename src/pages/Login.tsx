@@ -6,11 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
 import useAuth from "@queries/useAuth";
+import AlertText from "@components/AlertText";
 // import useKakao from "@queries/useKakao";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { mutateLogin, isPendingLogin } = useAuth();
+  const { mutateLogin, isPendingLogin, isErrorLogin, errorLogin } = useAuth();
 
   const [loginUser, setLoginUser] = useState({ username: "", password: "" });
 
@@ -35,20 +36,21 @@ export default function Login() {
     setLoginUser({ username: "", password: "" });
   };
 
-  // const [isKakaoLoginClicked, setIsKakaoLoginClicked] = useState(false);
-  // //카카오 로그인
-  // const {
-  //   kakaoLoginAuthData,
-  //   // isPendingKakaoLogin,
-  //   // isErrorKakaoLogin,
-  //   // isSuccessKakaoLogin,
-  // } = useKakao(isKakaoLoginClicked);
+  const handleKakaoLogin = () => {
+    const KAKAO_LOGIN = import.meta.env.VITE_KAKAO_LOGIN_REST_API_KEY;
 
-  // useEffect(() => {
-  //   if (isKakaoLoginClicked) {
-  //     console.log(kakaoLoginAuthData);
-  //   }
-  // }, [isKakaoLoginClicked, kakaoLoginAuthData]);
+    const KAKAO_REDIRECT_LOCAL = import.meta.env
+      .VITE_KAKAO_LOGIN_REDIRECT_URI_LOCAL;
+
+    const KAKAO_REDIRECT_PRODUCTION = import.meta.env
+      .VITE_KAKAO_LOGIN_REDIRECT_URI_PRODUCTION;
+
+    const REDIRECT_URI = import.meta.env.PROD
+      ? KAKAO_REDIRECT_PRODUCTION //프로덕션
+      : KAKAO_REDIRECT_LOCAL; //로컬
+
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_LOGIN}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  };
 
   return (
     <Container>
@@ -62,14 +64,6 @@ export default function Login() {
               패션과 날씨,
               <br />
               이제 웨더웨어에서 한 번에!
-              {/* 지금 웨더웨어에서
-            <br />
-            스마트한 OOTD 스타일링을
-            <br />
-            시작하세요! */}
-              {/* 날씨에 딱 맞는 옷차림,
-            <br />
-            웨더웨어에서 찾으세요! */}
             </Title>
             <Text>
               웨더웨어에 가입하시면 날씨를 고려한 개인 맞춤형 옷차림을
@@ -110,15 +104,16 @@ export default function Login() {
                 로그인
               </Button>
             </Form>
+
+            {isErrorLogin && (
+              <AlertText>
+                {(errorLogin?.response?.data as { message: string })?.message}
+              </AlertText>
+            )}
             <LinkWrapper>
               비밀번호가 기억나지 않아요.
               <LinkToLogin to={`/login/find`}>비밀번호 찾기</LinkToLogin>
-              {/* 아직 회원이 아닌가요?
-              <LinkToLogin to={`/login`}>가입하기</LinkToLogin> */}
             </LinkWrapper>
-            {/* <SeparateBorder>
-              <span>아직 회원이 아닌가요?</span>
-            </SeparateBorder> */}
             <Button
               type="button"
               buttonType="secondary"
@@ -134,11 +129,7 @@ export default function Login() {
                 <span>또는 SNS 계정으로 시작하기</span>
               </SeparateBorder>
               {/* SNS 계정으로 로그인 */}
-              <SocialLoginButton
-                // onClick={() => {
-                //   setIsKakaoLoginClicked((prev) => !prev);
-                // }}
-              >
+              <SocialLoginButton onClick={handleKakaoLogin}>
                 <Icon icon={kakaoIcon} />
               </SocialLoginButton>
             </SocialLoginContainer>
