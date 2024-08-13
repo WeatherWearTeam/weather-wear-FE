@@ -21,28 +21,17 @@ export default ({ mode }: configProps) => {
           },
         },
       }),
-      //
     ],
-    // 개발 모드에서만 작동함
-    // 서버 proxy 설정
     server: {
       proxy: {
         "/api": {
-          target: env.VITE_SERVER_URL_PRODUCTION, //요청 전달 대상 서버 주소 설정
+          target: env.VITE_SERVER_URL_PRODUCTION,
           changeOrigin: true, // 요청 헤더 host 필드 값을 대상 서버의 호스트 이름으로 변경
           secure: false, // SSL 인증서 검증 무시
-          rewrite: (path) => path.replace(/^\/api/, ""), // '/api'를 제거하여 서버로 전달
+          rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
-      // "/kauth": {
-      //   target: "https://kauth.kakao.com", // 카카오 인증 서버 주소
-      //   changeOrigin: true, // 요청 헤더 host 필드 값을 대상 서버의 호스트 이름으로 변경
-      //   secure: true, // SSL 인증서 검증 활성화 (SSL인증서 사용을 위해 true로 설정)
-      //   rewrite: (path: string) => path.replace(/^\/kauth/, "/oauth/authorize"), // "/kauth"를 "/oauth/authorize"로 변경
-      // },
     },
-
-    //절대경로 설정
     resolve: {
       alias: [
         { find: "@components", replacement: "/src/components" },

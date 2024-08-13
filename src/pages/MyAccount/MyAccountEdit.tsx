@@ -1,6 +1,8 @@
+import AlertText from "@components/AlertText";
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
 import Input from "@components/Input";
+import useError from "@hooks/useError";
 import useAuth from "@queries/useAuth";
 import { useDeleteUser, useMe, useUpdateUser } from "@queries/userQueries";
 import { imageAddIcon, weatherSunCloudyIcon } from "@shared/icons";
@@ -12,6 +14,7 @@ export default function MyAccountEdit() {
   const navigate = useNavigate();
   const { isLoggedIn, mutateLogout } = useAuth();
   const { me } = useMe(isLoggedIn);
+  const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
 
   /////////////////////////////////////////////////////
   //회원 탈퇴
@@ -34,6 +37,7 @@ export default function MyAccountEdit() {
   const [userNickname, setUserNickname] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    deleteErrorMessage();
     setUserNickname(e.target.value);
   };
 
@@ -70,8 +74,7 @@ export default function MyAccountEdit() {
 
     if (me) {
       if (!userNickname.trim()) {
-        alert("닉네임을 입력해 주세요!");
-        return;
+        return alertErrorMessage("닉네임을 입력해 주세요!");
       }
 
       if (
@@ -79,10 +82,9 @@ export default function MyAccountEdit() {
         !imageFile &&
         imageSrc === me?.image
       ) {
-        alert(
+        return alertErrorMessage(
           "변경된 사항이 없습니다. 변경하실 사항이 없으면 취소를 버튼을 눌러 주세요."
         );
-        return;
       }
 
       // return console.log(
@@ -253,6 +255,15 @@ export default function MyAccountEdit() {
                     취소
                   </Button>
                 </ButtonWrapper>
+                <AlertText>
+                  {
+                    errorMessage
+                    // ||
+                    //   (isErrorLogin &&
+                    //     (errorLogin?.response?.data as { message: string })
+                    //       ?.message)
+                  }
+                </AlertText>
               </InputContainer>
             </Form>
             <LinkContainer>

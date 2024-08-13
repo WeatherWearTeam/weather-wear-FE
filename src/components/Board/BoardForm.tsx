@@ -1,4 +1,5 @@
 import { BoardByIdResponse } from "@api/boardApi";
+import AlertText from "@components/AlertText";
 import Button from "@components/Button";
 import ColorPickBar from "@components/Color/ColorPickBar";
 import Input from "@components/Input";
@@ -6,6 +7,7 @@ import Select from "@components/Select/Select";
 import SelectedTag from "@components/Select/SelectedTag";
 import Textarea from "@components/Textarea";
 import MapSelector, { AddressInfo } from "@components/Weather/MapSelector";
+import useError from "@hooks/useError";
 import useModal from "@hooks/useModal";
 import clothesTypeList, {
   ClothesKoreanType,
@@ -58,7 +60,9 @@ export default function BoardForm({
   onCreateBoard,
 }: BoardFormProps) {
   const navigate = useNavigate();
+  const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
   const { openModal, closeModal, isVisible } = useModal();
+  
   const [addressInfo, setAddressInfo] = useState<AddressInfo | null>(null);
 
   const getAddressCode = useCallback((info: AddressInfo) => {
@@ -107,7 +111,7 @@ export default function BoardForm({
   const addTag = useCallback(
     (data: ClothesTypeData) => {
       if (boardData.tags.length >= 5) {
-        alert("태그는 최대 5개까지만 추가할 수 있습니다!");
+        alertErrorMessage("옷 태그는 최대 5개까지만 추가할 수 있습니다.");
         return;
       }
 
@@ -130,7 +134,7 @@ export default function BoardForm({
         typeKorean: "옷 종류",
       });
     },
-    [boardData.tags.length]
+    [boardData.tags.length, alertErrorMessage]
   );
 
   const handleRemoveTag = (tagId: number) => {
@@ -183,16 +187,17 @@ export default function BoardForm({
   ) => {
     const { name, value } = e.target;
     setBoardData((prev) => ({ ...prev, [name]: value }));
+    deleteErrorMessage();
   };
 
   //////////////////////////////////////////////////////////////
-  // 🌟 FormData의 내용을 콘솔에 출력하는 함수
-  function logFormData(formData: FormData) {
-    for (const pair of formData.entries()) {
-      // 'const' 사용
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-  }
+  // FormData의 내용을 콘솔에 출력하는 함수
+  // function logFormData(formData: FormData) {
+  //   for (const pair of formData.entries()) {
+  //     // 'const' 사용
+  //     console.log(`${pair[0]}: ${pair[1]}`);
+  //   }
+  // }
 
   //////////////////////////////////////////////////////////////
   //등록하기 버튼 클릭했을 때 실행하는 handleSubmit 함수
@@ -203,29 +208,21 @@ export default function BoardForm({
 
     //예외처리: 이미지파일이 안들어 왔다면 return
     if (!imageSrc) {
-      return alert("사진을 선택해 주세요!");
+      return alertErrorMessage("사진을 선택해 주세요.");
     }
 
     if (!boardData.title.trim()) {
-      // dispatch(
-      //   setAlert({
-      //     formId,
-      //     message: "제목과 내용을 모두 입력해 주세요!",
-      //   })
-      // );
-      alert("제목을 입력해 주세요!");
-      return;
+      return alertErrorMessage("제목을 입력해 주세요.");
     }
 
     if (!boardData.contents.trim()) {
-      alert("내용을 입력해 주세요!");
-      return;
+      return alertErrorMessage("내용을 입력해 주세요!");
     }
+
     //예외처리:옷 종류-컬러 1세트 없으면 return
     if (boardData.tags.length < 1) {
-      return alert("옷 종류와 색상을 선택해 주세요!");
+      return alertErrorMessage("옷 종류와 색상을 선택해 주세요!");
     }
-    // return console.log(boardData);
 
     //폼 보내기 전에 아이디 없애기
     // const tagsWithoutId = boardData.tags.map(
@@ -270,7 +267,7 @@ export default function BoardForm({
         })
       );
 
-      logFormData(formData); //로그찍기
+      // logFormData(formData); //로그찍기
       onCreateBoard?.(formData);
     } else {
       const updatedJsonData = {
@@ -290,19 +287,10 @@ export default function BoardForm({
         })
       );
 
-      logFormData(formData); //로그찍기
+      // logFormData(formData); //로그찍기
       onUpdateBoard?.(formData);
     }
   };
-
-  //////////////////////////////////////////////////////////////
-  // formData.append("title", boardData.title);
-  // formData.append("contents", boardData.contents);
-  // formData.append("isPrivate", String(boardData.isPrivate));
-  // formData.append("addressId", String(boardData.addressId));
-  // formData.append("address", boardData.address);
-  // formData.append("tags", JSON.stringify(tagsWithoutId)); // tags를 JSON 문자열로 변환하여 추가
-  //////////////////////////////////////////////////////////////
 
   // imageSrc 상태 변하면 프리뷰 세팅
   useEffect(() => {
@@ -314,9 +302,7 @@ export default function BoardForm({
     };
   }, [imageSrc]);
 
-  //////////////////////////////////////////////////////////////
   //에딧 페이지인 경우 데이터 채워 넣기
-
   useEffect(() => {
     if (data) {
       setBoardData((prev) => ({
@@ -333,19 +319,7 @@ export default function BoardForm({
           typeKorean: getKoreanType(tag.type),
         })),
       }));
-
       setImageSrc(data.image);
-
-      // // 전역 상태 업데이트
-      // const initialTags = data.boardTags.map((tag) => ({
-      //   id: tag.id,
-      //   type: tag.type,
-      //   color: tag.color,
-      // }));
-
-      // initialTags.forEach((tag) => {
-      //   addTag(tag);
-      // });
     }
   }, [data]);
 
@@ -479,6 +453,15 @@ export default function BoardForm({
                   ))}
                 </SelectedTagContainer>
               </RowWrapper>
+              <AlertText>
+                {
+                  errorMessage
+                  // ||
+                  //   (isErrorLogin &&
+                  //     (errorLogin?.response?.data as { message: string })
+                  //       ?.message)
+                }
+              </AlertText>
               <ButtonWrapper>
                 <Button type="submit" buttonType="primary" disabled={isPending}>
                   {data ? `수정하기` : `등록하기`}

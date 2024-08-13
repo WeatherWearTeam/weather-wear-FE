@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Signup() {
-  // const { data } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: testUser,
-  // });
+
 
   return (
     <Container>
