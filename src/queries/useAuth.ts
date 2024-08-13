@@ -11,8 +11,12 @@ export interface LoginUserRequest {
 
 // 로그인
 const login = async (user: LoginUserRequest) => {
-  const response = await api.post(`login`, user);
-  return response.data;
+  try {
+    const response = await api.post(`login`, user);
+    return response.data;
+  } catch (error) {
+    // console.log("로그인시 에러 발생", error);
+  }
 };
 
 //로그아웃

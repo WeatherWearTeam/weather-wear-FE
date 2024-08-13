@@ -1,8 +1,8 @@
-// import { useAppDispatch, useAppSelector } from "@hooks/rtkHooks";
-// import AlertText from "@components/AlertText";
+import AlertText from "@components/AlertText";
 import { CreateCommentRequest, UpdatedCommentRequest } from "@api/commentApi";
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
+import useError from "@hooks/useError";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -41,17 +41,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
   isPending,
   // isError,
 }) => {
-  // console.log(image);
-  // const dispatch = useAppDispatch();
-  // const alertMessage = useAppSelector((state) => state.alert[formId]);
+  const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
 
   const [comment, setComment] = useState("");
 
   const changeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    // if (alertMessage) {
-    //   dispatch(clearAlert(formId));
-    // }
-
+    deleteErrorMessage();
     setComment(e.target.value);
   };
 
@@ -59,14 +54,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
     e.preventDefault();
 
     if (!comment.trim()) {
-      //   dispatch(
-      //     setAlert({
-      //       formId: formId,
-      //       message: "댓글을 1글자 이상 적어 주세요.",
-      //     })
-      //   );
-      //   return;
-      return alert("댓글을 한 글자 이상 입력해 주세요!");
+      return alertErrorMessage("댓글을 한 글자 이상 입력해 주세요.");
+    }
+    if (comment.length <= 200) {
+      return alertErrorMessage("댓글은 200자 이상 입력할 수 없습니다.");
     }
 
     const newComment = {
@@ -88,7 +79,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
     setComment("");
   };
-  // };
 
   useEffect(() => {
     if (isEditing && preComment) {
@@ -111,10 +101,15 @@ const CommentForm: React.FC<CommentFormProps> = ({
             maxLength={200}
             minLength={1}
           />
-          {/* <AlertText>{alertMessage}</AlertText> */}
-          {/* {isError && (
-            <AlertText>{"오류가 발생했습니다. 다시 시도해 주세요!"}</AlertText>
-          )} */}
+          <AlertText>
+            {
+              errorMessage
+              // ||
+              //   (isErrorLogin &&
+              //     (errorLogin?.response?.data as { message: string })
+              //       ?.message)
+            }
+          </AlertText>
           <UserIdText>{myNickname}</UserIdText>
         </TextareaWrapper>
         <ButtonWrapper>
