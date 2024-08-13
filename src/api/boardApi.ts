@@ -206,9 +206,7 @@ export interface CommentsByBoardIdResponse {
 // 보드별 코멘트 리스트 조회 => 🌟 상세페이지의 코멘트 부분
 export const getCommentsByBoardId = async (boardId: number) => {
   try {
-    const response = await api.get(`boards/${boardId}/comments`, {
-      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
-    });
+    const response = await api.get(`boards/${boardId}/comments`);
     return response.data;
   } catch (error) {
     console.log(error);
