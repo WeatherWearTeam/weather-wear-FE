@@ -96,9 +96,7 @@ export interface BoardByIdResponse {
 // 상세페이지 Board 리소스 조회 => 🌟 OOTD 상세 페이지
 export const getBoardById = async (boardId: number) => {
   try {
-    const response = await api.get(`boards/${boardId}`, {
-      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
-    });
+    const response = await api.get(`boards/${boardId}`);
     return response.data;
   } catch (error) {
     console.log(error);
