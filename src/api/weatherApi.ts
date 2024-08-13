@@ -26,6 +26,7 @@ export const getWeatherByLocation = async (
     const response = await api.get(`weathers?id=${id}`, {
       withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
     });
+    console.log("⛈️", response);
     return response.data;
   } catch (error) {
     console.error("날씨 정보를 가져오는데 실패했습니다:", error);
