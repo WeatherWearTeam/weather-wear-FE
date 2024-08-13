@@ -4,6 +4,7 @@ import {
   getMe,
   getUserById,
   signUpUser,
+  SignUpUserRequest,
   updatePassword,
   updateUser,
 } from "@api/userApi";
@@ -14,24 +15,28 @@ import { useNavigate } from "react-router-dom";
 
 ///////////////////////////////////////////////////////////////
 //회원가입
+interface ErrorResponse {
+  message: string;
+}
+
 export const useCreateUser = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { setAlert } = useAlertStore();
 
-  
   const {
     mutate: mutateCreateUser,
     isPending,
     isError,
     isSuccess,
-  } = useMutation({
+    error: errorSignup,
+  } = useMutation<any, AxiosError<ErrorResponse>, SignUpUserRequest>({
     mutationFn: signUpUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       navigate("/login");
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<ErrorResponse>) => {
       let errorMessage = "오류가 발생했습니다.\n회원가입을 다시 시도해 주세요.";
       if (error.response) {
         errorMessage = `${error.response.data}`;
@@ -40,7 +45,7 @@ export const useCreateUser = () => {
     },
   });
 
-  return { mutateCreateUser, isError, isPending, isSuccess };
+  return { mutateCreateUser, isError, isPending, isSuccess, errorSignup };
 };
 
 ///////////////////////////////////////////////////////////////
@@ -48,7 +53,6 @@ export const useCreateUser = () => {
 export const useDeleteUser = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { setAlert } = useAlertStore();
 
   const {
     mutate: mutateDeleteUser,
@@ -71,7 +75,6 @@ export const useDeleteUser = () => {
       if (error.response) {
         errorMessage = `${error.response.data}`;
       }
-      setAlert("userDelete", errorMessage);
     },
   });
 
