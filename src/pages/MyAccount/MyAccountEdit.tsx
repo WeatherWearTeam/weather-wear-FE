@@ -364,11 +364,6 @@ const Title = styled.h2`
   color: ${({ theme }) => theme.colors.WHITE};
 `;
 
-// const Text = styled.div`
-//   font-size: medium;
-//   color: ${({ theme }) => theme.colors.GRAY};
-// `;
-
 //✅ 오른쪽
 const RightColumn = styled.div`
   grid-area: right-column;
@@ -395,11 +390,6 @@ const FormTitle = styled.h1`
   color: ${({ theme }) => theme.colors.BLACK};
 `;
 
-// const FormText = styled.p`
-//   font-size: large;
-// `;
-
-// 폼 , 소셜로그인 컨테이너
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -417,51 +407,6 @@ const Form = styled.form`
   gap: 2rem;
 `;
 
-// const FlexRow = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: space-between;
-//   gap: 2rem;
-// `;
-
-// const Fieldset = styled.fieldset`
-//   border: ${({ theme }) => theme.borders.containerBorder};
-//   width: 100%;
-//   height: 100%;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   text-align: center;
-//   gap: 2rem;
-//   position: relative;
-// `;
-
-// const Legend = styled.legend`
-//   position: absolute;
-//   left: 1rem;
-//   top: 50%; //수직 중앙
-//   transform: translateY(-50%); //중앙정렬
-//   font-size: small;
-// `;
-
-// const InputContainer = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   padding-left: 3.5rem;
-// `;
-
-// const RadioInputWrapper = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   gap: 0.5rem;
-//   label {
-//     font-size: small;
-//   }
-// `;
-
-//
-
 const LinkContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -469,6 +414,10 @@ const LinkContainer = styled.div`
   justify-content: space-between;
   height: 100%;
   width: 70%;
+
+  @media (max-width: 1200px) {
+    gap: 3rem;
+  }
 `;
 const LinkWrapper = styled.div`
   font-size: small;
@@ -476,6 +425,10 @@ const LinkWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 0.5rem;
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+  }
 `;
 const LinkToPassEdit = styled(Link)`
   color: ${({ theme }) => theme.colors.BLUE};
@@ -500,8 +453,6 @@ const ImageEditContainer = styled.div`
 `;
 
 export const Label = styled.label`
-  /* height: 100%; */
-  /* width: 100%; */
   width: 13rem;
   height: 13rem;
   border-radius: 50%;

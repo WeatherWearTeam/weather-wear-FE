@@ -300,13 +300,8 @@ const InfoTextWrapper = styled.div`
   align-items: center;
   gap: 1rem;
   padding: 2rem;
-  width: 60%;
+  width: 28rem;
   border-bottom: ${({ theme }) => theme.borders.containerBorder};
-
-  /* svg {
-    width: 2.5rem;
-    height: 2.5rem;
-  } */
 `;
 
 const InfoTitle = styled.h5`

@@ -55,6 +55,9 @@ export default function CommentList({
               </LiComments>
             );
           })}
+        {comments?.length === 0 && (
+          <NoComments>아직 댓글이 없어요.</NoComments>
+        )}
       </UlComments>
     </>
   );
@@ -62,18 +65,22 @@ export default function CommentList({
 
 export const Title = styled.div`
   border-bottom: ${({ theme }) => theme.borders.containerBorder};
-  padding-bottom: 0.5rem;
+  padding: 1rem 0;
   width: 100%;
   display: flex;
   gap: 1rem;
   font-size: small;
   font-weight: 600;
+  @media (max-width: 600px) {
+    padding-bottom: 1rem;
+  }
 `;
 
 export const UlComments = styled.ul`
   list-style-type: none;
   margin: 0;
   padding: 0;
+  border-bottom: ${({ theme }) => theme.borders.containerBorder};
 `;
 
 export const LiComments = styled.li`
@@ -81,4 +88,10 @@ export const LiComments = styled.li`
   list-style-type: none;
   margin: 0;
   padding: 0;
+`;
+
+export const NoComments = styled.div`
+  display: flex;
+  padding: 2rem 0rem;
+  font-size: small;
 `;

@@ -185,7 +185,11 @@ const WeatherInfoSubText = styled.div`
 const RecommendedContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 3rem;
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
 `;
 
 const RecommendedItem = styled.div`
@@ -206,10 +210,15 @@ const RecommendedItem = styled.div`
   `};
   box-shadow: 1px 5px 20px 1px rgba(198, 198, 198, 0.2);
 
-  @media (max-width: 600px) {
+  @media (max-width: 1200px) {
     font-size: small;
     width: 10rem;
     height: 10rem;
+  }
+  @media (max-width: 600px) {
+    font-size: small;
+    width: 8rem;
+    height: 8rem;
   }
 `;
 

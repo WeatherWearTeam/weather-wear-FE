@@ -22,16 +22,16 @@ export default ({ mode }: configProps) => {
         },
       }),
     ],
-    server: {
-      proxy: {
-        "/api": {
-          target: env.VITE_SERVER_URL_PRODUCTION,
-          changeOrigin: true, // 요청 헤더 host 필드 값을 대상 서버의 호스트 이름으로 변경
-          secure: false, // SSL 인증서 검증 무시
-          rewrite: (path) => path.replace(/^\/api/, ""),
-        },
-      },
-    },
+    // server: {
+    //   proxy: {
+    //     "/api": {
+    //       target: env.VITE_SERVER_URL_PRODUCTION,
+    //       changeOrigin: true, // 요청 헤더 host 필드 값을 대상 서버의 호스트 이름으로 변경
+    //       secure: false, // SSL 인증서 검증 무시
+    //       rewrite: (path) => path.replace(/^\/api/, ""),
+    //     },
+    //   },
+    // },
     resolve: {
       alias: [
         { find: "@components", replacement: "/src/components" },

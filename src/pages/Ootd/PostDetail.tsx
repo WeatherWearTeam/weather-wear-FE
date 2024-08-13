@@ -28,7 +28,6 @@ import LikeButton from "@components/LikeButton";
 import { useEffect, useState } from "react";
 
 export default function PostDetail() {
-  //❌ 좋아요 기능 아직 구현 안함 ->  근우님꺼 가져다 쓰기 ㅇㅇ
   const { mutateToggleLikeBoard } = useToggleLikeBoard();
   const [isClickedLike, setIsClickedLike] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
@@ -48,6 +47,8 @@ export default function PostDetail() {
     if (board) {
       setLikesCount(board.boardLikesCount);
     }
+    console.log(board);
+
     if (board?.checkLike) {
       setIsClickedLike(true);
     } else if (!board?.checkLike) {
@@ -157,13 +158,15 @@ export default function PostDetail() {
                   {isSuccess &&
                     board &&
                     board?.tags.map(
-                      (tag: {
-                        id: number;
-                        color: ClothesColorType;
-                        type: ClothesType;
-                      }) => (
+                      (
+                        tag: {
+                          color: ClothesColorType;
+                          type: ClothesType;
+                        },
+                        index: number
+                      ) => (
                         <ClothesTag
-                          key={tag.id}
+                          key={index}
                           color={tag.color}
                           type={tag.type}
                         />
@@ -233,8 +236,6 @@ const FlexRow = styled.div`
 const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
   gap: 2rem;
 `;
 
@@ -314,6 +315,7 @@ const ClothesTagWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
 `;
 
@@ -338,7 +340,7 @@ const CommentWrapper = styled.div`
 //✅ 화면 전체 레이아웃
 
 const Container = styled.div`
-  height: calc(100vh - 7rem);
+  /* height: calc(100vh - 7rem); */
   display: flex;
   flex-direction: column;
   padding: 2rem 4rem 4rem 4rem;
@@ -352,10 +354,6 @@ const TitleContainer = styled.div`
   margin-bottom: 2rem;
   gap: 1rem;
 `;
-
-// const Title = styled.div`
-//   font-size: x-large;
-// `;
 
 const SubTitle = styled.div`
   font-size: large;
@@ -382,30 +380,26 @@ const GridContainer = styled.div`
   @media (max-width: 900px) {
     grid-template-columns: 2fr 3fr;
     grid-template-rows: auto auto;
-    //행의 높이 자동 조정
   }
 
   @media (max-width: 600px) {
-    grid-template-columns: 1fr; /* 단일 컬럼으로 변경 */
+    grid-template-columns: 1fr;
     grid-template-rows: repeat(3, auto);
-    //모든 아이템이 세로로 쌓이도록 설정
   }
 `;
 
 const Column = styled.div`
   padding: 1rem 0;
-  /* border: 1px solid blue; */
 `;
 
 const FullWidthColumn = styled.div`
-  /* border: 1px solid blue; */
-  grid-column: 1 / span 2; /* 두 번째 행 전체를 차지 */
+  grid-column: 1 / span 2;
 
   @media (max-width: 900px) {
-    grid-column: 1 / span 2; /* 모바일 화면에서 두 번째 행 전체를 차지하도록 설정 */
+    grid-column: 1 / span 2;
   }
 
   @media (max-width: 600px) {
-    grid-column: auto; /* 모든 화면에서 정상적으로 작동하도록 기본값으로 설정 */
+    grid-column: auto;
   }
 `;

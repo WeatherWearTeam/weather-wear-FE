@@ -167,6 +167,9 @@ const StLink = styled(NavLink)`
 
 const NavItem = styled.span`
   font-size: small;
+  @media (max-width: 395px) {
+    font-size: 11px;
+  }
 `;
 
 //네비게이션 바 밑의 메인 영역입니다.

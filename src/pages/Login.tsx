@@ -34,7 +34,6 @@ export default function Login() {
     }
 
     mutateLogin(loginUser);
-
     setLoginUser({ username: "", password: "" });
   };
 
@@ -101,7 +100,7 @@ export default function Login() {
                 value={loginUser.password}
                 onChange={handleChangeLoginUser}
               />
-              
+
               <AlertText>
                 {errorMessage ||
                   (isErrorLogin &&

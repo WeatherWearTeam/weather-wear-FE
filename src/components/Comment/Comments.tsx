@@ -51,16 +51,18 @@ export default function Comments({ boardId }: CommentsProps) {
             isSuccessComments={isSuccessComments}
           />
         </CommentListWrapper>
-        <CommentForm
-          myId={me?.id as number}
-          myImage={me?.image as string}
-          myNickname={me?.nickname as string}
-          boardId={boardId}
-          formId={"createCommentForm"}
-          isPending={isPending}
-          isError={isError}
-          onCreateComment={handleCreateComment}
-        />
+        {isLoggedIn && (
+          <CommentForm
+            myId={me?.id as number}
+            myImage={me?.image as string}
+            myNickname={me?.nickname as string}
+            boardId={boardId}
+            formId={"createCommentForm"}
+            isPending={isPending}
+            isError={isError}
+            onCreateComment={handleCreateComment}
+          />
+        )}
       </CommentsContainer>
     </>
   );

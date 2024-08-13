@@ -46,7 +46,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
   const [comment, setComment] = useState("");
 
   const changeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    deleteErrorMessage();
+    errorMessage && deleteErrorMessage();
     setComment(e.target.value);
   };
 
@@ -56,7 +56,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
     if (!comment.trim()) {
       return alertErrorMessage("댓글을 한 글자 이상 입력해 주세요.");
     }
-    if (comment.length <= 200) {
+    if (comment.length >= 200) {
       return alertErrorMessage("댓글은 200자 이상 입력할 수 없습니다.");
     }
 

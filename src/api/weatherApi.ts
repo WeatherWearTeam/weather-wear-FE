@@ -7,7 +7,7 @@ export interface WeatherData {
   pcp: number | null; //1시간 강수량 (mm)
   reh: number | null; //습도 (%)
   sno: number | null; //1시간 신적설(cm)
-  sky: number | null; //하늘상태: 맑음(1), 구름조금(2), 구름많음(3), 흐림(4)
+  sky: number | null; //하늘상태: 맑음(1), <구름조금(2)>, 구름많음(3), 흐림(4)
   tmp: number | null; //1시간 기온
   tmn: number | null; //일 최저기온
   tmx: number | null; //일 최고기온
@@ -24,9 +24,8 @@ export const getWeatherByLocation = async (
 ): Promise<WeatherData> => {
   try {
     const response = await api.get(`weathers?id=${id}`, {
-      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
+      withCredentials: false,
     });
-    console.log("⛈️", response);
     return response.data;
   } catch (error) {
     console.error("날씨 정보를 가져오는데 실패했습니다:", error);

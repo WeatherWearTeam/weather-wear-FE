@@ -14,20 +14,9 @@ import MyClosetRecommendation from "@components/Home/MyClosetRecommendation";
 import OOTDTrend from "@components/Trend/OOTDTrend";
 
 const Home: React.FC = () => {
-  const [liked, setLiked] = useState<boolean[]>([false, false, false]);
-
-  const toggleLike = (index: number) => {
-    setLiked((prev) => {
-      const newLiked = [...prev];
-      newLiked[index] = !newLiked[index];
-      return newLiked;
-    });
-  };
-
   const { isLoggedIn } = useAuth();
   const { me: myUserData } = useMe(isLoggedIn);
 
-  ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
   const [addressInfo, setAddressInfo] = useState<AddressInfo | null>(null);
   const [weatherId, setWeatherId] = useState<number | null>(null);
@@ -37,6 +26,17 @@ const Home: React.FC = () => {
   }, []); //컴포넌트가 마운트될 때만 함수를 생성
 
   ////////////////////////////////////////////////////////
+  const [liked, setLiked] = useState<boolean[]>([false, false, false]);
+
+  const toggleLike = (index: number) => {
+    setLiked((prev) => {
+      const newLiked = [...prev];
+      newLiked[index] = !newLiked[index];
+      return newLiked;
+    });
+  };
+  ////////////////////////////////////////////////////////
+
   const {
     weatherData,
     // isPendingWeather,
@@ -63,7 +63,6 @@ const Home: React.FC = () => {
   return (
     <HomeContainer>
       {/* 정보를 얻는 지도 */}
-
       <WeatherInfoWrapper>
         <MapSelectorWrapper>
           <MapSelector
@@ -85,7 +84,7 @@ const Home: React.FC = () => {
         <>
           <SignupRecommendation />
           <Divider />
-          {isSuccess && <OOTDTrend data={homeRecommendsData[0]} />}
+          <OOTDTrend data={homeRecommendsData[0]} />
         </>
       )}
 
