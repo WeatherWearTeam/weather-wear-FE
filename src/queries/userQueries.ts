@@ -69,13 +69,13 @@ export const useDeleteUser = () => {
         navigate("/", { replace: true }); //히스토리 스택 대체
       }
     },
-    onError: (error: AxiosError) => {
-      let errorMessage =
-        "오류가 발생했습니다.\n회원 탈퇴를 다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-      }
-    },
+    // onError: (error: AxiosError) => {
+    //   // let errorMessage =
+    //   //   "오류가 발생했습니다.\n회원 탈퇴를 다시 시도해 주세요.";
+    //   // if (error.response) {
+    //   //   errorMessage = `${error.response.data}`;
+    //   // }
+    // },
   });
 
   return { mutateDeleteUser, isError, isPending, isSuccess };

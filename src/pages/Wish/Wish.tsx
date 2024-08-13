@@ -93,8 +93,12 @@ function Wish() {
 
   //////////////////////////////////////////////////////////////
   //위시리스트 아이템 조회하기
-  const { wishlistItems, isPending, isError, isSuccess } =
-    useWishlistItems(searchKeys);
+  const {
+    wishlistItems,
+    // isPending,
+    isError,
+    isSuccess,
+  } = useWishlistItems(searchKeys);
 
   const selectedItem = wishlistItems?.content?.find(
     (item: WishlistItem) => item.id === selectedItemId
