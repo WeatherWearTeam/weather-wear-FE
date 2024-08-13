@@ -47,7 +47,7 @@ export type TrendSearchKeysRequest = {
 };
 export const getTrendBoards = async () => {
   try {
-    const response = await api.get(`/api/boards`, {
+    const response = await api.get(`boards`, {
       withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
     });
     return response.data;
@@ -96,7 +96,7 @@ export interface BoardByIdResponse {
 // 상세페이지 Board 리소스 조회 => 🌟 OOTD 상세 페이지
 export const getBoardById = async (boardId: number) => {
   try {
-    const response = await api.get(`/api/boards/${boardId}`, {
+    const response = await api.get(`boards/${boardId}`, {
       withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
     });
     return response.data;
@@ -132,7 +132,7 @@ export const getUserBoards = async (
   searchKeys: UserBoardsSearchKeysRequest
 ) => {
   try {
-    const response = await api.get(`/api/users/boards`, {
+    const response = await api.get(`users/boards`, {
       params: {
         page: searchKeys.page - 1,
         pty: searchKeys.pty,
@@ -150,7 +150,7 @@ export const getUserBoards = async (
 
 // Board 리소스 생성
 export const createBoard = async (newBoardFormData: FormData) => {
-  const response = await api.post(`/api/boards`, newBoardFormData, {
+  const response = await api.post(`boards`, newBoardFormData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -160,12 +160,12 @@ export const createBoard = async (newBoardFormData: FormData) => {
 
 // DELETE Board 지우기
 export const deleteBoard = async (boardId: number) => {
-  await api.delete(`/api/boards/${boardId}`);
+  await api.delete(`boards/${boardId}`);
 };
 
 // PUT Board 업데이트하기
 export const updateBoard = async (updatedBoard: FormData) => {
-  const response = await api.put(`/api/boards`, updatedBoard, {
+  const response = await api.put(`boards`, updatedBoard, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -179,13 +179,13 @@ export const updateBoard = async (updatedBoard: FormData) => {
 // export const toggleHeartBoard = async (boardId: number) => {
 //   const currentBoard = await getBoardById(boardId);
 //   const updatedBoard = { ...currentBoard, isLike: !currentBoard.isLike };
-//   const response = await api.put(`/api/boards/${boardId}`, updatedBoard);
+//   const response = await api.put(`boards/${boardId}`, updatedBoard);
 //   return response.data;
 // };
 export const toggleHeartBoard = async (boardId: number) => {
   // const currentBoard = await getBoardById(boardId);
   // const updatedBoard = { ...currentBoard, isLike: !currentBoard.isLike };
-  const response = await api.post(`/api/boards/likes/${boardId}`);
+  const response = await api.post(`boards/likes/${boardId}`);
   return response.data;
 };
 
@@ -208,7 +208,7 @@ export interface CommentsByBoardIdResponse {
 // 보드별 코멘트 리스트 조회 => 🌟 상세페이지의 코멘트 부분
 export const getCommentsByBoardId = async (boardId: number) => {
   try {
-    const response = await api.get(`/api/boards/${boardId}/comments`, {
+    const response = await api.get(`boards/${boardId}/comments`, {
       withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
     });
     return response.data;
