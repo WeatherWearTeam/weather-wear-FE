@@ -1,6 +1,6 @@
-// import api from "@api/api";
-import api from "@api/api";
+import KakaoApi from "@api/kakaoApi";
 import { kakaoIcon } from "@shared/icons";
+
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -11,26 +11,23 @@ const KakaoCallback: React.FC = () => {
 
   useEffect(() => {
     if (code) {
-      const KAKAO_REDIRECT_LOCAL = import.meta.env
-        .VITE_KAKAO_LOGIN_REDIRECT_URI_LOCAL;
-
-      const KAKAO_REDIRECT_PRODUCTION = import.meta.env
-        .VITE_KAKAO_LOGIN_REDIRECT_URI_PRODUCTION;
-
       const REDIRECT_URI = import.meta.env.PROD
-        ? KAKAO_REDIRECT_PRODUCTION //프로덕션
-        : KAKAO_REDIRECT_LOCAL; //로컬
+        ? import.meta.env.VITE_KAKAO_LOGIN_REDIRECT_URI_PRODUCTION //프로덕션
+        : import.meta.env.VITE_KAKAO_LOGIN_REDIRECT_URI_LOCAL; //로컬
 
-      console.log(REDIRECT_URI);
-      api
-        .post(`api/kakao/login`, {
-          code,
-          redirectUri: REDIRECT_URI,
-        })
-        .then(() => {
-          localStorage.setItem("ISLOGGEDIN", "true");
-          navigate("/");
-        });
+      const URL = import.meta.env.PROD
+        ? `kakao/login` //프로덕션
+        : `api/kakao/login`; //로컬
+
+      console.log(URL);
+
+      KakaoApi.post(`${URL}`, {
+        code,
+        redirectUri: REDIRECT_URI,
+      }).then(() => {
+        localStorage.setItem("ISLOGGEDIN", "true");
+        navigate("/");
+      });
     }
   }, [code, navigate]);
 

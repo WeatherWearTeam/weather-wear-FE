@@ -141,11 +141,12 @@ function Closet() {
           onDeleteClick={handleDeleteClick}
         />
       )}
+
       {isSuccess && clothesItems?.content.length < 1 && (
-        <div>옷장에 옷이 없습니다.</div>
+        <NoBoard>아직 게시글이 없어요!</NoBoard>
       )}
-      {/* {isPending && <div>로딩중...</div>} */}
-      {isError && <div>에러 발생!</div>}
+      {/* {isPending && <NoBoard>로딩중...</NoBoard>} */}
+      {isError && <NoBoard>옷장의 옷을 불러오지 못했어요.</NoBoard>}
       <ContentsFooter>
         <Pagination
           totalPages={clothesItems?.totalPages} //총 아이템 수 //많아지면 버튼 생김
@@ -210,4 +211,10 @@ const ContentsFooter = styled.div`
   align-items: center;
   max-width: 1220px;
   /* flex-shrink: 0; */
+`;
+const NoBoard = styled.div`
+  font-size: small;
+  display: flex;
+  align-items: center;
+  height: 100%;
 `;
