@@ -255,7 +255,7 @@ export default function MapContainer({
 
     const newMyLocation = {
       address: address.address_name,
-      code: address.b_code,
+      code: address.b_code.slice(0, -3) + "000",
     };
     setCurrentAddressAndCode(newMyLocation);
 
@@ -302,7 +302,7 @@ export default function MapContainer({
       const result = response.data.documents[0];
       const newAddressAndCode = {
         address: result.address_name,
-        code: result.code,
+        code: result.code.slice(0, -3) + "000",
       };
 
       return setCurrentAddressAndCode(newAddressAndCode);
