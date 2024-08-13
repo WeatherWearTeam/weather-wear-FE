@@ -58,7 +58,7 @@ const MapSelector = ({
           const result = response.data.documents[0];
           const newAddressAndCode = {
             address: result.address_name,
-            code: result.code,
+            code: result.code.slice(0, -3) + "000",
           };
 
           setCurrentAddressAndCode(newAddressAndCode);
