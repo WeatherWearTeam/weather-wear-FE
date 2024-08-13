@@ -81,7 +81,7 @@ const Home: React.FC = () => {
         isLoggedIn={isLoggedIn}
       />
 
-      {!isLoggedIn && (
+      {!isLoggedIn && isSuccess && (
         <>
           <SignupRecommendation />
           <Divider />
@@ -89,7 +89,7 @@ const Home: React.FC = () => {
         </>
       )}
 
-      {isLoggedIn && (
+      {isLoggedIn && isSuccess && (
         <>
           <Divider />
 
