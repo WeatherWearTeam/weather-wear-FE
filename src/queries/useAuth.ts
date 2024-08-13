@@ -1,7 +1,7 @@
 import api from "@api/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ErrorResponse, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //로그인
 export interface LoginUserRequest {
