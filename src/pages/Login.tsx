@@ -7,28 +7,30 @@ import styled from "styled-components";
 import { useState } from "react";
 import useAuth from "@queries/useAuth";
 import AlertText from "@components/AlertText";
-// import useKakao from "@queries/useKakao";
+import useError from "@hooks/useError";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
   const { mutateLogin, isPendingLogin, isErrorLogin, errorLogin } = useAuth();
 
   const [loginUser, setLoginUser] = useState({ username: "", password: "" });
 
   const handleChangeLoginUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    deleteErrorMessage();
     setLoginUser({ ...loginUser, [name]: value });
   };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!loginUser.username) {
-      return alert("이메일을 입력해 주세요!");
+    if (!loginUser.username.trim()) {
+      return alertErrorMessage("이메일을 입력해 주세요.");
     }
 
-    if (!loginUser.password) {
-      return alert("비밀번호를 입력해 주세요!");
+    if (!loginUser.password.trim()) {
+      return alertErrorMessage("비밀번호를 입력해 주세요.");
     }
 
     mutateLogin(loginUser);
@@ -99,17 +101,17 @@ export default function Login() {
                 value={loginUser.password}
                 onChange={handleChangeLoginUser}
               />
-
+              
+              <AlertText>
+                {errorMessage ||
+                  (isErrorLogin &&
+                    (errorLogin?.response?.data as { message: string })
+                      ?.message)}
+              </AlertText>
               <Button type="submit" disabled={isPendingLogin}>
                 로그인
               </Button>
             </Form>
-
-            {isErrorLogin && (
-              <AlertText>
-                {(errorLogin?.response?.data as { message: string })?.message}
-              </AlertText>
-            )}
             <LinkWrapper>
               비밀번호가 기억나지 않아요.
               <LinkToLogin to={`/login/find`}>비밀번호 찾기</LinkToLogin>

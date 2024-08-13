@@ -1,12 +1,14 @@
 import AlertText from "@components/AlertText";
 import Button from "@components/Button";
 import Input from "@components/Input";
+import useError from "@hooks/useError";
 import { useCreateUser } from "@queries/userQueries";
-import useAlertStore from "@store/store";
 import { useState } from "react";
 import styled from "styled-components";
 
 export default function SignupForm() {
+  const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
+
   const [signUpUser, setSignUpUser] = useState({
     EMAIL: "",
     NICKNAME: "",
@@ -18,20 +20,40 @@ export default function SignupForm() {
 
   const {
     mutateCreateUser,
-    isError,
+    // isError,
     // , isPending, isSuccess
-
   } = useCreateUser();
-  const { alerts, clearAlert } = useAlertStore();
 
   const changeNewUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    clearAlert("signupError"); // 입력 시 알림 클리어
+    deleteErrorMessage();
     setSignUpUser({ ...signUpUser, [name]: value });
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+
+    if (!signUpUser.EMAIL.trim()) {
+      return alertErrorMessage("이메일을 입력해 주세요.");
+    }
+    if (!signUpUser.NICKNAME.trim()) {
+      return alertErrorMessage("닉네임을 입력해 주세요.");
+    }
+    if (!signUpUser.PASS1.trim()) {
+      return alertErrorMessage("비밀번호를 입력해 주세요.");
+    }
+    if (!signUpUser.PASS2.trim()) {
+      return alertErrorMessage("확인용 비밀번호를 입력해 주세요.");
+    }
+    if (signUpUser.PASS1 !== signUpUser.PASS2) {
+      return alertErrorMessage("비밀번호가 일치하지 않습니다.");
+    }
+    if (!signUpUser.BIRTHDAY) {
+      return alertErrorMessage("생년월일을 선택해 주세요.");
+    }
+    if (!signUpUser.GENDER) {
+      return alertErrorMessage("성별을 선택해 주세요.");
+    }
 
     const newUser = {
       email: signUpUser.EMAIL,
@@ -79,7 +101,7 @@ export default function SignupForm() {
           onChange={changeNewUser}
         />
         <Input
-          label="비밀번호"
+          label="비밀번호 확인"
           type="password"
           name="PASS2"
           value={signUpUser.PASS2}
@@ -124,9 +146,14 @@ export default function SignupForm() {
           </InputContainer>
         </Fieldset>
       </FlexRow>
-      {isError && alerts["signupError"] && (
-        <AlertText>{alerts["signupError"]}</AlertText>
-      )}
+      <AlertText>
+        {
+          errorMessage
+          // ||
+          // (isError &&
+          // (isError?.response?.data as { message: string })?.message)
+        }
+      </AlertText>
       <Button type="submit">가입하기</Button>
     </Form>
   );

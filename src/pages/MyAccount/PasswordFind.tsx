@@ -1,5 +1,7 @@
+import AlertText from "@components/AlertText";
 import Button from "@components/Button";
 import Input from "@components/Input";
+import useError from "@hooks/useError";
 import { useCreateFindCode, useResetPassword } from "@queries/passwordQueries";
 import { weatherSunCloudyIcon } from "@shared/icons";
 import { useState } from "react";
@@ -8,6 +10,7 @@ import styled from "styled-components";
 
 export default function PasswordFind() {
   const navigate = useNavigate();
+  const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
 
   //비밀번호 리셋 메일 발송
   const {
@@ -20,6 +23,7 @@ export default function PasswordFind() {
   const [email, setEmail] = useState("");
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    deleteErrorMessage();
     setEmail(e.target.value);
   };
 
@@ -28,11 +32,10 @@ export default function PasswordFind() {
 
     //폼 검증
     if (!email.trim()) {
-      alert("이메일을 입력해 주세요.");
-      return;
+      return alertErrorMessage("이메일을 입력해 주세요.");
     }
     //비동기 통신
-    mutateCreateFindCode({ email }); //보낼때 항상 객체로 보내라!!!!✅
+    mutateCreateFindCode({ email }); //보낼때 항상 객체로 보내기
     setEmail("");
   };
   //////////////////////////////////////////////////////////
@@ -47,25 +50,23 @@ export default function PasswordFind() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    deleteErrorMessage();
     setPassword((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    //폼 검증
     if (
       !passwords.code.trim() ||
       !passwords.newPassword.trim() ||
       !passwords.newPasswordCheck.trim()
     ) {
-      alert("모든 값을 입력해주세요.");
-      return;
+      return alertErrorMessage("모든 값을 입력해주세요.");
     }
 
     if (passwords.newPassword !== passwords.newPasswordCheck) {
-      alert("바꾸려고 하는 비밀번호가 일치하지 않습니다.");
-      return;
+      return alertErrorMessage("바꾸려고 하는 비밀번호가 일치하지 않습니다.");
     }
 
     mutateResetPassword(passwords);
@@ -109,6 +110,15 @@ export default function PasswordFind() {
                     value={email}
                     onChange={handleEmailChange}
                   />
+                  <AlertText>
+                    {
+                      errorMessage
+                      // ||
+                      //   (isErrorLogin &&
+                      //     (errorLogin?.response?.data as { message: string })
+                      //       ?.message)
+                    }
+                  </AlertText>
                   <ButtonWrapper>
                     <Button type={"submit"} disabled={isPendingCreateFindCode}>
                       다음
@@ -142,6 +152,15 @@ export default function PasswordFind() {
                     value={passwords.newPasswordCheck}
                     onChange={handleChange}
                   />
+                  <AlertText>
+                    {
+                      errorMessage
+                      // ||
+                      //   (isErrorLogin &&
+                      //     (errorLogin?.response?.data as { message: string })
+                      //       ?.message)
+                    }
+                  </AlertText>
                   <ButtonWrapper>
                     <Button type={"submit"}>수정</Button>
                     <Button

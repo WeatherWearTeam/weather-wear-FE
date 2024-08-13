@@ -1,8 +1,10 @@
 import { ClothesItemByIdResponse } from "@api/clothesApi";
+import AlertText from "@components/AlertText";
 import Button from "@components/Button";
 import ColorPickBar from "@components/Color/ColorPickBar";
 import Select from "@components/Select/Select";
 import SelectedTag from "@components/Select/SelectedTag";
+import useError from "@hooks/useError";
 import clothesTypeList, {
   ClothesKoreanType,
   ClothesType,
@@ -37,7 +39,8 @@ export default function ClosetForm({
   onCreateClothes,
 }: ClosetFormProps) {
   const navigate = useNavigate();
-  /////////////////////////////////////////////////////////
+  const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
+
   const [clothesBoardData, setClothesBoardData] = useState<ClothesBoardData>({
     color: null, // 초기값을 null로 설정
     type: null,
@@ -48,6 +51,7 @@ export default function ClosetForm({
     type: ClothesType,
     typeKorean: ClothesKoreanType
   ) => {
+    deleteErrorMessage();
     setClothesBoardData((prev) => ({
       ...prev,
       type,
@@ -70,7 +74,6 @@ export default function ClosetForm({
     });
   };
 
-  //////////////////////////////////////////////////////////////
   //파일 선택 및 프리뷰 보기
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null); //임시 url 만들기(string 타입으로 src에 넣기 위함)
@@ -86,13 +89,13 @@ export default function ClosetForm({
   };
 
   //////////////////////////////////////////////////////////////
-  // 🌟 FormData의 내용을 콘솔에 출력하는 함수
-  function logFormData(formData: FormData) {
-    for (const pair of formData.entries()) {
-      // 'const' 사용
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-  }
+  // FormData의 내용을 콘솔에 출력하는 함수
+  // function logFormData(formData: FormData) {
+  //   for (const pair of formData.entries()) {
+  //     // 'const' 사용
+  //     console.log(`${pair[0]}: ${pair[1]}`);
+  //   }
+  // }
 
   //////////////////////////////////////////////////////////////
   //등록하기 버튼 클릭했을 때 실행하는 handleSubmit 함수
@@ -101,18 +104,15 @@ export default function ClosetForm({
 
     //예외처리: 이미지파일이 안들어 왔다면 return
     if (!imageFile && !imageSrc) {
-      alert("옷 사진을 선택해 주세요!");
-      return;
+      return alertErrorMessage("옷 사진을 선택해 주세요!");
     }
 
     if (clothesBoardData.typeKorean === "옷 종류") {
-      alert("옷 종류를 선택해 주세요!");
-      return;
+      return alertErrorMessage("옷 종류를 선택해 주세요!");
     }
 
     if (clothesBoardData.color === null) {
-      alert("옷 색깔을 선택해 주세요!");
-      return;
+      return alertErrorMessage("옷 색깔을 선택해 주세요!");
     }
 
     if (
@@ -121,10 +121,9 @@ export default function ClosetForm({
       clothesBoardData.color === data.color &&
       !imageFile
     ) {
-      alert(
+      return alertErrorMessage(
         "변경된 사항이 없습니다. 변경하실 사항이 없으면 취소를 버튼을 눌러 주세요."
       );
-      return;
     }
 
     const formData = new FormData();
@@ -143,11 +142,11 @@ export default function ClosetForm({
     }
 
     if (!data) {
-      logFormData(formData); //로그찍기
+      // logFormData(formData); //로그찍기
       onCreateClothes?.(formData);
     } else {
       formData.append("id", data.id.toString());
-      logFormData(formData); //로그찍기
+      // logFormData(formData); //로그찍기
       onUpdateClothes?.(formData);
     }
   };
@@ -228,6 +227,15 @@ export default function ClosetForm({
                     ) : null}
                   </SelectedTagContainer>
                 </RowWrapper>
+                <AlertText>
+                  {
+                    errorMessage
+                    // ||
+                    //   (isErrorLogin &&
+                    //     (errorLogin?.response?.data as { message: string })
+                    //       ?.message)
+                  }
+                </AlertText>
                 <ButtonWrapper>
                   <Button
                     type="submit"
