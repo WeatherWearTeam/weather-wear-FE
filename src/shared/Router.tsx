@@ -20,6 +20,7 @@ import Posts from "@pages/Ootd/Posts";
 import Trend from "@pages/Trend";
 import PostEdit from "@pages/Ootd/PostEdit";
 import PostDetail from "@pages/Ootd/PostDetail";
+import KakaoCallback from "@pages/KakaoCallback";
 
 // PrivateRoute : 로그인이 필요한 페이지에 접근할 수 있도록 하는 컴포넌트
 // 로그인이 되어있지 않은 사용자는 login 페이지로 리다이렉트
@@ -48,6 +49,7 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
           {/* 퍼블릭 */}
           <Route path="/signup" element={<PublicRoute element={Signup} />} />
           <Route path="/login" element={<PublicRoute element={Login} />} />
@@ -55,6 +57,7 @@ const Router = () => {
             path="/login/find"
             element={<PublicRoute element={PasswordFind} />}
           />
+
           {/* 프라이빗 */}
           <Route path="/my" element={<PrivateRoute element={MyAccount} />} />
           <Route
