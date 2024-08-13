@@ -120,10 +120,10 @@ function Posts() {
         />
       )}
       {isSuccess && boards?.content.length < 1 && (
-        <div>아직 올린 게시글이 없어요!</div>
+        <NoBoard>아직 게시글이 없어요!</NoBoard>
       )}
-      {/* {isPending && <div>로딩중...</div>} */}
-      {isError && <div>에러 발생!</div>}
+      {/* {isPending && <NoBoard>로딩중...</NoBoard>} */}
+      {isError && <NoBoard>에러 발생!</NoBoard>}
       <ContentsFooter>
         <Pagination
           totalPages={boards?.totalPages} //총 아이템 수 //많아지면 버튼 생김
@@ -192,4 +192,11 @@ const ContentsFooter = styled.div`
   align-items: center;
   max-width: 1220px;
   /* flex-shrink: 0; */
+`;
+
+const NoBoard = styled.div`
+  font-size: small;
+  display: flex;
+  align-items: center;
+  height: 100%;
 `;

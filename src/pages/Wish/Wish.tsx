@@ -93,8 +93,12 @@ function Wish() {
 
   //////////////////////////////////////////////////////////////
   //위시리스트 아이템 조회하기
-  const { wishlistItems, isPending, isError, isSuccess } =
-    useWishlistItems(searchKeys);
+  const {
+    wishlistItems,
+    // isPending,
+    isError,
+    isSuccess,
+  } = useWishlistItems(searchKeys);
 
   const selectedItem = wishlistItems?.content?.find(
     (item: WishlistItem) => item.id === selectedItemId
@@ -127,13 +131,15 @@ function Wish() {
           onDelete={handleDelete}
         />
       )}
+
       {isSuccess && wishlistItems?.content.length < 1 && (
-        <div>
-          아직 좋아요한 위시 리스트가가 없어요! 위시리스트를 추가해주세요.
-        </div>
+        <NoBoard>
+          <NoBoardText>아직 좋아요한 위시 아이템이 없어요.</NoBoardText>
+          <NoBoardText>위시 리스트에 항목을 추가해 보세요!</NoBoardText>
+        </NoBoard>
       )}
-      {isPending && <div>로딩중...</div>}
-      {isError && <div>위시리스트를 불러오지 못했습니다.</div>}
+      {/* {isPending && <NoBoard>로딩중...</NoBoard>} */}
+      {isError && <NoBoard>위시리스트를 불러오지 못했어요.</NoBoard>}
       {isVisible && (
         <ModalPortal>
           <ModalLayout onClose={closeModal}>
@@ -204,4 +210,15 @@ const ContentsFooter = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 1220px;
+`;
+
+const NoBoard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+`;
+
+const NoBoardText = styled.div`
+  font-size: small;
 `;

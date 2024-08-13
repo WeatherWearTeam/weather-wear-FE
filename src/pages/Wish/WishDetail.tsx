@@ -13,7 +13,7 @@ const WishDetail: React.FC<WishItemProps> = ({ item }) => {
   return (
     <Container>
       <TitleWrapper>
-        <Title>위시 리스트</Title>
+        <Title>위시리스트</Title>
       </TitleWrapper>
       <GridContainer>
         <Column>
@@ -130,7 +130,7 @@ const CategoryWrapper = styled.p`
   align-items: center;
   text-align: center;
   gap: 1rem;
-  font-size: x-small;
+  font-size: small;
   padding-bottom: 2rem;
   border-bottom: ${({ theme }) => theme.borders.containerBorder};
 `;
@@ -149,13 +149,9 @@ const ProductName = styled.h2`
   padding-bottom: 2rem;
   color: ${({ theme }) => theme.colors.BLACK};
 
-  /* transition: border-bottom 0.25s linear; */
-  /* 
-  &:hover,
-  &:focus {
-    color: ${({ theme }) => theme.colors.BLACK};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.BLACK};
-  } */
+  @media (max-width: 600px) {
+    font-size: large;
+  }
 `;
 
 const DataWrapper = styled.div`
@@ -172,6 +168,9 @@ const InfoLabel = styled.h3`
 
 const InfoData = styled.p`
   font-size: medium;
+  @media (max-width: 600px) {
+    font-size: small;
+  }
 `;
 
 //아래
@@ -179,12 +178,18 @@ const LowHighlight = styled.h4`
   font-size: x-large;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.BLUE};
+  @media (max-width: 600px) {
+    font-size: large;
+  }
 `;
 
 const LowPrice = styled.h4`
   font-size: x-large;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.BLACK};
+  @media (max-width: 600px) {
+    font-size: large;
+  }
 `;
 
 const HighHighlight = styled.h5`
@@ -213,6 +218,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 5rem 5rem 5rem;
+  @media (max-width: 600px) {
+    padding: 2rem;
+  }
 `;
 
 const TitleWrapper = styled.div`

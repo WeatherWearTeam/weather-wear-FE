@@ -62,7 +62,7 @@ export default function BoardForm({
   const navigate = useNavigate();
   const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
   const { openModal, closeModal, isVisible } = useModal();
-  
+
   const [addressInfo, setAddressInfo] = useState<AddressInfo | null>(null);
 
   const getAddressCode = useCallback((info: AddressInfo) => {
@@ -94,6 +94,7 @@ export default function BoardForm({
     type: ClothesType,
     typeKorean: ClothesKoreanType
   ) => {
+    errorMessage && deleteErrorMessage();
     setClothesBoardData((prev) => ({
       ...prev,
       type,
@@ -102,6 +103,7 @@ export default function BoardForm({
   };
 
   const handleSelectColor = (color: ClothesColorType) => {
+    errorMessage && deleteErrorMessage();
     setClothesBoardData((prev) => ({
       ...prev,
       color,
@@ -158,6 +160,7 @@ export default function BoardForm({
   const [imageSrc, setImageSrc] = useState<string | null>(null); //임시 url 만들기(string 타입으로 src에 넣기 위함)
 
   const uploadImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    errorMessage && deleteErrorMessage();
     const file = e.target.files?.[0];
 
     if (file) {
@@ -186,8 +189,8 @@ export default function BoardForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    errorMessage && deleteErrorMessage();
     setBoardData((prev) => ({ ...prev, [name]: value }));
-    deleteErrorMessage();
   };
 
   //////////////////////////////////////////////////////////////
@@ -204,7 +207,9 @@ export default function BoardForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // 새로고침 방지
 
-    //🌟🌟🌟🌟🌟 예외처리 하는 로직 작성 🌟🌟🌟🌟🌟
+    if (isVisible) {
+      return;
+    }
 
     //예외처리: 이미지파일이 안들어 왔다면 return
     if (!imageSrc) {
@@ -216,12 +221,12 @@ export default function BoardForm({
     }
 
     if (!boardData.contents.trim()) {
-      return alertErrorMessage("내용을 입력해 주세요!");
+      return alertErrorMessage("내용을 입력해 주세요.");
     }
 
     //예외처리:옷 종류-컬러 1세트 없으면 return
     if (boardData.tags.length < 1) {
-      return alertErrorMessage("옷 종류와 색상을 선택해 주세요!");
+      return alertErrorMessage("옷 종류와 색상을 선택해 주세요.");
     }
 
     //폼 보내기 전에 아이디 없애기
@@ -236,11 +241,6 @@ export default function BoardForm({
         color: tag.color as ClothesColorType,
         type: tag.type as ClothesType,
       }));
-
-    // return console.log(boardData);
-    //폼 데이터 제출하는 로직 짜기
-
-    // return console.log(tagsWithoutIdAndTypeKorean)
 
     const formData = new FormData();
 
@@ -259,6 +259,7 @@ export default function BoardForm({
         address: boardData.address,
         tags: tagsWithoutIdAndTypeKorean,
       };
+      console.log("✅ address:", boardData.address);
 
       formData.append(
         "data",
@@ -452,16 +453,17 @@ export default function BoardForm({
                     />
                   ))}
                 </SelectedTagContainer>
+                <AlertText>
+                  {
+                    errorMessage
+                    // ||
+                    //   (isErrorLogin &&
+                    //     (errorLogin?.response?.data as { message: string })
+                    //       ?.message)
+                  }
+                </AlertText>
               </RowWrapper>
-              <AlertText>
-                {
-                  errorMessage
-                  // ||
-                  //   (isErrorLogin &&
-                  //     (errorLogin?.response?.data as { message: string })
-                  //       ?.message)
-                }
-              </AlertText>
+
               <ButtonWrapper>
                 <Button type="submit" buttonType="primary" disabled={isPending}>
                   {data ? `수정하기` : `등록하기`}

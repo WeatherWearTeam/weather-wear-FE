@@ -51,7 +51,7 @@ export default function ClosetForm({
     type: ClothesType,
     typeKorean: ClothesKoreanType
   ) => {
-    deleteErrorMessage();
+    errorMessage && deleteErrorMessage();
     setClothesBoardData((prev) => ({
       ...prev,
       type,
@@ -60,6 +60,7 @@ export default function ClosetForm({
   };
 
   const handleSelectColor = (color: ClothesColorType) => {
+    errorMessage && deleteErrorMessage();
     setClothesBoardData((prev) => ({
       ...prev,
       color,
@@ -104,15 +105,15 @@ export default function ClosetForm({
 
     //예외처리: 이미지파일이 안들어 왔다면 return
     if (!imageFile && !imageSrc) {
-      return alertErrorMessage("옷 사진을 선택해 주세요!");
+      return alertErrorMessage("옷 사진을 선택해 주세요.");
     }
 
     if (clothesBoardData.typeKorean === "옷 종류") {
-      return alertErrorMessage("옷 종류를 선택해 주세요!");
+      return alertErrorMessage("옷 종류를 선택해 주세요.");
     }
 
     if (clothesBoardData.color === null) {
-      return alertErrorMessage("옷 색깔을 선택해 주세요!");
+      return alertErrorMessage("옷 색깔을 선택해 주세요.");
     }
 
     if (
@@ -226,16 +227,16 @@ export default function ClosetForm({
                       />
                     ) : null}
                   </SelectedTagContainer>
+                  <AlertText>
+                    {
+                      errorMessage
+                      // ||
+                      //   (isErrorLogin &&
+                      //     (errorLogin?.response?.data as { message: string })
+                      //       ?.message)
+                    }
+                  </AlertText>
                 </RowWrapper>
-                <AlertText>
-                  {
-                    errorMessage
-                    // ||
-                    //   (isErrorLogin &&
-                    //     (errorLogin?.response?.data as { message: string })
-                    //       ?.message)
-                  }
-                </AlertText>
                 <ButtonWrapper>
                   <Button
                     type="submit"
@@ -351,15 +352,13 @@ const MyPageContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding: 0 2rem; */
 `;
 
 const Container = styled.div`
-  max-width: 1040px; //✅에라이
+  max-width: 1040px; //
   display: flex;
   flex-direction: column;
   padding: 2rem 4rem 4rem 4rem;
-  /* background-color: blue; */
 `;
 
 const TitleContainer = styled.div`
@@ -381,7 +380,6 @@ const SubTitle = styled.div`
 
 const Form = styled.form`
   height: 100%;
-  /* background-color: red; */
 `;
 
 const GridContainer = styled.div`
@@ -389,9 +387,7 @@ const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 3rem;
-  /* @media (max-width: 900px) {
-    grid-template-columns: repeat(2, 1fr);
-  } */
+
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
@@ -400,6 +396,4 @@ const GridContainer = styled.div`
   }
 `;
 
-const Column = styled.div`
-  /* border: 1px solid blue; */
-`;
+const Column = styled.div``;

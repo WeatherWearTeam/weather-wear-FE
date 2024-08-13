@@ -47,7 +47,11 @@ export const Dialog = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 20;
+  @media (max-width: 600px) {
+    padding: 1rem;
+  }
 `;
+
 export const DialogButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;

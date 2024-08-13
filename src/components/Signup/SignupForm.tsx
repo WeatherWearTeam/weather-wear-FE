@@ -20,13 +20,14 @@ export default function SignupForm() {
 
   const {
     mutateCreateUser,
-    // isError,
+    isError,
+    errorSignup,
     // , isPending, isSuccess
   } = useCreateUser();
 
   const changeNewUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    deleteErrorMessage();
+    errorMessage && deleteErrorMessage();
     setSignUpUser({ ...signUpUser, [name]: value });
   };
 
@@ -147,12 +148,9 @@ export default function SignupForm() {
         </Fieldset>
       </FlexRow>
       <AlertText>
-        {
-          errorMessage
-          // ||
-          // (isError &&
-          // (isError?.response?.data as { message: string })?.message)
-        }
+        {errorMessage ||
+          (isError &&
+            (errorSignup?.response?.data as { message: string })?.message)}
       </AlertText>
       <Button type="submit">가입하기</Button>
     </Form>

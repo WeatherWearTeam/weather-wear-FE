@@ -89,10 +89,19 @@ const StNavLink = styled(NavLink)`
     font-weight: 600;
     border-bottom: 1.5px solid ${({ theme }) => theme.colors.BLACK}; /* 하단의 수평선 */
   }
+
+  @media (max-width: 429px) {
+    padding-right: 0rem;
+  }
 `;
 
 const NavItem = styled.span`
   font-size: medium;
+  width: 100%;
+  /* 
+  @media (max-width: 429px) {
+    font-size: small;
+  } */
 `;
 
 //마이페이지의 탭 바 밑의 메인 영역입니다.
