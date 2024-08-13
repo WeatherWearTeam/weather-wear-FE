@@ -23,7 +23,7 @@ export const getWeatherByLocation = async (
   id: number
 ): Promise<WeatherData> => {
   try {
-    const response = await api.get(`/api/weathers?id=${id}`, {
+    const response = await api.get(`weathers?id=${id}`, {
       withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
     });
     return response.data;

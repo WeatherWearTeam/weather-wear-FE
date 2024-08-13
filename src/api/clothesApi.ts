@@ -22,7 +22,7 @@ export type SearchKeysRequest = {
 //전체 데이터 조회
 export const getClothesItems = async (searchKeys: SearchKeysRequest) => {
   try {
-    const response = await api.get(`/api/clothes`, {
+    const response = await api.get(`clothes`, {
       params: {
         page: searchKeys.page - 1, //페이네이션 실제로 0부터 시작되기 때문
         color: searchKeys.color,
@@ -46,13 +46,13 @@ export interface ClothesItemByIdResponse {
 
 // 개별 데이터 조회 //하나씩 수정할 때 필요함
 export const getClothesItemById = async (id: number) => {
-  const response = await api.get(`/api/clothes/${id}`);
+  const response = await api.get(`clothes/${id}`);
   return response.data;
 };
 
 // 생성
 export const createClothesItem = async (formData: FormData) => {
-  const response = await api.post("/api/clothes", formData, {
+  const response = await api.post("clothes", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -64,7 +64,7 @@ export const createClothesItem = async (formData: FormData) => {
 export const updateClothesItem = async (
   formData: FormData
 ): Promise<ClothesItemsResponse> => {
-  const response = await api.put(`/api/clothes`, formData, {
+  const response = await api.put(`clothes`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -74,5 +74,5 @@ export const updateClothesItem = async (
 
 // 삭제
 export const deleteClothesItem = async (clothesId: number): Promise<void> => {
-  await api.delete(`/api/clothes/${clothesId}`);
+  await api.delete(`clothes/${clothesId}`);
 };
