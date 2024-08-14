@@ -8,7 +8,6 @@ import {
   updatePassword,
   updateUser,
 } from "@api/userApi";
-import useAlertStore from "@store/store";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +21,6 @@ interface ErrorResponse {
 export const useCreateUser = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { setAlert } = useAlertStore();
 
   const {
     mutate: mutateCreateUser,
@@ -97,7 +95,7 @@ export const useUpdateUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] }); //전체 보드
       queryClient.invalidateQueries({ queryKey: ["auth"] }); // 로그인한 사용자 정보 쿼리 무효화
-      navigate(`/my/setting`, { replace: true }); //히스토리 스택 대체
+      navigate(`/my`, { replace: true }); //히스토리 스택 대체
     },
     onError: (error: AxiosError) => {
       let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
