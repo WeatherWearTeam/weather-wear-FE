@@ -13,9 +13,9 @@ import clothesTypeList, {
   ClothesKoreanType,
   ClothesType,
 } from "@shared/clothesTypeList";
-import Select from "@components/Select/Select";
 import ColorPickBar from "@components/Color/ColorPickBar";
 import TrendGrid from "@components/Trend/TrendGrid";
+import SelectClothes from "@components/Select/SelectClothes";
 
 interface SelectedClothesState {
   type: ClothesType | null;
@@ -130,7 +130,7 @@ function Trend() {
           </MainTitleTop>
           <TrendSearch>
             <SelectWrapper>
-              <Select
+              <SelectClothes
                 list={clothesTypeList}
                 onClick={handleSelectType}
                 value={selectedClothesType.typeKorean}
@@ -195,6 +195,7 @@ const MainTitleContainer = styled.div`
   width: 100%;
   padding: 2rem 0;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
@@ -207,7 +208,6 @@ const MainTitleContainer = styled.div`
 `;
 
 const MainTitleTop = styled.div`
-  margin: 0;
   font-size: x-large;
   font-weight: bold;
   color: black;
@@ -215,6 +215,7 @@ const MainTitleTop = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin: 2rem 0;
 `;
 const IconWrapper = styled.div`
   width: 3rem;
