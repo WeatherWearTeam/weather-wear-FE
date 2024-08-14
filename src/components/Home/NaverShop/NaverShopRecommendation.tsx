@@ -26,7 +26,7 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
   data,
 }) => {
   const [wishlistIds, setWishlistIds] = useState<(number | null)[]>(
-    data.map(() => null)
+    data ? data.map(() => null) : []
   );
   const { mutateCreateWishlistItem } = useCreateWishlistItem();
   const { mutateDeleteRecommendWishlistItem } =
@@ -98,7 +98,7 @@ const NaverShopRecommendation: React.FC<NaverShopRecommendationProps> = ({
             }}
             className="mySwiper"
           >
-            {data.map((slide, index) => (
+            {data?.map((slide, index) => (
               <SwiperSlide key={index}>
                 <NaverShopImage
                   style={{ backgroundImage: `url(${slide.image})` }}

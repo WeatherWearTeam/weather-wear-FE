@@ -3,7 +3,7 @@ import AlertText from "@components/AlertText";
 import Button from "@components/Button";
 import ColorPickBar from "@components/Color/ColorPickBar";
 import Input from "@components/Input";
-import Select from "@components/Select/Select";
+import SelectClothes from "@components/Select/SelectClothes";
 import SelectedTag from "@components/Select/SelectedTag";
 import Textarea from "@components/Textarea";
 import MapSelector, { AddressInfo } from "@components/Weather/MapSelector";
@@ -433,7 +433,7 @@ export default function BoardForm({
                     onGetAddressCode={getAddressCode}
                   />
                 </MapWrapper>
-                <Select
+                <SelectClothes
                   list={clothesTypeList}
                   onClick={handleSelectType}
                   value={clothesBoardData.typeKorean}

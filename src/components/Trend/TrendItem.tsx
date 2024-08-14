@@ -9,7 +9,6 @@ import {
   heartIcon,
 } from "@shared/icons";
 import { getSkyState } from "@utils/getWeather";
-import getKoreanColor from "@utils/getKoreanColor";
 import getKoreanType from "@utils/getKoreanType";
 import { ClothesColorType } from "@shared/colorTypeList";
 import { ClothesType } from "@shared/clothesTypeList";
@@ -17,6 +16,7 @@ import { TrendItemResponse } from "@api/trendApi";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@components/Avatar";
 import { getTimesAgo } from "@utils/getTime";
+import ColorChip from "@components/Color/ColorChip";
 
 interface TrendItemProps {
   item: TrendItemResponse;
@@ -66,9 +66,11 @@ const TrendItem = ({ item }: TrendItemProps) => {
               index: number
             ) => (
               <HashtagWrapper key={index}>
-                <Icon icon={hashtagIcon} />
-                {getKoreanColor(tag.color as ClothesColorType)}{" "}
-                {getKoreanType(tag.type as ClothesType)}
+                {hashtagIcon}
+                <HashText>
+                  {getKoreanType(tag.type as ClothesType)}
+                  <ColorChip color={tag.color as ClothesColorType} />
+                </HashText>
               </HashtagWrapper>
             )
           )}
@@ -176,6 +178,7 @@ const ContentsItemImage = styled.img`
 const ItemInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 0.3rem;
   padding: 1rem 0;
   border-top: ${({ theme }) => theme.borders.containerBorder};
@@ -205,16 +208,30 @@ const ContentsItemTagData = styled.div`
   display: flex;
   font-size: 10px;
   box-sizing: border-box;
-  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 22rem;
+  gap: 0.5rem;
 `;
 
 const HashtagWrapper = styled.div`
   display: flex;
   font-size: x-small;
-
+  display: flex;
+  gap: 0.1rem;
   svg {
     width: 14px;
     height: 14px;
+  }
+`;
+
+const HashText = styled.small`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  div {
+    border: 0.5px solid gray;
   }
 `;
 
