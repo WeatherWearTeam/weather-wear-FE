@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import AddButton from "@components/AddButton";
-import { trendingIcon } from "@shared/icons";
+import { emptyBox, trendingIcon } from "@shared/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import Search from "@components/Search";
 import { useTrendItems } from "@queries/trendQueries";
@@ -117,9 +117,6 @@ function Trend() {
   const { trendItemsData, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useTrendItems(searchKeys);
 
-  //trendItemsData.pageParams: [null]
-  //trendItemsData.pages는 배열, 각 인덱스 마다 데이터 8개씩 들어 오게 됨 -> 배열 안에 배열
-
   return (
     <>
       <TrendHeader>
@@ -150,8 +147,11 @@ function Trend() {
       </TrendHeader>
       <MyPageContentsContainer>
         {/* 메인  */}
-        {(!trendItemsData || trendItemsData?.pages.length === 0) && (
-          <UXText>게시글이 없어요!</UXText>
+        {trendItemsData?.pages[0].length === 0 && (
+          <NoBoard>
+            <NoBoardIconWrapper>{emptyBox}</NoBoardIconWrapper>
+            찾는 게시글이 없어요!
+          </NoBoard>
         )}
         <TrendGrid
           trendItemsData={trendItemsData?.pages as TrendItemResponse[][]}
@@ -241,28 +241,19 @@ const TrendSearch = styled.div`
 const MyPageContentsContainer = styled.div`
   overflow-y: auto;
   width: 100%;
-  /* height: calc(100vh - 16rem); */
-  /* position: fixed; */
-  /* top: 17.5rem; */
-  top: 16.2rem; //픽스 위치 조정
-  left: 0;
-  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 2rem;
-  /* background-color: green; */
 `;
 
 const ContentsFooter = styled.div`
   padding: 4rem;
   width: 100%;
-  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 1220px;
-  /* flex-shrink: 0; */
 `;
 
 const MoreButtonWrapper = styled.div`
@@ -291,4 +282,18 @@ const SelectWrapper = styled.div`
 const UXText = styled.div`
   padding: 2rem;
   font-size: small;
+`;
+const NoBoard = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
+  gap: 2rem;
+`;
+const NoBoardIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 10rem;
 `;

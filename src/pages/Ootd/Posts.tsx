@@ -8,6 +8,7 @@ import Pagination from "@components/pagination";
 import { useEffect, useState } from "react";
 import { UserBoardsSearchKeysRequest } from "@api/boardApi";
 import WeatherBar from "@components/Weather/WeatherBar";
+import { emptyBox, notFound } from "@shared/icons";
 
 interface WeatherIconTypes {
   sky: number | null;
@@ -120,10 +121,18 @@ function Posts() {
         />
       )}
       {isSuccess && boards?.content.length < 1 && (
-        <NoBoard>아직 게시글이 없어요!</NoBoard>
+        <NoBoard>
+          <IconWrapper>{emptyBox}</IconWrapper>
+          등록된 OOTD가 없어요.
+        </NoBoard>
       )}
       {/* {isPending && <NoBoard>로딩중...</NoBoard>} */}
-      {isError && <NoBoard>에러 발생!</NoBoard>}
+      {isError && (
+        <NoBoard>
+          <IconWrapper>{notFound}</IconWrapper>
+          OOTD를 불러오지 못했어요.
+        </NoBoard>
+      )}
       <ContentsFooter>
         <Pagination
           totalPages={boards?.totalPages} //총 아이템 수 //많아지면 버튼 생김
@@ -195,8 +204,16 @@ const ContentsFooter = styled.div`
 `;
 
 const NoBoard = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: small;
+  gap: 2rem;
+`;
+const IconWrapper = styled.div`
   display: flex;
   align-items: center;
-  height: 100%;
+  width: 10rem;
 `;

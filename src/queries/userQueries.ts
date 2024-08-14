@@ -34,13 +34,11 @@ export const useCreateUser = () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       navigate("/login");
     },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      let errorMessage = "오류가 발생했습니다.\n회원가입을 다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-      }
-      setAlert("signupError", errorMessage);
-    },
+    // onError: (error: AxiosError<ErrorResponse>) => {
+    //   let errorMessage = "오류가 발생했습니다.\n회원가입을 다시 시도해 주세요.";
+    //   if (error.response) {
+    //   }
+    // },
   });
 
   return { mutateCreateUser, isError, isPending, isSuccess, errorSignup };

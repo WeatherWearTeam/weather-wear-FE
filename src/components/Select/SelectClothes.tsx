@@ -1,5 +1,4 @@
 import DropdownLayoutSelect from "@components/Modal/DropdownLayoutSelect";
-import ModalPortal from "@components/Modal/ModalPortal";
 import SelectButton from "@components/Select/SelectButton";
 import useModal from "@hooks/useModal";
 import useOutsideClick from "@hooks/useOutsideClick";

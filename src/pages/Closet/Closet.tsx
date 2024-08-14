@@ -13,6 +13,7 @@ import Select from "@components/Select/Select";
 import { ClothesColorType } from "@shared/colorTypeList";
 import { SearchKeysRequest } from "@api/clothesApi";
 import Pagination from "@components/pagination";
+import { emptyBox, notFound } from "@shared/icons";
 
 interface SelectedClothesState {
   type: ClothesType | null;
@@ -143,10 +144,18 @@ function Closet() {
       )}
 
       {isSuccess && clothesItems?.content.length < 1 && (
-        <NoBoard>아직 게시글이 없어요!</NoBoard>
+        <NoBoard>
+          <IconWrapper>{emptyBox}</IconWrapper>
+          옷장에 옷이 없어요.
+        </NoBoard>
       )}
       {/* {isPending && <NoBoard>로딩중...</NoBoard>} */}
-      {isError && <NoBoard>옷장의 옷을 불러오지 못했어요.</NoBoard>}
+      {isError && (
+        <NoBoard>
+          <IconWrapper>{notFound}</IconWrapper>
+          옷장의 옷을 불러오지 못했어요.
+        </NoBoard>
+      )}
       <ContentsFooter>
         <Pagination
           totalPages={clothesItems?.totalPages} //총 아이템 수 //많아지면 버튼 생김
@@ -210,11 +219,18 @@ const ContentsFooter = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 1220px;
-  /* flex-shrink: 0; */
 `;
 const NoBoard = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: small;
+  gap: 2rem;
+`;
+const IconWrapper = styled.div`
   display: flex;
   align-items: center;
-  height: 100%;
+  width: 10rem;
 `;
