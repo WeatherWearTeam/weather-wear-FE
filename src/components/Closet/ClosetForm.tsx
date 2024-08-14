@@ -2,7 +2,7 @@ import { ClothesItemByIdResponse } from "@api/clothesApi";
 import AlertText from "@components/AlertText";
 import Button from "@components/Button";
 import ColorPickBar from "@components/Color/ColorPickBar";
-import Select from "@components/Select/Select";
+import SelectClothes from "@components/Select/SelectClothes";
 import SelectedTag from "@components/Select/SelectedTag";
 import useError from "@hooks/useError";
 import clothesTypeList, {
@@ -208,7 +208,7 @@ export default function ClosetForm({
               {/* / */}
               <RightWrapper>
                 <RowWrapper>
-                  <Select
+                  <SelectClothes
                     list={clothesTypeList}
                     onClick={handleSelectType}
                     value={clothesBoardData.typeKorean}

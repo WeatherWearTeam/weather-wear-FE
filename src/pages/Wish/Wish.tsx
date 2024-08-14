@@ -17,6 +17,7 @@ import Select from "@components/Select/Select";
 import Pagination from "@components/pagination";
 import { WishlistItem, WishSearchKeysRequest } from "@api/wishlistApi";
 import WishsGrid from "@components/Wish/WishsGrid";
+import { emptyBox, notFound } from "@shared/icons";
 
 interface SelectedClothesState {
   type: ClothesType | null;
@@ -134,12 +135,20 @@ function Wish() {
 
       {isSuccess && wishlistItems?.content.length < 1 && (
         <NoBoard>
-          <NoBoardText>아직 좋아요한 위시 아이템이 없어요.</NoBoardText>
-          <NoBoardText>위시 리스트에 항목을 추가해 보세요!</NoBoardText>
+          <IconWrapper>{emptyBox}</IconWrapper>
+          <NoBoardTextWrapper>
+            <NoBoardText>좋아요한 위시 아이템이 없어요.</NoBoardText>
+            <NoBoardText>위시 리스트에 항목을 더 추가해 보세요!</NoBoardText>
+          </NoBoardTextWrapper>
         </NoBoard>
       )}
       {/* {isPending && <NoBoard>로딩중...</NoBoard>} */}
-      {isError && <NoBoard>위시리스트를 불러오지 못했어요.</NoBoard>}
+      {isError && (
+        <NoBoard>
+          <IconWrapper>{notFound}</IconWrapper>
+          위시리스트를 불러오지 못했어요.
+        </NoBoard>
+      )}
       {isVisible && (
         <ModalPortal>
           <ModalLayout onClose={closeModal}>
@@ -213,12 +222,28 @@ const ContentsFooter = styled.div`
 `;
 
 const NoBoard = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  height: 100%;
+  font-size: small;
+  gap: 2rem;
+`;
+
+const NoBoardTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
 `;
 
 const NoBoardText = styled.div`
   font-size: small;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 10rem;
 `;

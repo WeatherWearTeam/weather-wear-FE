@@ -9,6 +9,7 @@ import { useMe } from "@queries/userQueries";
 import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
+import WeatherWearLogo from "@assets/images/logoimg.png";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -34,9 +35,13 @@ function Layout({ children }: LayoutProps) {
       <HeaderContainer>
         <Nav>
           <NavLeft>
-            <Link to={`/`}>
-              <NavItem>웨더웨어</NavItem>
-            </Link>
+            <LogoWrapper to={`/`}>
+              <img
+                src={WeatherWearLogo}
+                alt="WeatherWear Logo"
+                style={{ height: "50px", width: "auto" }}
+              />
+            </LogoWrapper>
             <StNavLink to={`/`}>
               <NavItem>홈</NavItem>
             </StNavLink>
@@ -115,6 +120,7 @@ const NavLeft = styled.div`
   display: flex;
   align-items: center;
   gap: 3rem;
+  // flex: 1; // 추가
 `;
 
 const NavRight = styled.div`
@@ -177,4 +183,12 @@ const Main = styled.main`
   margin-top: 5rem;
   height: calc(100vh - 5rem);
   width: 100%;
+`;
+
+const LogoWrapper = styled(Link)`
+  display: flex;
+
+  align-items: center;
+  flex: 1;
+  padding: 0.5rem 0; // 상하 여백 추가
 `;
