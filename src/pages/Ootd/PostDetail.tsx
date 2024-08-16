@@ -26,6 +26,7 @@ import { useMe } from "@queries/userQueries";
 import WeatherStateIcon from "@components/Weather/WeatherStateIcon";
 import LikeButton from "@components/LikeButton";
 import { useEffect, useState } from "react";
+import Loading from "@components/Loading";
 
 export default function PostDetail() {
   const { mutateToggleLikeBoard } = useToggleLikeBoard();
@@ -38,7 +39,7 @@ export default function PostDetail() {
   const { me } = useMe(isLoggedIn);
   const {
     board,
-    //  isPending,
+    isPending,
     //   isError,
     isSuccess,
   } = useBoardById(Number(boardId));
@@ -47,8 +48,6 @@ export default function PostDetail() {
     if (board) {
       setLikesCount(board.boardLikesCount);
     }
-    console.log(board);
-
     if (board?.checkLike) {
       setIsClickedLike(true);
     } else if (!board?.checkLike) {
@@ -65,138 +64,134 @@ export default function PostDetail() {
 
   const { mutateDeleteBoard } = useDeleteBoard();
   return (
-    <Container>
-      <TitleContainer>
-        {/* <Title>나의 OOTD</Title> */}
-        <SubTitle>OOTD</SubTitle>
-      </TitleContainer>
-      <GridWrapper>
-        <GridContainer>
-          <Column>
+    <>
+      {isPending && <Loading />}
+      <Container>
+        <TitleContainer>
+          {/* <Title>나의 OOTD</Title> */}
+          <SubTitle>OOTD</SubTitle>
+        </TitleContainer>
+        <GridWrapper>
+          <GridContainer>
             {isSuccess && board && (
-              <ImageWrapper>
-                <img src={board.image} alt="ootd 사진" />
-                {/* 이미지 로드 실패 시 예외 처리 필요 */}
-              </ImageWrapper>
-            )}
-            <FlexRowIconContainer>
-              {isSuccess && board && (
-                <>
-                  {!board.isPrivate ? (
-                    <Icon icon={eyeIcon} />
-                  ) : (
-                    <Icon icon={eyeOffIcon} />
-                  )}
-                  <span>조회수 {board.views}</span>
-                  <LikeButton
-                    active={isClickedLike}
-                    onClick={handleLikeClick}
-                  />
-                  <span>좋아요 {likesCount}</span>{" "}
-                </>
-              )}
-            </FlexRowIconContainer>
-            {/*  */}
-          </Column>
+              <>
+                <Column>
+                  <ImageWrapper>
+                    <img src={board.image} alt="ootd 사진" />
+                    {/* 이미지 로드 실패 시 예외 처리 필요 */}
+                  </ImageWrapper>
 
-          <Column>
-            {/*  */}
-            <ContentContainer>
-              {/*  */}
-              <FlexColumn>
-                {/*  */}
-                <FlexRow>
-                  <FlexRowUser>
-                    <UserImage>
-                      <AvatarImg src={board?.user.image} />
-                    </UserImage>
-                    <FlexColumnUser>
-                      <FlexRowUser>
-                        <UserInfoText>
-                          {board?.user.nickname} ·{" "}
-                          {getTimesAgo(board?.createdAt as string)}
-                        </UserInfoText>
-                      </FlexRowUser>
-                      {isSuccess && board && (
-                        <WeatherInfo>
-                          <Location>
-                            {atIcon}
-                            <span>{board.address}</span>
-                          </Location>
-                          <span>{board.weather.tmp}°C </span>
-                          <span>{getSkyState(board.weather.sky)}</span>
-                        </WeatherInfo>
-                      )}
-                    </FlexColumnUser>
-                  </FlexRowUser>
-                  <IconWrapper>
-                    {isSuccess && board.weather ? (
-                      <WeatherStateIcon
-                        pty={board.weather.pty}
-                        sky={board.weather.sky}
-                      />
+                  <FlexRowIconContainer>
+                    {!board.isPrivate ? (
+                      <Icon icon={eyeIcon} />
                     ) : (
-                      <Icon icon={weatherSunIcon} />
+                      <Icon icon={eyeOffIcon} />
                     )}
-                  </IconWrapper>
-                </FlexRow>
-                {/*  */}
-                {/*  */}
-                <FlexColumn>
-                  {isSuccess && board && (
-                    <>
-                      <ContentTitle>{board?.title}</ContentTitle>
-                      <ContentText>{board?.contents}</ContentText>
-                    </>
-                  )}
-                </FlexColumn>
-                {/*  */}
-              </FlexColumn>
-              {/*  */}
-              <FlexRow>
-                <ClothesTagWrapper>
-                  {isSuccess &&
-                    board &&
-                    board?.tags.map(
-                      (
-                        tag: {
-                          color: ClothesColorType;
-                          type: ClothesType;
-                        },
-                        index: number
-                      ) => (
-                        <ClothesTag
-                          key={index}
-                          color={tag.color}
-                          type={tag.type}
-                        />
-                      )
-                    )}
-                </ClothesTagWrapper>
-                {isSuccess && board && board.user.id === me?.id && (
-                  <EditDeleteButton
-                    id={board.id}
-                    editPath={`/ootd/${board.id}/edit`}
-                    onMutateDelete={mutateDeleteBoard}
-                  />
-                )}
-                {/* 여기는 navigate 하는 함수 보내기 */}
-              </FlexRow>
-              {/*  */}
-            </ContentContainer>
-            {/*  */}
-          </Column>
+                    <span>조회수 {board.views}</span>
+                    <LikeButton
+                      active={isClickedLike}
+                      onClick={handleLikeClick}
+                    />
+                    <span>좋아요 {likesCount}</span>{" "}
+                  </FlexRowIconContainer>
+                  {/*  */}
+                </Column>
 
-          <FullWidthColumn>
-            {/*  */}
-            <CommentWrapper>
-              <Comments boardId={board?.id as number} />
-            </CommentWrapper>
-            {/*  */}
-          </FullWidthColumn>
-        </GridContainer>
-      </GridWrapper>
-    </Container>
+                <Column>
+                  {/*  */}
+                  <ContentContainer>
+                    {/*  */}
+                    <FlexColumn>
+                      {/*  */}
+                      <FlexRow>
+                        <FlexRowUser>
+                          <UserImage>
+                            <AvatarImg src={board?.user.image} />
+                          </UserImage>
+                          <FlexColumnUser>
+                            <FlexRowUser>
+                              <UserInfoText>
+                                {board?.user.nickname} ·{" "}
+                                {getTimesAgo(board?.createdAt as string)}
+                              </UserInfoText>
+                            </FlexRowUser>
+                            <WeatherInfo>
+                              <Location>
+                                {atIcon}
+                                <span>{board.address}</span>
+                              </Location>
+                              <span>{board.weather.tmp}°C </span>
+                              <span>{getSkyState(board.weather.sky)}</span>
+                            </WeatherInfo>
+                          </FlexColumnUser>
+                        </FlexRowUser>
+                        <IconWrapper>
+                          {isSuccess && board.weather ? (
+                            <WeatherStateIcon
+                              pty={board.weather.pty}
+                              sky={board.weather.sky}
+                            />
+                          ) : (
+                            <Icon icon={weatherSunIcon} />
+                          )}
+                        </IconWrapper>
+                      </FlexRow>
+                      {/*  */}
+                      {/*  */}
+                      <FlexColumn>
+                        <>
+                          <ContentTitle>{board?.title}</ContentTitle>
+                          <ContentText>{board?.contents}</ContentText>
+                        </>
+                      </FlexColumn>
+                      {/*  */}
+                    </FlexColumn>
+                    {/*  */}
+                    <FlexRow>
+                      <ClothesTagWrapper>
+                        {board?.tags.map(
+                          (
+                            tag: {
+                              color: ClothesColorType;
+                              type: ClothesType;
+                            },
+                            index: number
+                          ) => (
+                            <ClothesTag
+                              key={index}
+                              color={tag.color}
+                              type={tag.type}
+                            />
+                          )
+                        )}
+                      </ClothesTagWrapper>
+                      {board.user.id === me?.id && (
+                        <EditDeleteButton
+                          id={board.id}
+                          editPath={`/ootd/${board.id}/edit`}
+                          onMutateDelete={mutateDeleteBoard}
+                        />
+                      )}
+                      {/* 여기는 navigate 하는 함수 보내기 */}
+                    </FlexRow>
+                    {/*  */}
+                  </ContentContainer>
+                  {/*  */}
+                </Column>
+              </>
+            )}
+
+            <FullWidthColumn>
+              {/*  */}
+              <CommentWrapper>
+                <Comments boardId={board?.id as number} />
+              </CommentWrapper>
+              {/*  */}
+            </FullWidthColumn>
+          </GridContainer>
+        </GridWrapper>
+      </Container>
+    </>
   );
 }
 
