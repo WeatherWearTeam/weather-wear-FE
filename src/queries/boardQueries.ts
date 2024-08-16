@@ -73,7 +73,7 @@ export const useTrendBoards = () => {
     isSuccess,
   } = useQuery({
     queryKey: ["boards"], // 전체 보드
-    queryFn: getTrendBoards, //✅ @api/boardApi 에 작성해둔 api 함수
+    queryFn: getTrendBoards,
   });
 
   return { boards, isPending, isError, isSuccess };
@@ -129,6 +129,7 @@ export const useCreateBoard = () => {
     mutate: mutateCreateBoard,
     isPending,
     isError,
+    error: createBoardError,
   } = useMutation({
     mutationFn: createBoard,
 
@@ -141,18 +142,16 @@ export const useCreateBoard = () => {
       navigate(`/ootd/${id}`, { replace: true }); //히스토리 스택 대체
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      console.log(error);
+      return error;
     },
   });
 
-  return { mutateCreateBoard, isPending, isError }; // 컴포넌트에서 사용해야할 값 리턴하기
+  return { mutateCreateBoard, isPending, isError, createBoardError }; // 컴포넌트에서 사용해야할 값 리턴하기
 };
 
 ///////////////////////////////////////////////////////////////
+//보드 삭제
 export const useDeleteBoard = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -167,20 +166,17 @@ export const useDeleteBoard = () => {
       queryClient.invalidateQueries({ queryKey: ["boards"] }); //전체 보드
       queryClient.invalidateQueries({ queryKey: ["board", boardId] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
       queryClient.invalidateQueries({ queryKey: ["userBoards"] }); // 마이 페이지 보드
-      navigate(`/mypage/myootd`, { replace: true }); // 생성 성공시 상세페이지로 이동, 히스토리 스택 대체
+      navigate(`/mypage/myootd`, { replace: true }); //히스토리 스택 대체
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
   return { mutateDeleteBoard, isPendingDelete, isErrorDelete };
 };
 
 ///////////////////////////////////////////////////////////////
+//보드 수정
 export const useUpdateBoard = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -192,7 +188,7 @@ export const useUpdateBoard = () => {
   } = useMutation({
     mutationFn: updateBoard,
     //첫 번째 인자: mutationFn이 반환하는 response.data
-    //두 번째 인자: mutationFn의 인자로 보낸 업데이트된 보드 > 쓰면 안전빵..?
+    //두 번째 인자: mutationFn의 인자로 보낸 업데이트된 보드
     onSuccess: ({ id: boardId }) => {
       queryClient.invalidateQueries({ queryKey: ["boards"] }); //전체 보드
       queryClient.invalidateQueries({ queryKey: ["board", boardId] }); // 상세 페이지에서 겟하는 보드 아이디에 해당하는 보드
@@ -200,11 +196,7 @@ export const useUpdateBoard = () => {
       navigate(`/ootd/${boardId}`, { replace: true }); //히스토리 스택 대체
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 
@@ -231,11 +223,7 @@ export const useToggleLikeBoard = () => {
       queryClient.invalidateQueries({ queryKey: ["board", boardId] });
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 

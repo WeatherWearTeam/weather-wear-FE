@@ -6,15 +6,10 @@ export interface FindCodeRequest {
 
 //비밀번호 리셋 메일 발송
 export const createFindCode = async (email: FindCodeRequest) => {
-  try {
-    const response = await api.post(`password/forgot`, email, {
-      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  const response = await api.post(`password/forgot`, email, {
+    withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
+  });
+  return response.data;
 };
 
 //////////////////////////////////////////////////////////
@@ -26,13 +21,8 @@ export interface ResetPasswordRequest {
 }
 
 export const resetPassword = async (passwords: ResetPasswordRequest) => {
-  try {
-    const response = await api.post(`password/reset`, passwords, {
-      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  const response = await api.post(`password/reset`, passwords, {
+    withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
+  });
+  return response.data;
 };

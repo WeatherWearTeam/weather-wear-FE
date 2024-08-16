@@ -46,14 +46,10 @@ export type TrendSearchKeysRequest = {
   keyword: string | null; //초기값
 };
 export const getTrendBoards = async () => {
-  try {
-    const response = await api.get(`boards`, {
-      withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await api.get(`boards`, {
+    withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
+  });
+  return response.data;
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -93,18 +89,14 @@ export interface BoardByIdResponse {
   views: number;
   checkLike: boolean;
 }
-// 상세페이지 Board 리소스 조회 => 🌟 OOTD 상세 페이지
+
+// 상세페이지 Board 리소스 조회 => OOTD 상세 페이지
 export const getBoardById = async (boardId: number) => {
-  try {
-    const response = await api.get(`boards/${boardId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await api.get(`boards/${boardId}`);
+  return response.data;
 };
 
 //////////////////////////////////////////////////////////////////
-// 전체 Boards 리소스 조회 => 🌟 trend 페이지
 
 export interface UserBoardsResponse {
   id: number;
@@ -118,7 +110,7 @@ export interface UserBoardsResponse {
   updatedAt: string;
   isPrivate: boolean;
 }
-// ✅ 페이지네이션
+// 페이지네이션
 export type UserBoardsSearchKeysRequest = {
   page: number;
   pty: number | null; //초기값
@@ -126,25 +118,21 @@ export type UserBoardsSearchKeysRequest = {
   keyword: string | null; //초기값
 };
 
+// 마이페이지 유저의 보드 전체 조회
 export const getUserBoards = async (
   searchKeys: UserBoardsSearchKeysRequest
 ) => {
-  try {
-    const response = await api.get(`users/boards`, {
-      params: {
-        page: searchKeys.page - 1,
-        pty: searchKeys.pty,
-        sky: searchKeys.sky,
-        keyword: searchKeys.keyword,
-      },
-    });
+  const response = await api.get(`users/boards`, {
+    params: {
+      page: searchKeys.page - 1,
+      pty: searchKeys.pty,
+      sky: searchKeys.sky,
+      keyword: searchKeys.keyword,
+    },
+  });
 
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  return response.data;
 };
-//////////////////////////////////////////////////////////////////
 
 // Board 리소스 생성
 export const createBoard = async (newBoardFormData: FormData) => {
@@ -173,16 +161,9 @@ export const updateBoard = async (updatedBoard: FormData) => {
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// PUT ❤️ 좋아요 toggle 업데이트하기
-// export const toggleHeartBoard = async (boardId: number) => {
-//   const currentBoard = await getBoardById(boardId);
-//   const updatedBoard = { ...currentBoard, isLike: !currentBoard.isLike };
-//   const response = await api.put(`boards/${boardId}`, updatedBoard);
-//   return response.data;
-// };
+//좋아요 toggle 업데이트
+
 export const toggleHeartBoard = async (boardId: number) => {
-  // const currentBoard = await getBoardById(boardId);
-  // const updatedBoard = { ...currentBoard, isLike: !currentBoard.isLike };
   const response = await api.post(`boards/likes/${boardId}`);
   return response.data;
 };
@@ -203,14 +184,10 @@ export interface CommentsByBoardIdResponse {
   user: UserCommentsByBoardIdResponse;
 }
 
-// 보드별 코멘트 리스트 조회 => 🌟 상세페이지의 코멘트 부분
+// 보드별 코멘트 리스트 조회 => 상세페이지의 코멘트 부분
 export const getCommentsByBoardId = async (boardId: number) => {
-  try {
-    const response = await api.get(`boards/${boardId}/comments`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await api.get(`boards/${boardId}/comments`);
+  return response.data;
 };
 
 // RESTful 원칙 준수: 자원의 계층적 관계를 명확히 표현할 수 있습니다.
