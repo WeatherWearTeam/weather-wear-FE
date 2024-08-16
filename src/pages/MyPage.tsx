@@ -42,7 +42,7 @@ const Wrapper = styled.div`
 
 const TabContainer = styled.div`
   background-color: white;
-  width: 100%;
+  width: 85%;
   padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
@@ -98,10 +98,14 @@ const StNavLink = styled(NavLink)`
 const NavItem = styled.span`
   font-size: medium;
   width: 100%;
-  /* 
-  @media (max-width: 429px) {
+
+  @media (max-width: 500px) {
     font-size: small;
-  } */
+  }
+
+  @media (max-width: 350px) {
+    font-size: x-small;
+  }
 `;
 
 //마이페이지의 탭 바 밑의 메인 영역입니다.
