@@ -55,8 +55,8 @@ const useAuth = () => {
     mutationFn: logout,
     onSuccess: () => {
       localStorage.removeItem("ISLOGGEDIN");
-      // queryClient.invalidateQueries({ queryKey: ["auth"] }); // 이거지우니까 에러 안뜸 //없는데 호출해서 그런거였음
       navigate("/"); //페이지 이동
+      // queryClient.invalidateQueries({ queryKey: ["auth"] }); // 이거지우니까 에러 안뜸 //없는데 호출해서 그런거였음
     },
     onError: (error: AxiosError) => {
       return error;
