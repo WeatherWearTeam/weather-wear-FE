@@ -16,10 +16,10 @@ export default function AddButton({ onClick }: AddButtonProps) {
 
 const BoardAddButton = styled.button`
   position: fixed;
-  bottom: 3rem;
-  right: 3rem;
-  width: 4rem;
-  height: 4rem;
+  bottom: 6rem;
+  right: 7.5rem;
+  width: 5rem;
+  height: 5rem;
   background-color: ${({ theme }) => theme.colors.BLACK};
   border: 1px solid ${({ theme }) => theme.colors.BLACK};
   border-radius: 50%;
