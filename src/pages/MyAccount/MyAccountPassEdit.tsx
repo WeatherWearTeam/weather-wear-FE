@@ -12,7 +12,7 @@ export default function MyAccountPassEdit() {
   const navigate = useNavigate();
   const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
 
-  const { mutateUpdatePassword } = useUpdatePassword();
+  const { mutateUpdatePassword, updatePasswordError } = useUpdatePassword();
 
   const [passwords, setPasswords] = useState({
     currentPassword: "",
@@ -29,6 +29,9 @@ export default function MyAccountPassEdit() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    //최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자를 포함하는 정규식
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+
     //폼 검증
     if (
       !passwords.currentPassword.trim() ||
@@ -36,6 +39,18 @@ export default function MyAccountPassEdit() {
       !passwords.newPasswordCheck.trim()
     ) {
       return alertErrorMessage("모든 값을 입력해주세요.");
+    }
+
+    if (
+      !passwords.newPassword.trim() ||
+      !(
+        passwords.newPassword.length > 7 && passwords.newPassword.length < 16
+      ) ||
+      !regex.test(passwords.newPassword)
+    ) {
+      return alertErrorMessage(
+        "비밀번호는 8-15자 길이여야 하며, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자를 포함해야 합니다."
+      );
     }
 
     // currentPassword 이거 검증 어떻게 하지? -> 일단 수정버튼 눌러서 내고, 서버에서 검증해서 결과 알려주기 ㅇㅇ
@@ -49,10 +64,8 @@ export default function MyAccountPassEdit() {
       return alertErrorMessage("바꾸려고 하는 비밀번호가 일치하지 않습니다.");
     }
 
-
     //비동기 통신
     mutateUpdatePassword(passwords);
-    //폼 인풋 비우기
   };
 
   //useEffect로 내 정보 먼저 가져와서 폼 채우기
@@ -102,13 +115,9 @@ export default function MyAccountPassEdit() {
                   onChange={handleChange}
                 />
                 <AlertText>
-                  {
-                    errorMessage
-                    // ||
-                    //   (isErrorLogin &&
-                    //     (errorLogin?.response?.data as { message: string })
-                    //       ?.message)
-                  }
+                  {errorMessage ||
+                    (updatePasswordError &&
+                      (updatePasswordError?.response?.data as string))}
                 </AlertText>
                 <ButtonWrapper>
                   <Button type={"submit"}>수정</Button>

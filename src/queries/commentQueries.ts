@@ -59,11 +59,7 @@ export const useCreateComment = () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 
@@ -86,11 +82,7 @@ export const useDeleteComment = () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 
@@ -113,15 +105,9 @@ export const useUpdateComment = () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] }); // 댓글 수정 > 댓글 하나만 겟하는게 없으므로 전체 리스트
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 
   return { mutateUpdateComment, isPending, isError, isSuccess };
 };
-
-//////////////////////////////////////////////////////////////

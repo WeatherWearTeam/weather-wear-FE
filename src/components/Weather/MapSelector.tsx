@@ -63,7 +63,7 @@ const MapSelector = ({
 
           setCurrentAddressAndCode(newAddressAndCode);
         } catch (error) {
-          console.error("❌ 주소와 코드를 가져오지 못했어요!", error);
+          console.error("주소와 코드를 가져오지 못했어요!", error);
         }
       };
 

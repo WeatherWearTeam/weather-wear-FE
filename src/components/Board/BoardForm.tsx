@@ -16,6 +16,7 @@ import clothesTypeList, {
 import { ClothesColorType } from "@shared/colorTypeList";
 import { globalIcon, imageAddIcon, lockIcon } from "@shared/icons";
 import getKoreanType from "@utils/getKoreanType";
+import { AxiosError } from "axios";
 
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -48,6 +49,7 @@ interface BoardFormProps {
   data?: BoardByIdResponse;
   isPending: boolean;
   isError: boolean;
+  serverError?: AxiosError | null;
   onUpdateBoard?: (updatedBoard: FormData) => void;
   onCreateBoard?: (newBoard: FormData) => void;
 }
@@ -55,7 +57,8 @@ interface BoardFormProps {
 export default function BoardForm({
   data,
   isPending,
-  // isError,
+  isError,
+  serverError,
   onUpdateBoard,
   onCreateBoard,
 }: BoardFormProps) {
@@ -112,8 +115,8 @@ export default function BoardForm({
 
   const addTag = useCallback(
     (data: ClothesTypeData) => {
+      // 현재 태그가 5개 이상일 경우 추가 금지
       if (boardData.tags.length >= 5) {
-        alertErrorMessage("옷 태그는 최대 5개까지만 추가할 수 있습니다.");
         return;
       }
 
@@ -136,10 +139,12 @@ export default function BoardForm({
         typeKorean: "옷 종류",
       });
     },
-    [boardData.tags.length, alertErrorMessage]
+
+    [boardData.tags.length]
   );
 
   const handleRemoveTag = (tagId: number) => {
+    errorMessage && deleteErrorMessage();
     setBoardData((prev) => ({
       ...prev,
       tags: prev.tags.filter((item) => item.id !== tagId),
@@ -148,11 +153,16 @@ export default function BoardForm({
 
   // useEffect를 사용하여 clothesBoardData가 업데이트되면 태그 추가하기
   useEffect(() => {
-    //컬러-타입 한 세트이기 때문에 이렇게 하나씩 추가해야 ㅇㅇ..
     if (clothesBoardData.type && clothesBoardData.color) {
-      addTag(clothesBoardData);
+      //컬러-타입 한 세트이기 때문에 이렇게 하나씩 추가해야 ㅇㅇ..
+      if (boardData.tags.length <= 5) {
+        addTag(clothesBoardData);
+      } else {
+        //5개 넘으면 추가안되게 리턴
+        return;
+      }
     }
-  }, [clothesBoardData, addTag]);
+  }, [boardData.tags.length, alertErrorMessage, clothesBoardData, addTag]);
 
   //////////////////////////////////////////////////////////////
   //파일 선택 및 프리뷰 보기
@@ -201,7 +211,6 @@ export default function BoardForm({
   //     console.log(`${pair[0]}: ${pair[1]}`);
   //   }
   // }
-
   //////////////////////////////////////////////////////////////
   //등록하기 버튼 클릭했을 때 실행하는 handleSubmit 함수
   const handleSubmit = (e: React.FormEvent) => {
@@ -259,7 +268,6 @@ export default function BoardForm({
         address: boardData.address,
         tags: tagsWithoutIdAndTypeKorean,
       };
-      console.log("✅ address:", boardData.address);
 
       formData.append(
         "data",
@@ -453,14 +461,14 @@ export default function BoardForm({
                     />
                   ))}
                 </SelectedTagContainer>
+                <TagsAnnounceText>
+                  {"*옷 태그는 최대 5개 까지만 추가할 수 있습니다."}
+                </TagsAnnounceText>
                 <AlertText>
-                  {
-                    errorMessage
-                    // ||
-                    //   (isErrorLogin &&
-                    //     (errorLogin?.response?.data as { message: string })
-                    //       ?.message)
-                  }
+                  {errorMessage ||
+                    (isError &&
+                      (serverError?.response?.data as { message: string })
+                        ?.message)}
                 </AlertText>
               </RowWrapper>
 
@@ -659,4 +667,8 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 2rem;
+`;
+
+const TagsAnnounceText = styled.div`
+  font-size: small;
 `;

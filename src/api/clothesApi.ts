@@ -21,20 +21,15 @@ export type SearchKeysRequest = {
 
 //전체 데이터 조회
 export const getClothesItems = async (searchKeys: SearchKeysRequest) => {
-  try {
-    const response = await api.get(`clothes`, {
-      params: {
-        page: searchKeys.page - 1, //페이네이션 실제로 0부터 시작되기 때문
-        color: searchKeys.color,
-        type: searchKeys.type,
-      },
-    });
+  const response = await api.get(`clothes`, {
+    params: {
+      page: searchKeys.page - 1, //페이네이션 실제로 0부터 시작되기 때문
+      color: searchKeys.color,
+      type: searchKeys.type,
+    },
+  });
 
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  return response.data;
 };
 
 export interface ClothesItemByIdResponse {
@@ -44,7 +39,7 @@ export interface ClothesItemByIdResponse {
   type: ClothesType;
 }
 
-// 개별 데이터 조회 //하나씩 수정할 때 필요함
+// 개별 데이터 조회 //하나씩 수정할 때 필요
 export const getClothesItemById = async (id: number) => {
   const response = await api.get(`clothes/${id}`);
   return response.data;

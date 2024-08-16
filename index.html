@@ -2,9 +2,52 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/public/Brand Logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/wwfavicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>웨더웨어</title>
+    <meta
+      name="description"
+      content="날씨를 기반으로 개인 맞춤형 옷차림 추천 서비스를 제공하는 패션 커뮤니티"
+    />
+    <meta name="keywords" content="패션, 날씨, 날씨별 옷차림, 코디, 스타일, OOTD, 오오티디" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="웨더웨어" />
+    <meta property="og:site_name" content="웨더웨어(Weather Wear)" />
+    <meta
+      property="og:description"
+      content="날씨를 기반으로 개인 맞춤형 옷차림 추천 서비스를 제공하는 패션 커뮤니티"
+    />
+    <meta property="og:image" content="/mainpage.png" />
+    <meta property="og:url" content="https://weatherwearclothing.com" />
+
+    <meta
+      name="twitter:card"
+      content="패션과 날씨,
+    이제 웨더웨어에서 한 번에!"
+    />
+    <meta name="twitter:title" content="웨더웨어(Weather Wear)" />
+    <meta
+      name="twitter:description"
+      content="날씨를 기반으로 개인 맞춤형 옷차림 추천 서비스를 제공하는 패션 커뮤니티"
+    />
+    <meta name="twitter:image" content="/mainpage.png" />
+    <script
+      type="text/javascript"
+      strategy="beforeInteractive"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%= kakaoApiKey %>&libraries=services,clusterer,drawing"
+    ></script>
+    <script
+      strategy="beforeInteractive"
+      src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="portal"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
     <script
       type="text/javascript"
       strategy="beforeInteractive"

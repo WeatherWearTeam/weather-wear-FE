@@ -34,18 +34,29 @@ export default function SignupForm() {
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
+    //최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자를 포함하는 정규식
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+
     if (!signUpUser.EMAIL.trim()) {
       return alertErrorMessage("이메일을 입력해 주세요.");
     }
     if (!signUpUser.NICKNAME.trim()) {
       return alertErrorMessage("닉네임을 입력해 주세요.");
     }
-    if (!signUpUser.PASS1.trim()) {
-      return alertErrorMessage("비밀번호를 입력해 주세요.");
+
+    if (
+      !signUpUser.PASS1.trim() ||
+      !(signUpUser.PASS1.length > 7 && signUpUser.PASS1.length < 16) ||
+      !regex.test(signUpUser.PASS1)
+    ) {
+      return alertErrorMessage(
+        "비밀번호는 8-15자 길이여야 하며, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자를 포함해야 합니다."
+      );
     }
     if (!signUpUser.PASS2.trim()) {
       return alertErrorMessage("확인용 비밀번호를 입력해 주세요.");
     }
+
     if (signUpUser.PASS1 !== signUpUser.PASS2) {
       return alertErrorMessage("비밀번호가 일치하지 않습니다.");
     }
@@ -148,9 +159,7 @@ export default function SignupForm() {
         </Fieldset>
       </FlexRow>
       <AlertText>
-        {errorMessage ||
-          (isError &&
-            (errorSignup?.response?.data as { message: string })?.message)}
+        {errorMessage || (isError && (errorSignup?.response?.data as string))}
       </AlertText>
       <Button type="submit">가입하기</Button>
     </Form>

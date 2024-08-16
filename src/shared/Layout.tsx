@@ -39,7 +39,7 @@ function Layout({ children }: LayoutProps) {
               <img
                 src={WeatherWearLogo}
                 alt="WeatherWear Logo"
-                style={{ height: "50px", width: "auto" }}
+                style={{ height: "40px", width: "auto" }}
               />
             </LogoWrapper>
             <StNavLink to={`/`}>
@@ -113,7 +113,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 0 4rem;
+  padding: 0 3rem;
 `;
 
 const NavLeft = styled.div`

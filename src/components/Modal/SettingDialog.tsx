@@ -63,7 +63,7 @@ export const DialogWrapper = styled.div`
   position: absolute;
   top: 2px; /* 필요에 따라 조정 */
   // right: 0px; /* 오른쪽에서 10px 떨어진 위치 */
-  left: calc(100% - 180px); /* 오른쪽에서 10px 떨어진 위치 */
+  left: calc(100% - 205px); /* 오른쪽에서 10px 떨어진 위치 */
 
   z-index: 1000;
 `;
