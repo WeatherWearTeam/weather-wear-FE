@@ -9,7 +9,6 @@ import {
   userIcon,
   weatherSunCloudyIcon,
 } from "@shared/icons";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -32,13 +31,6 @@ export default function MyAccount() {
         break;
     }
   };
-
-  //useEffect로 내 정보 먼저 가져와서 채우기
-  useEffect(() => {
-    if (me) {
-      console.log(me);
-    }
-  }, [me]);
 
   return (
     <Container>
