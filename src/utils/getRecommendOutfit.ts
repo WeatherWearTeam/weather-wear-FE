@@ -75,11 +75,11 @@ export default function getRecommendOutfit(tmp: number, gender?: Gender) {
     }
   }
 
-  if (recommendations.length === 0) {
-    recommendations.push(
-      gender ? "기온을 확인할 수 없습니다." : "성별을 확인할 수 없습니다."
-    );
-  }
+  // if (recommendations.length === 0) {
+  //   recommendations.push(
+  //     gender ? "기온을 확인할 수 없습니다." : "성별을 확인할 수 없습니다."
+  //   );
+  // }
 
   return recommendations;
 }

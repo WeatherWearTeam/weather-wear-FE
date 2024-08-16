@@ -33,11 +33,9 @@ export default function WeatherRecommendation({
       weatherData?.tmp as number,
       gender as Gender
     );
-    // console.log("로그인한 사용자 추천:", recommendOutfit);
   } else {
     // 로그인하지 않은 사용자
     recommendOutfit = getRecommendOutfit(weatherData?.tmp as number);
-    // console.log("로그인하지 않은 사용자 추천:", recommendOutfit);
   }
 
   /////////////////////////////////////////
@@ -97,7 +95,8 @@ export default function WeatherRecommendation({
               {getWeatherRecommendation(weatherData as WeatherData)}
             </WeatherAnnouncement>
             <ContentDescription>
-              오늘 같은 날씨에 입기 좋은 옷차림을 추천해 드릴게요!
+              {recommendOutfit.length > 0 &&
+                `오늘 같은 날씨에 입기 좋은 옷차림을 추천해 드릴게요!`}
             </ContentDescription>
             <RecommendedContainer>
               {recommendOutfit?.map((item: string, index: number) => (
