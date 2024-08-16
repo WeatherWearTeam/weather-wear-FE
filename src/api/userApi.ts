@@ -1,5 +1,4 @@
 import api from "@api/api";
-import axios from "axios";
 
 //회원가입
 export interface SignUpUserRequest {
@@ -11,6 +10,7 @@ export interface SignUpUserRequest {
   birthday: string;
 }
 
+//유저 생성
 export const signUpUser = async (newUser: SignUpUserRequest) => {
   const response = await api.post(`users`, newUser, {
     withCredentials: false, //퍼블릭 페이지: 자격 증명 포함하지 않음
@@ -18,9 +18,7 @@ export const signUpUser = async (newUser: SignUpUserRequest) => {
   return response.data;
 };
 
-////////////////////////////////////////////////////////////
 //유저 삭제
-
 export const deleteUser = async () => {
   //회원 탈퇴시 보통은 myId 넣는데 이미 설정되어 있다고 하니 프론트에선 할 필요 없음
   const response = await api.delete(`users`);
@@ -29,18 +27,13 @@ export const deleteUser = async () => {
 
 ////////////////////////////////////////////////////////////
 //유저 업데이트
-
 export const updateUser = async (formData: FormData) => {
-  try {
-    const response = await api.put(`users`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await api.put(`users`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
 };
 
 ////////////////////////////////////////////////////////////
@@ -52,28 +45,14 @@ export interface UpdatePasswordRequest {
 }
 
 export const updatePassword = async (passwords: UpdatePasswordRequest) => {
-  try {
-    const response = await api.put(`users/password`, passwords);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await api.put(`users/password`, passwords);
+  return response.data;
 };
 
 // 로그인한 유저 프로필 조회
 export const getMe = async () => {
-  try {
-    const response = await api.get("users/me");
-    return response.data;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      console.error("Server responded with a status:", error.response?.status);
-      console.error("Response data:", error.response?.data);
-    } else {
-      console.error("Error message:", (error as Error).message);
-    }
-    throw error;
-  }
+  const response = await api.get("users/me");
+  return response.data;
 };
 ///////////////////////////////////////////////////////////////
 

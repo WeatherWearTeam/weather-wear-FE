@@ -2,7 +2,8 @@ import { useCreateBoard } from "@queries/boardQueries";
 import BoardForm from "@components/Board/BoardForm";
 
 export default function PostAdd() {
-  const { mutateCreateBoard, isPending, isError } = useCreateBoard();
+  const { mutateCreateBoard, isPending, isError, createBoardError } =
+    useCreateBoard();
 
   const onCreateBoard = (newBoard: FormData) => {
     mutateCreateBoard(newBoard);
@@ -13,6 +14,7 @@ export default function PostAdd() {
       isPending={isPending}
       isError={isError}
       onCreateBoard={onCreateBoard}
+      serverError={createBoardError}
     />
   );
 }

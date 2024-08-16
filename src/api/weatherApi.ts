@@ -22,13 +22,8 @@ export interface WeatherData {
 export const getWeatherByLocation = async (
   id: number
 ): Promise<WeatherData> => {
-  try {
-    const response = await api.get(`weathers?id=${id}`, {
-      withCredentials: false,
-    });
-    return response.data;
-  } catch (error) {
-    console.error("날씨 정보를 가져오는데 실패했습니다:", error);
-    throw error;
-  }
+  const response = await api.get(`weathers?id=${id}`, {
+    withCredentials: false,
+  });
+  return response.data;
 };

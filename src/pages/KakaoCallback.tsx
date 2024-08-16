@@ -19,8 +19,6 @@ const KakaoCallback: React.FC = () => {
         ? `kakao/login` //프로덕션
         : `api/kakao/login`; //로컬
 
-      console.log(URL);
-
       KakaoApi.post(`${URL}`, {
         code,
         redirectUri: REDIRECT_URI,

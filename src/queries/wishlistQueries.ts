@@ -10,6 +10,8 @@ import {
 } from "@api/wishlistApi";
 import { AxiosError } from "axios";
 
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 // 메인 페이전체 조회
 export const useHomeRecommendsItems = (weatherId: number) => {
   const {
@@ -38,11 +40,7 @@ export const useDeleteRecommendWishlistItem = () => {
       queryClient.invalidateQueries({ queryKey: ["homeRecommendsItems"] });
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
   return {
@@ -100,15 +98,10 @@ export const useCreateWishlistItem = () => {
       queryClient.invalidateQueries({ queryKey: ["wishlistItems"] });
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 
-  //<WishlistItem, Error, Product>
   return { mutateCreateWishlistItem, isPending, isError, isSuccess };
 };
 
@@ -126,11 +119,7 @@ export const useDeleteWishlistItem = () => {
       queryClient.invalidateQueries({ queryKey: ["wishlistItems"] });
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
   return {
@@ -140,5 +129,3 @@ export const useDeleteWishlistItem = () => {
     isSuccessDelete,
   };
 };
-
-////////////////////////////////////////////////////////

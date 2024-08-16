@@ -62,12 +62,12 @@ export default function MyAccountEdit() {
   };
 
   // 🌟 FormData의 내용을 콘솔에 출력하는 함수
-  function logFormData(formData: FormData) {
-    for (const pair of formData.entries()) {
-      // 'const' 사용
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-  }
+  // function logFormData(formData: FormData) {
+  //   for (const pair of formData.entries()) {
+  //     // 'const' 사용
+  //     console.log(`${pair[0]}: ${pair[1]}`);
+  //   }
+  // }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,9 +156,8 @@ export default function MyAccountEdit() {
         }
       }
 
-      logFormData(formData);
+      // logFormData(formData);
 
-      //폼 인풋 비우기
       mutateUpdateUser(formData);
     }
   };

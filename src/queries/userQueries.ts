@@ -4,7 +4,6 @@ import {
   getMe,
   getUserById,
   signUpUser,
-  SignUpUserRequest,
   updatePassword,
   updateUser,
 } from "@api/userApi";
@@ -12,12 +11,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 
-///////////////////////////////////////////////////////////////
 //회원가입
-interface ErrorResponse {
-  message: string;
-}
-
 export const useCreateUser = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -28,23 +22,20 @@ export const useCreateUser = () => {
     isError,
     isSuccess,
     error: errorSignup,
-  } = useMutation<any, AxiosError<ErrorResponse>, SignUpUserRequest>({
+  } = useMutation({
     mutationFn: signUpUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       navigate("/login");
     },
-    // onError: (error: AxiosError<ErrorResponse>) => {
-    //   let errorMessage = "오류가 발생했습니다.\n회원가입을 다시 시도해 주세요.";
-    //   if (error.response) {
-    //   }
-    // },
+    onError: (error: AxiosError) => {
+      return error;
+    },
   });
 
   return { mutateCreateUser, isError, isPending, isSuccess, errorSignup };
 };
 
-///////////////////////////////////////////////////////////////
 //회원탈퇴
 export const useDeleteUser = () => {
   const navigate = useNavigate();
@@ -65,19 +56,14 @@ export const useDeleteUser = () => {
         navigate("/", { replace: true }); //히스토리 스택 대체
       }
     },
-    // onError: (error: AxiosError) => {
-    //   // let errorMessage =
-    //   //   "오류가 발생했습니다.\n회원 탈퇴를 다시 시도해 주세요.";
-    //   // if (error.response) {
-    //   //   errorMessage = `${error.response.data}`;
-    //   // }
-    // },
+    onError: (error: AxiosError) => {
+      return error;
+    },
   });
 
   return { mutateDeleteUser, isError, isPending, isSuccess };
 };
 
-///////////////////////////////////////////////////////////////
 //회원 수정
 export const useUpdateUser = () => {
   const navigate = useNavigate();
@@ -96,11 +82,7 @@ export const useUpdateUser = () => {
       navigate(`/my`, { replace: true }); //히스토리 스택 대체
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 
@@ -118,6 +100,7 @@ export const useUpdatePassword = () => {
     isPending,
     isError,
     isSuccess,
+    error: updatePasswordError,
   } = useMutation({
     mutationFn: updatePassword,
     onSuccess: () => {
@@ -126,16 +109,17 @@ export const useUpdatePassword = () => {
       navigate(`/my/setting`, { replace: true }); //히스토리 스택 대체
     },
     onError: (error: AxiosError) => {
-      let errorMessage =
-        "오류가 발생했습니다.\n비밀번호를 수정을 다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 
-  return { mutateUpdatePassword, isError, isPending, isSuccess };
+  return {
+    mutateUpdatePassword,
+    isError,
+    isPending,
+    isSuccess,
+    updatePasswordError,
+  };
 };
 
 ///////////////////////////////////////////////////////////////

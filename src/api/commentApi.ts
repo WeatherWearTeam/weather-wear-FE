@@ -5,6 +5,7 @@ export interface CreateCommentRequest {
   boardId: number;
   contents: string;
 }
+
 // id는 서버에서 받아옴
 export const createComment = async (newComment: CreateCommentRequest) => {
   const response = await api.post(

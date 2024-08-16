@@ -57,16 +57,10 @@ export const useCreateClothesItem = () => {
     mutationFn: createClothesItem,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["clothesItems"] });
-      
       navigate(`/mypage/closet`, { replace: true }); //히스토리 스택 대체
-      // window.history.go(-1); // add 페이지 자체 히스토리에서 빼고 가기
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
 
@@ -88,14 +82,9 @@ export const useUpdateClothesItem = () => {
       // 데이터 수정 후, 전체 데이터 무효화
       queryClient.invalidateQueries({ queryKey: ["clothesItems"] });
       navigate(`/mypage/closet`, { replace: true }); //히스토리 스택 대체
-      window.history.go(-1); // add 페이지 자체 히스토리에서 빼고 가기
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
   return { mutateUpdateClothesItem, isPending, isError, isSuccess };
@@ -116,11 +105,7 @@ export const useDeleteClothesItem = () => {
       queryClient.invalidateQueries({ queryKey: ["clothesItems"] });
     },
     onError: (error: AxiosError) => {
-      let errorMessage = "오류가 발생했습니다.\n다시 시도해 주세요.";
-      if (error.response) {
-        errorMessage = `${error.response.data}`;
-        console.log(errorMessage);
-      }
+      return error;
     },
   });
   return { mutateDeleteClothesItem, isPending, isError, isSuccess };
