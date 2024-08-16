@@ -142,7 +142,6 @@ export const useCreateBoard = () => {
       navigate(`/ootd/${id}`, { replace: true }); //히스토리 스택 대체
     },
     onError: (error: AxiosError) => {
-      console.log(error);
       return error;
     },
   });

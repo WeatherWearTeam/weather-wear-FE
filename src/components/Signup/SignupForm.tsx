@@ -76,12 +76,9 @@ export default function SignupForm() {
       gender: signUpUser.GENDER,
     };
 
-    console.log(newUser);
-
     mutateCreateUser(newUser);
   };
 
-  console.log("✅", errorSignup?.response?.data);
   return (
     <Form onSubmit={handleSubmit}>
       <FlexRow>
