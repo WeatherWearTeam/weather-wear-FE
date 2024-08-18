@@ -34,7 +34,7 @@
 
 |FE 팀장: 정은화|FE 팀원: 고근우|
 |:--:|:--:|
-|<img src="https://github.com/user-attachments/assets/2ce74d31-062e-42cd-9291-57dfd93af169" width="120px;" alt="이미지"/>|<img src="https://github.com/user-attachments/assets/080936e6-8725-4b34-b030-b341587bc035" width="120px;" alt="이미지"/>|
+|<img src="https://github.com/user-attachments/assets/290ab63a-9a4a-4c2e-a25b-5d218f23520d" width="120px" height="120px" alt="이미지"/>|<img src="https://github.com/user-attachments/assets/587b2993-53f4-4e58-ad35-1681b9dc19b9" width="120px" height="120px" alt="이미지"/>|
 |<a href="https://github.com/summereuna">@summereuna</a>|<a href="https://github.com/GoGeunWoo">@GoGeunWoo</a>|
 |`summereuna@gmail.com`|`gkw0314@naver.com`|
 
