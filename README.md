@@ -25,6 +25,9 @@
 
 ## 개요
 - 프로젝트 이름: 웨더웨어(Weather Wear)
+- 서비스 사이트: [⛈️ 웨더웨어](https://weatherwearclothing.com)
+- 브로셔: [🎨 브로셔](https://twisty-snowshoe-22b.notion.site/26c9ddad0ef8487eb29591a690a67bf3)
+- 팀 노션: [📔 팀 노션](https://twisty-snowshoe-22b.notion.site/Weather-Wear-9e4122225f5d446489d14b9a028046f3?pvs=74)
 - 프로젝트 기간: 2024.07.26-08.16 (4주)
 - FE 개발 언어: React + TypeScript
 - FE 멤버: 정은화, 고근우
