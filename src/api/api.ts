@@ -14,4 +14,29 @@ const api = axios.create({
   withCredentials: true,
 });
 
+// 응답 받기 전
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    //refresh token까지 만료되면 로컬스토리지 지우고 로그아웃, 로그인 페이지로 리다이렉트
+    if (
+      error.response.status === 401 &&
+      error.response.data === "Refresh Token expired or invalid." //로그인 인증 에러랑 분기 처리
+    ) {
+      //모달로 처리하기
+      const isConfirmed = confirm(
+        "로그인 기간이 만료되었습니다. 확인 버튼을 누르면 로그인 페이지로 이동합니다."
+      );
+
+      if (isConfirmed) {
+        localStorage.removeItem("ISLOGGEDIN");
+        window.location.replace("/login");
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

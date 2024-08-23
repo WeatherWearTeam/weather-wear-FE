@@ -52,13 +52,16 @@ export const useDeleteUser = () => {
       if (message === "User deleted successfully") {
         queryClient.invalidateQueries({ queryKey: ["users"] }); // 전체 사용자 쿼리 무효화
         queryClient.invalidateQueries({ queryKey: ["auth"] }); // 로그인한 사용자 정보 쿼리 무효화
-        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("isLoggedIn"); //로그아웃에서 이미 처리
+        console.log("로컬스토리지 삭제");
         navigate("/", { replace: true }); //히스토리 스택 대체
+        queryClient.clear(); //상태 초기화
       }
     },
     onError: (error: AxiosError) => {
       return error;
     },
+    retry: 0, //한번만 실행
   });
 
   return { mutateDeleteUser, isError, isPending, isSuccess };

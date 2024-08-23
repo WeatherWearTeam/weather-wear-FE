@@ -12,7 +12,7 @@ import styled, { css } from "styled-components";
 
 export default function MyAccountEdit() {
   const navigate = useNavigate();
-  const { isLoggedIn, mutateLogout } = useAuth();
+  const { isLoggedIn } = useAuth();
   const { me } = useMe(isLoggedIn);
   const { errorMessage, alertErrorMessage, deleteErrorMessage } = useError();
 
@@ -25,7 +25,7 @@ export default function MyAccountEdit() {
     );
 
     if (isConfirmed) {
-      mutateLogout(); //로그아웃해서 로컬스토리지 파기
+      // mutateLogout(); //로그아웃
       mutateDeleteUser(); //유저 정보 디비에서 삭제
     }
   };
