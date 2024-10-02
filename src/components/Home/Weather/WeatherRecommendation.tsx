@@ -157,7 +157,7 @@ const WeatherInfoMainWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 1rem;
-  width: 25rem;
+  width: 35rem;
 `;
 
 const WeatherInfoMainText = styled.h3`
@@ -169,7 +169,7 @@ const WeatherInfoSubWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 1rem;
-  width: 25rem;
+  width: 35rem;
 `;
 
 const WeatherInfoSubTitle = styled.div`
@@ -197,8 +197,8 @@ const RecommendedItem = styled.div`
   justify-content: center;
   align-items: center;
   font-size: medium;
-  width: 13rem;
-  height: 13rem;
+  width: 10rem;
+  height: 10rem;
   border: 1px solid
     ${({ theme }) => css`
       ${theme.colors.WHITE}80; //투명도 30% 4d, 20% 26
@@ -210,11 +210,6 @@ const RecommendedItem = styled.div`
   box-shadow: 1px 5px 20px 1px rgba(198, 198, 198, 0.2);
 
   @media (max-width: 1200px) {
-    font-size: small;
-    width: 10rem;
-    height: 10rem;
-  }
-  @media (max-width: 600px) {
     font-size: small;
     width: 8rem;
     height: 8rem;
