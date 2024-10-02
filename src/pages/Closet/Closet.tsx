@@ -189,7 +189,7 @@ const MyPageContentsContainer = styled.div`
 `;
 
 const HeaderContainer = styled.div`
-  width: 100%;
+  width: 80%;
   /* max-width: 1220px; */
   display: flex;
   flex-direction: row;
